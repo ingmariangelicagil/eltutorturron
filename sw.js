@@ -1,6 +1,6 @@
 /* Service worker de Turrón: la app funciona sin conexión (todo menos Gemini).
-   tools/build.py reemplaza 665dd00fc1 con un hash del sitio, así cada publicación renueva la caché. */
-var V = 'turron-665dd00fc1';
+   tools/build.py reemplaza 6d4dff6ca4 con un hash del sitio, así cada publicación renueva la caché. */
+var V = 'turron-6d4dff6ca4';
 var CORE = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 
 self.addEventListener('install', function (e) {

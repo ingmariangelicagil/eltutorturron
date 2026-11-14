@@ -159,9 +159,9 @@ if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
   function gateUpdate(){ var g=document.getElementById('gate'), need=needGate();
     if(!need){ if(g){ g.remove(); document.documentElement.classList.remove('gated'); } gateKey=''; clearInterval(gateAnim); gateAnim=0; return; }
     var A=app(), dog=A&&A.welcomeFrame?A.welcomeFrame(0):((document.querySelector('#splash span')||{}).innerHTML||''), inner;
-    if(!S.user) inner='<p class="glead">Entren con su cuenta de Google. Así Turrón habla sin claves y el progreso queda en los dos teléfonos.</p><button class="btn gbtn" data-sync="in">Entrar con Google</button>'+(S.err?'<p class="fb bad">'+esc(S.err)+'</p>':'');
+    if(!S.user) inner='<button class="btn gbtn" data-sync="in">Entrar con Google</button>'+(S.err?'<p class="gerr">'+esc(S.err)+'</p>':'');
     else inner='<p class="glead">Hola, '+esc((S.user.displayName||S.user.email||'').split(' ')[0])+'.</p>'+stepHogar()+'<p><button class="slow" data-sync="out">Usar otra cuenta</button></p>';
-    var html='<div class="gate-in"><p class="gsay" aria-hidden="true">¡Guau! ¡Bienvenidos!</p><span class="gdog" id="gdog" aria-hidden="true">'+dog+'</span><h1>Turrón</h1><p class="gsub">Aprendiendo con el Jeirer</p><div class="gbody">'+inner+'</div></div>';
+    var html='<div class="gate-in"><p class="gsay" aria-hidden="true">¡Bienvenidos!</p><span class="gdog" id="gdog" aria-hidden="true">'+dog+'</span><h1>Turrón</h1><div class="'+(S.user?'gbody':'gsolo')+'">'+inner+'</div></div>';
     if(html===gateKey) return; gateKey=html;
     var keep=document.activeElement&&document.activeElement.id==='syncCode'?document.activeElement.value:null;
     if(!g){ g=document.createElement('div'); g.id='gate'; g.setAttribute('role','dialog'); g.setAttribute('aria-modal','true'); g.setAttribute('aria-label','Entrar a Turrón'); document.body.appendChild(g); document.documentElement.classList.add('gated'); }
@@ -685,7 +685,10 @@ html.gated,html.gated body{overflow:hidden}
 .gsub{margin:2px 0 18px;font-weight:700}
 .gbody{background:var(--paper);color:var(--ink);border-radius:22px;padding:16px 18px;text-align:left;box-shadow:0 6px 0 rgba(43,26,18,.25)}
 .glead{margin-top:0}
-.gbtn{width:100%;background:var(--collar);border-color:var(--collar);color:#fff;--bs:#8F1F47;min-height:52px;font-size:1.05rem}
+.gsolo{margin-top:22px}
+.gbtn{width:100%;background:var(--sea);border-color:var(--sea);color:var(--cream);--bs:var(--tink);min-height:54px;font-size:1.1rem}
+.gerr{margin:12px 0 0;font-weight:700}
+#gate h1{margin-bottom:6px}
 #gate [data-sync=who][aria-pressed=true]{background:var(--sea);border-color:var(--sea);color:#fff}
 
 /* motor de estados: la escena tiene 8 filas de aire arriba para los glifos (22×30) */

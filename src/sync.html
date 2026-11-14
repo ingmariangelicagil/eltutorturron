@@ -112,9 +112,9 @@
   function gateUpdate(){ var g=document.getElementById('gate'), need=needGate();
     if(!need){ if(g){ g.remove(); document.documentElement.classList.remove('gated'); } gateKey=''; clearInterval(gateAnim); gateAnim=0; return; }
     var A=app(), dog=A&&A.welcomeFrame?A.welcomeFrame(0):((document.querySelector('#splash span')||{}).innerHTML||''), inner;
-    if(!S.user) inner='<p class="glead">Entren con su cuenta de Google. Así Turrón habla sin claves y el progreso queda en los dos teléfonos.</p><button class="btn gbtn" data-sync="in">Entrar con Google</button>'+(S.err?'<p class="fb bad">'+esc(S.err)+'</p>':'');
+    if(!S.user) inner='<button class="btn gbtn" data-sync="in">Entrar con Google</button>'+(S.err?'<p class="gerr">'+esc(S.err)+'</p>':'');
     else inner='<p class="glead">Hola, '+esc((S.user.displayName||S.user.email||'').split(' ')[0])+'.</p>'+stepHogar()+'<p><button class="slow" data-sync="out">Usar otra cuenta</button></p>';
-    var html='<div class="gate-in"><p class="gsay" aria-hidden="true">¡Guau! ¡Bienvenidos!</p><span class="gdog" id="gdog" aria-hidden="true">'+dog+'</span><h1>Turrón</h1><p class="gsub">Aprendiendo con el Jeirer</p><div class="gbody">'+inner+'</div></div>';
+    var html='<div class="gate-in"><p class="gsay" aria-hidden="true">¡Bienvenidos!</p><span class="gdog" id="gdog" aria-hidden="true">'+dog+'</span><h1>Turrón</h1><div class="'+(S.user?'gbody':'gsolo')+'">'+inner+'</div></div>';
     if(html===gateKey) return; gateKey=html;
     var keep=document.activeElement&&document.activeElement.id==='syncCode'?document.activeElement.value:null;
     if(!g){ g=document.createElement('div'); g.id='gate'; g.setAttribute('role','dialog'); g.setAttribute('aria-modal','true'); g.setAttribute('aria-label','Entrar a Turrón'); document.body.appendChild(g); document.documentElement.classList.add('gated'); }
