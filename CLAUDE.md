@@ -76,7 +76,15 @@ Se escribieron en otro entorno: pueden necesitar ajustar la ruta de Chrome (`exe
 
 ## Publicar
 
-Subir a `main` `index.html`, `sw.js`, `manifest.webmanifest` e `icons/`. GitHub Pages lo publica en 1–2 minutos.
+- **Principal: https://jeirer.web.app** (Firebase, proyecto `jeirer`). Construir y luego `firebase deploy --only hosting,firestore:rules`. `firebase.json` publica solo los archivos construidos.
+- **Respaldo: GitHub Pages.** Subir a `main` `index.html`, `sw.js`, `manifest.webmanifest` e `icons/`. Ahí la tarjeta de Inicio manda a jeirer.web.app y ofrece «Llevar mi progreso» (lo pasa en el `#importar=` de la URL, que no llega a ningún servidor).
+
+### Firebase (`src/sync.html`, solo en el sitio público)
+
+- Login con Google; cada persona con su cuenta. «Hogar» = `hogares/{id}` con `members`, `code` y el progreso de `el` y `ella` como JSON. `codes/{código}` lleva del código de 6 letras al hogar. `users/{uid}` guarda su hogar y quién es. Reglas en `firestore.rules`.
+- El progreso sigue en `localStorage`; `mergeAll()` une teléfono y nube sin perder nada (frases, días, tarjetas, cuaderno se suman; plan y metas gana el más reciente por persona, campo `u`).
+- Con sesión, Turrón usa Gemini por **Firebase AI Logic** (`firebase-ai.js`, modelo en `AIM`). La clave propia de Gemini queda solo como respaldo.
+- La config web de Firebase en `sync.html` es pública por diseño. Pendiente: App Check para que nadie más use la cuota de Gemini.
 
 ---
 
