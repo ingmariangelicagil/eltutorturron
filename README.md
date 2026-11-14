@@ -24,3 +24,8 @@ La clave se guarda solo en el navegador de ese teléfono; no está en este repos
 
 - El micrófono usa el reconocimiento de voz del navegador (Chrome o Safari).
 - El progreso se guarda en cada navegador y no se sincroniza entre teléfonos.
+
+## Para desarrollar
+
+Ver `CLAUDE.md`. Resumen: el código fuente está en `src/`, se construye con
+`python3 tools/build.py`, y `index.html` es lo que publica GitHub Pages.
