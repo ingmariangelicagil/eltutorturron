@@ -5,15 +5,15 @@
    La configuración de abajo es pública por diseño: la seguridad está en firestore.rules. */
 (function(){
   var CFG={apiKey:"AIzaSyDp_7oEY4YRsRxOsjyzbhhefSRKm5dc84Q",authDomain:"jeirer.firebaseapp.com",projectId:"jeirer",appId:"1:542831715434:web:0a269a1de3c63486dbd613",messagingSenderId:"542831715434"};
-  var SDK="https://www.gstatic.com/firebasejs/12.0.0/", HOME="https://jeirer.web.app/", FLAG="turron-sync";
+  var SDK="https://www.gstatic.com/firebasejs/12.0.0/", HOME="https://jeirer.web.app/", FLAG="turron-sync", HKEY="turron-hogar";
   var host=location.hostname, onFirebase=/^jeirer\.(web\.app|firebaseapp\.com)$/.test(host), local=/^(localhost|127\.0\.0\.1)$/.test(host);
-  var S={on:onFirebase||local, ready:false, loading:false, user:null, prof:null, hogar:null, code:'', status:'', err:'', who:'', remote:null, unsub:null, timer:0};
+  var S={on:onFirebase||local, ready:false, loading:false, user:null, prof:null, profLoaded:false, hogar:null, code:'', status:'', err:'', who:'', remote:null, unsub:null, timer:0};
   var F=null; // módulos de Firebase
   function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
   function lsSet(k,v){ try{ if(v==null) localStorage.removeItem(k); else localStorage.setItem(k,v); }catch(e){} }
   function app(){ return window.TURRON_APP; }
   function esc(s){ return app()?app().esc(s):String(s); }
-  function redraw(){ var c=document.getElementById('syncCard'); if(c) c.outerHTML=card(); }
+  function redraw(){ var c=document.getElementById('syncCard'); if(c) c.outerHTML=card(); gateUpdate(); }
 
   /* ---------- unir progreso: nunca se pierde lo aprendido en ninguno de los dos teléfonos ---------- */
   function obj(x){ return x&&typeof x==='object'&&!Array.isArray(x)?x:{}; }
@@ -39,10 +39,11 @@
       m[1].onAuthStateChanged(F.auth,onUser); return F; });
     return S.loading; }
   function onUser(u){ S.user=u; S.ready=true; S.err=''; window.TUTOR_AI_READY=!!u; if(u&&app()&&app().aiReady){ try{ app().aiReady(); }catch(e){} }
-    if(!u){ stopListen(); S.prof=null; S.hogar=null; lsSet(FLAG,null); redraw(); return; }
-    lsSet(FLAG,'1');
-    F.D.getDoc(F.D.doc(F.db,'users',u.uid)).then(function(s){ S.prof=s.exists()?s.data():null;
-      if(S.prof&&S.prof.hogar){ S.hogar=S.prof.hogar; listen(); } redraw(); }).catch(fail); }
+    if(!u){ stopListen(); S.prof=null; S.hogar=null; S.profLoaded=false; lsSet(FLAG,null); lsSet(HKEY,null); redraw(); return; }
+    lsSet(FLAG,'1'); var cached=(lsGet(HKEY)||'').split('|'); if(cached[0]===u.uid&&cached[1]){ S.hogar=cached[1]; S.profLoaded=true; listen(); }
+    F.D.getDoc(F.D.doc(F.db,'users',u.uid)).then(function(s){ S.prof=s.exists()?s.data():null; S.profLoaded=true;
+      if(S.prof&&S.prof.hogar){ if(S.hogar!==S.prof.hogar){ S.hogar=S.prof.hogar; listen(); } lsSet(HKEY,u.uid+'|'+S.hogar); } redraw(); })
+      .catch(function(e){ if(S.hogar){ redraw(); return; } fail(e); }); }
   function fail(e){ S.err=(e&&e.code==='permission-denied')?'Ese código no existe o el hogar ya está lleno.':(e&&/offline|unavailable/.test(e.code||''))?'Sin conexión. Se sincroniza al volver.':'No se pudo sincronizar. Prueben otra vez.'; redraw(); }
   function stopListen(){ if(S.unsub){ S.unsub(); S.unsub=null; } }
   function listen(){ stopListen(); var ref=F.D.doc(F.db,'hogares',S.hogar);
@@ -61,7 +62,7 @@
       var mobile=matchMedia('(pointer:coarse)').matches||matchMedia('(display-mode: standalone)').matches;
       return (mobile&&onFirebase)?F.A.signInWithRedirect(F.auth,p):F.A.signInWithPopup(F.auth,p); }).catch(function(e){ if(e&&/popup-closed|cancelled/.test(e.code||'')) return; S.err='No se pudo entrar con Google. Prueben otra vez.'; redraw(); }); }
   function newCode(){ var A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789', c=''; var r=new Uint32Array(6); crypto.getRandomValues(r); for(var i=0;i<6;i++) c+=A[r[i]%A.length]; return c; }
-  function saveProfile(hid,who){ return F.D.setDoc(F.D.doc(F.db,'users',S.user.uid),{hogar:hid,who:who,updated:F.D.serverTimestamp()}).then(function(){ S.prof={hogar:hid,who:who}; S.hogar=hid; if(app()) app().who(who); listen(); redraw(); }); }
+  function saveProfile(hid,who){ return F.D.setDoc(F.D.doc(F.db,'users',S.user.uid),{hogar:hid,who:who,updated:F.D.serverTimestamp()}).then(function(){ S.prof={hogar:hid,who:who}; S.hogar=hid; S.profLoaded=true; lsSet(HKEY,S.user.uid+'|'+hid); if(app()) app().who(who); listen(); redraw(); }); }
   function create(who){ var uid=S.user.uid, ref=F.D.doc(F.D.collection(F.db,'hogares')), code=newCode(), loc=app().get();
     S.status='Creando el hogar…'; redraw();
     return F.D.setDoc(ref,{members:[uid],code:code,el:JSON.stringify(loc.el||{}),ella:JSON.stringify(loc.ella||{}),updated:F.D.serverTimestamp()})
@@ -72,20 +73,20 @@
     F.D.getDoc(F.D.doc(F.db,'codes',code)).then(function(s){ if(!s.exists()) throw {code:'permission-denied'}; var hid=s.data().hogar;
       return F.D.updateDoc(F.D.doc(F.db,'hogares',hid),{members:F.D.arrayUnion(S.user.uid)}).catch(function(e){ if(e&&e.code==='permission-denied') return; throw e; }) // ya era miembro
         .then(function(){ S.code=code; return saveProfile(hid,who); }); }).catch(fail); }
-  function signOut(){ if(S.timer) flush(); stopListen(); F.A.signOut(F.auth); }
+  function signOut(){ if(S.timer) flush(); stopListen(); lsSet(HKEY,null); F.A.signOut(F.auth); }
 
   /* ---------- Gemini por Firebase AI Logic: con sesión iniciada, Turrón no pide clave ----------
      La clave de Gemini la guarda Firebase; la página nunca la ve. Si alguien tiene su propia clave,
      se usa como respaldo cuando Firebase falla (salvo por límite de uso). */
   var AIM='gemini-3.5-flash-lite';
-  function aiCall(msgs){ return load().then(function(){ if(F.AI) return; return import(SDK+'firebase-ai.js').then(function(m){ F.AIm=m; F.AI=m.getAI(F.app,{backend:new m.GoogleAIBackend()}); }); }).then(function(){
+  function aiCall(msgs){ return load().then(function(){ return F.auth.authStateReady(); }).then(function(){ if(!F.auth.currentUser) throw {code:'clave'}; if(F.AI) return; return import(SDK+'firebase-ai.js').then(function(m){ F.AIm=m; F.AI=m.getAI(F.app,{backend:new m.GoogleAIBackend()}); }); }).then(function(){
       var model=F.AIm.getGenerativeModel(F.AI,{model:AIM,systemInstruction:msgs[0].content,generationConfig:{maxOutputTokens:400,temperature:0.7}}), rest=msgs.slice(1);
       var contents=rest.length?rest.map(function(m){ return {role:m.role==='assistant'?'model':'user',parts:[{text:m.content}]}; }):[{role:'user',parts:[{text:'Start the conversation now.'}]}];
       return model.generateContent({contents:contents}).then(function(r){ return r.response.text(); });
     }).catch(function(e){ if(e&&e.code&&!e.message) throw e; var msg=String(e&&e.message||e); throw {code:/429|quota|RESOURCE_EXHAUSTED/i.test(msg)?'rate_limited':'gemini',message:msg.slice(0,300)}; }); }
   var keyGemini=window.TUTOR_GEMINI;
   window.TUTOR_GEMINI=function(msgs){
-    if(S.on&&S.user) return aiCall(msgs).catch(function(e){ if(e.code!=='rate_limited'&&keyGemini&&window.TUTOR_KEY&&window.TUTOR_KEY.get()) return keyGemini(msgs); throw e; });
+    if(S.on&&(S.user||lsGet(FLAG))) return aiCall(msgs).catch(function(e){ if(e.code!=='rate_limited'&&keyGemini&&window.TUTOR_KEY&&window.TUTOR_KEY.get()) return keyGemini(msgs); throw e; });
     return keyGemini?keyGemini(msgs):Promise.reject({code:'clave'}); };
 
   /* ---------- llevar el progreso desde GitHub Pages ---------- */
@@ -95,6 +96,33 @@
     try{ history.replaceState(null,'',location.pathname+'#inicio'); }catch(e){} })();
   function applyImport(){ var A=app(); if(!A||!imported) return; var m=mergeAll(A.get(),{el:obj(imported.el),ella:obj(imported.ella)}); imported=null; A.put(m); if(S.hogar) push(); }
 
+  /* ---------- quién soy y hogar (pantalla de bienvenida y tarjeta) ---------- */
+  function stepHogar(){ var w=S.who||(app()?app().get().who:'ella');
+    return '<p>¿Quién eres?</p><div class="row" role="group" aria-label="¿Quién eres?"><button class="btn small" data-sync="who" data-w="el" aria-pressed="'+(w==='el')+'">Soy Eduardo</button><button class="btn small" data-sync="who" data-w="ella" aria-pressed="'+(w==='ella')+'">Soy Mariana</button></div>'+
+      '<p><b>¿Es el primer teléfono?</b> Creen el hogar y les damos un código para el otro.</p><button class="btn fill" data-sync="create">Crear el hogar</button>'+
+      '<p><b>¿Ya tienen un código?</b> Escríbanlo aquí:</p><div class="bar"><input class="inp" id="syncCode" maxlength="7" autocomplete="off" autocapitalize="characters" enterkeyhint="go" aria-label="Código del hogar" style="flex:1;min-width:0;text-transform:uppercase;letter-spacing:.15em"><button class="btn" data-sync="join">Unirme</button></div>'+
+      (S.status&&!S.err?'<p class="note">'+esc(S.status)+'</p>':'')+(S.err?'<p class="fb bad">'+esc(S.err)+'</p>':''); }
+
+  /* ---------- pantalla de bienvenida: primero Google, después el hogar ---------- */
+  function needGate(){ if(!S.on) return false;
+    if(!S.ready) return !lsGet(FLAG)&&navigator.onLine!==false; // con sesión guardada no se bloquea mientras carga
+    if(!S.user) return navigator.onLine!==false;                  // sin internet no se puede entrar: se deja usar la app
+    return S.profLoaded&&!S.hogar; }
+  var gateKey='', gateAnim=0, gateTick=0;
+  function gateUpdate(){ var g=document.getElementById('gate'), need=needGate();
+    if(!need){ if(g){ g.remove(); document.documentElement.classList.remove('gated'); } gateKey=''; clearInterval(gateAnim); gateAnim=0; return; }
+    var A=app(), dog=A&&A.welcomeFrame?A.welcomeFrame(0):((document.querySelector('#splash span')||{}).innerHTML||''), inner;
+    if(!S.user) inner='<p class="glead">Entren con su cuenta de Google. Así Turrón habla sin claves y el progreso queda en los dos teléfonos.</p><button class="btn gbtn" data-sync="in">Entrar con Google</button>'+(S.err?'<p class="fb bad">'+esc(S.err)+'</p>':'');
+    else inner='<p class="glead">Hola, '+esc((S.user.displayName||S.user.email||'').split(' ')[0])+'.</p>'+stepHogar()+'<p><button class="slow" data-sync="out">Usar otra cuenta</button></p>';
+    var html='<div class="gate-in"><p class="gsay" aria-hidden="true">¡Guau! ¡Bienvenidos!</p><span class="gdog" id="gdog" aria-hidden="true">'+dog+'</span><h1>Turrón</h1><p class="gsub">Aprendiendo con el Jeirer</p><div class="gbody">'+inner+'</div></div>';
+    if(html===gateKey) return; gateKey=html;
+    var keep=document.activeElement&&document.activeElement.id==='syncCode'?document.activeElement.value:null;
+    if(!g){ g=document.createElement('div'); g.id='gate'; g.setAttribute('role','dialog'); g.setAttribute('aria-modal','true'); g.setAttribute('aria-label','Entrar a Turrón'); document.body.appendChild(g); document.documentElement.classList.add('gated'); }
+    g.innerHTML=html; if(keep!==null){ var i=document.getElementById('syncCode'); if(i){ i.value=keep; i.focus(); } }
+    else { var b=g.querySelector('button'); if(b) try{ b.focus({preventScroll:true}); }catch(e){} }
+    if(!gateAnim&&A&&A.welcomeFrame){ gateTick=0; gateAnim=setInterval(function(){ var d=document.getElementById('gdog'); if(!d){ clearInterval(gateAnim); gateAnim=0; return; } if(!document.hidden) d.innerHTML=app().welcomeFrame(++gateTick); },230); } }
+  window.addEventListener('online',gateUpdate); window.addEventListener('offline',gateUpdate);
+
   /* ---------- tarjeta en Inicio ---------- */
   function card(){ var b='<section class="sync" id="syncCard" aria-live="polite"><h2>Sincronizar entre teléfonos</h2>';
     if(imported) return b+'<p>Trajeron su progreso desde la versión anterior. ¿Lo sumamos al de este teléfono? No se borra nada.</p><div class="row"><button class="btn fill" data-sync="import">Sumar mi progreso</button><button class="btn" data-sync="noimport">Ahora no</button></div></section>';
@@ -102,11 +130,7 @@
     if(!S.ready&&lsGet(FLAG)) return b+'<p class="note">Conectando…</p></section>';
     if(!S.user) return b+'<p>Entren con su cuenta de Google para que el progreso, la racha y el cuaderno estén en los dos teléfonos y en la laptop.</p><button class="btn fill" data-sync="in">Entrar con Google</button>'+(S.err?'<p class="fb bad">'+esc(S.err)+'</p>':'')+'</section>';
     var name=esc((S.user.displayName||S.user.email||'').split(' ')[0]);
-    if(!S.hogar){ var w=S.who||(app()?app().get().who:'ella');
-      return b+'<p>Hola, '+name+'. ¿Quién eres?</p><div class="row" role="group" aria-label="¿Quién eres?"><button class="btn small" data-sync="who" data-w="el" aria-pressed="'+(w==='el')+'">Soy Eduardo</button><button class="btn small" data-sync="who" data-w="ella" aria-pressed="'+(w==='ella')+'">Soy Mariana</button></div>'+
-        '<p><b>¿Es el primer teléfono?</b> Creen el hogar y les damos un código.</p><button class="btn fill" data-sync="create">Crear el hogar</button>'+
-        '<p><b>¿Ya tienen un código?</b> Escríbanlo aquí:</p><div class="bar"><input class="inp" id="syncCode" maxlength="7" autocomplete="off" autocapitalize="characters" enterkeyhint="go" aria-label="Código del hogar" style="flex:1;min-width:0;text-transform:uppercase;letter-spacing:.15em"><button class="btn" data-sync="join">Unirme</button></div>'+
-        (S.status&&!S.err?'<p class="note">'+esc(S.status)+'</p>':'')+(S.err?'<p class="fb bad">'+esc(S.err)+'</p>':'')+'<p><button class="slow" data-sync="out">Salir de la cuenta</button></p></section>'; }
+    if(!S.hogar) return b+'<p>Hola, '+name+'.</p>'+stepHogar()+'<p><button class="slow" data-sync="out">Salir de la cuenta</button></p></section>';
     return b+'<p>Hola, '+name+'. '+(S.status==='Sincronizado'?'El progreso está sincronizado.':esc(S.status||'Conectando…'))+'</p>'+
       (S.code?'<p>Código del hogar: <b class="hcode">'+esc(S.code)+'</b><br><span class="note">Para el otro teléfono: entren con su Google y escriban este código.</span></p>':'')+
       (S.err?'<p class="fb bad">'+esc(S.err)+'</p>':'')+'<p><button class="slow" data-sync="out">Salir de la cuenta</button></p></section>'; }
@@ -123,6 +147,8 @@
   document.addEventListener('keydown',function(e){ if(e.key==='Enter'&&e.target&&e.target.id==='syncCode'){ e.preventDefault(); var b=document.querySelector('[data-sync=join]'); if(b) b.click(); } });
 
   window.TURRON_SYNC={ card:card, canSignIn:function(){ return S.on&&!S.user; }, changed:function(){ var A=app(); if(A){ var m=A.get(); if(m[m.who]) m[m.who].u=Date.now(); } if(S.user&&S.hogar) push(); } };
-  if(S.on&&lsGet(FLAG)) load().catch(function(){ S.ready=true; redraw(); });
+  window.TUTOR_AI_READY=S.on&&!!lsGet(FLAG);
+  if(S.on){ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',gateUpdate); else gateUpdate();
+    load().catch(function(){ S.ready=true; S.err='No se pudo conectar. Revisen el internet y prueben otra vez.'; redraw(); }); }
 })();
 </script>

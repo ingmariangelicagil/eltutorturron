@@ -135,6 +135,22 @@ button,.tabs,.chips,.who,summary,.pdog,.dog{-webkit-user-select:none;user-select
 .hcode{font-family:var(--pixel);font-size:1.5rem;letter-spacing:.12em;color:var(--deep)}
 a.btn{display:inline-flex;align-items:center;text-decoration:none}
 
+/* bienvenida: entrar con Google antes de usar la app (solo jeirer.web.app) */
+html.gated,html.gated body{overflow:hidden}
+#gate{position:fixed;inset:0;z-index:90;overflow-y:auto;overscroll-behavior:contain;background:var(--hero);color:var(--hero-ink);display:grid;place-items:center;padding:calc(24px + env(safe-area-inset-top,0px)) 20px calc(24px + env(safe-area-inset-bottom,0px))}
+.gate-in{width:100%;max-width:420px;text-align:center}
+.gdog{display:block;width:132px;height:180px;margin:0 auto 4px;animation:gateIn .6s cubic-bezier(.2,.8,.2,1) both}
+.gsay{display:inline-block;position:relative;margin:0 0 4px;background:var(--cream);color:var(--tink);font-weight:700;border-radius:16px;padding:8px 14px;box-shadow:0 3px 0 rgba(43,26,18,.25);animation:gateIn .5s cubic-bezier(.2,.8,.2,1) .35s both}
+.gsay::after{content:"";position:absolute;left:50%;bottom:-9px;margin-left:-9px;border:9px solid transparent;border-top-color:var(--cream);border-bottom:0}
+@keyframes gateIn{from{opacity:0;transform:translateY(18px) scale(.92)}to{opacity:1;transform:none}}
+.gdog svg{display:block;width:100%;height:100%;stroke:none}
+#gate h1{font-size:2.6rem;margin:0}
+.gsub{margin:2px 0 18px;font-weight:700}
+.gbody{background:var(--paper);color:var(--ink);border-radius:22px;padding:16px 18px;text-align:left;box-shadow:0 6px 0 rgba(43,26,18,.25)}
+.glead{margin-top:0}
+.gbtn{width:100%;background:var(--collar);border-color:var(--collar);color:#fff;--bs:#8F1F47;min-height:52px;font-size:1.05rem}
+#gate [data-sync=who][aria-pressed=true]{background:var(--sea);border-color:var(--sea);color:#fff}
+
 /* motor de estados: la escena tiene 8 filas de aire arriba para los glifos (22×30) */
 .tstage .dog{width:112px;height:153px}
 .tstage .dog svg{stroke:none}
