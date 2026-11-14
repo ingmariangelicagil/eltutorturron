@@ -13,7 +13,7 @@
 .tscroll table{margin:0}
 table.t th{text-align:left;padding:9px 12px;background:var(--deep);color:#fff;font-size:.9rem}
 h2.part{margin-top:2.4rem;padding-top:1.2rem;border-top:3px solid var(--deep)}
-.chat{display:flex;flex-direction:column;gap:8px;margin:12px 0;max-height:60vh;overflow-y:auto}
+.chat{display:flex;flex-direction:column;gap:8px;margin:12px 0;max-height:60vh;max-height:60dvh;overscroll-behavior:contain;overflow-y:auto}
 .msg{border-radius:14px;padding:10px 14px;max-width:88%}
 .msg.bot{background:var(--paper);border:2px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:10px;align-self:flex-start}
 .msg.bot .play{width:36px;height:36px}

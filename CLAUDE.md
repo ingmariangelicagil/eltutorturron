@@ -8,11 +8,13 @@ va en español; el contenido de práctica, en inglés.
 Publicada en: https://ingmariangelicagil.github.io/eltutorturron/ (GitHub Pages,
 rama `main`, archivo `index.html` en la raíz).
 
-## Siguiente trabajo: rediseño de identidad centrado en Turrón
+## Estado: identidad Turrón (v5) hecha
 
-La dueña quiere convertir la guía en **su app para aprender inglés**, con una
-identidad visual que gire en torno a **Turrón**, el beagle pixelado. Ver el brief
-al final de este archivo.
+La app ya gira en torno a **Turrón**: paleta del sprite, títulos en Pixelify Sans,
+Turrón al centro de la barra inferior, sus estados en todas las pantallas, e
+instalable como app (PWA). El sistema visual está en `DESIGN.md`; el producto, en
+`PRODUCT.md`. El brief original queda al final de este archivo como referencia.
+Usuarios: Eduardo (técnico, `el`) y Mariana (reservaciones, `ella`).
 
 ## Cómo está construido
 
@@ -23,12 +25,13 @@ Python a partir de piezas en `src/`:
 python3 tools/build.py
 ```
 
-Produce dos salidas:
+(En Windows: `python tools/build.py`. Necesita Pillow para los íconos.) Produce:
 
 | Archivo | Para qué |
 |---|---|
 | `index.html` | Sitio público (GitHub Pages). Incluye `src/gemini.html`: Turrón usa Gemini con la clave que cada usuario pega en su teléfono (localStorage). |
-| `dist/claude.html` | Versión que vive como artifact dentro de claude.ai. Usa las capacidades de Claude (`window.claude.use('tts' / 'sample' / 'dictation')`) en vez de Gemini. |
+| `dist/claude.html` | Versión que vive como artifact dentro de claude.ai. Usa las capacidades de Claude (`window.claude.use('tts' / 'sample' / 'dictation')`) en vez de Gemini. Sin PWA. |
+| `icons/*.png`, `manifest.webmanifest`, `sw.js` | Íconos de la app (cabeza de Turrón sobre amarillo), manifest y service worker. Se generan a partir de `src/`; no editarlos a mano. |
 
 Ambas deben seguir funcionando. El código detecta en tiempo de ejecución qué
 servicio de IA hay (`aiState()` en `src/turron.js`).
@@ -43,13 +46,19 @@ servicio de IA hay (`aiState()` en `src/turron.js`).
 | `learning.js` / `learning.css` | Sistema de aprendizaje (v2): sesión diaria, racha, tarjetas con repaso espaciado (Leitner 1-2-4-8-16 días), quiz, juegos (números al oído, sonidos difíciles, dictado, deletreo, ordenar), buscador, «Mi cuaderno», nivel «Ya puedo…». |
 | `design.css` | Rediseño v3: tema claro/oscuro, botones táctiles con sombra, barra inferior flotante, anillo de progreso, animaciones con `prefers-reduced-motion`. |
 | `turron.js` / `turron.css` | Turrón (v4): sprite animado en SVG, 11 situaciones de trabajo, conversación por voz/texto, corrección en voz alta (español + inglés). |
-| `turron_sprite.json` | Sprite de Turrón: cuadrícula 22×22, paleta de 10 colores, y variantes (`blink`, `talk`, `happy`, `tailA`, `tailB`). |
+| `turron_sprite.json` | Sprite de Turrón: cuadrícula 22×22, paleta de 10 colores, y variantes. Por filas: `blink`, `talk`, `happy`. Por píxeles `[x,y,color]`: `tailA`, `tailB`, `sleep`, `helmet` (técnico), `headset` (reservaciones). El build saca de aquí el logo, la cabeza de la barra, los íconos y las caras de los avisos. |
 | `gemini.html` | Conexión con Gemini (`gemini-3.5-flash-lite`) por REST, solo en el sitio público. |
+| `identity.css` | v5: tokens de la identidad Turrón (claro y oscuro) y todos los estilos nuevos. Va al final de la cascada y manda sobre `design.css`. |
+| `pwa.html`, `manifest.webmanifest`, `sw.js` | App instalable, solo en el sitio público. `sw.js` lleva `__VERSION__`, que el build reemplaza con un hash: cada publicación renueva la caché. Gemini nunca se guarda en caché. |
 
 ### Estado y datos
 
 - El progreso se guarda en `localStorage`, clave `aruba-ingles-v1`, separado por persona (`el` / `ella`). No sincroniza entre dispositivos.
 - La clave de Gemini se guarda en `localStorage`, clave `turron-gemini-key`. **Nunca** debe quedar en el código ni en el repositorio.
+- Nombres: `NAME={el:'Eduardo',ella:'Mariana'}` en `learning.js`; las claves de almacenamiento siguen siendo `el` / `ella`.
+- Motor de estados de Turrón (`turron.js`): `idle`, `listen`, `think`, `talk`, `fix` (corrección suave), `happy`, `party` (celebración), `sleep`. `setDog(estado)` fija el estado; `flashDog(estado, ms)` hace un momento que vuelve solo. Glifos de píxel en 8 filas sobre la cabeza (SVG 22×30), gorro de dormir, gags al azar cada 30–45 s en reposo, boca por palabra (`onboundary`), mirada hacia donde tocan, acariciarlo lo pone feliz, y modo compacto (barrita fija) cuando la escena sale de pantalla. Todo respeta `prefers-reduced-motion`.
+- Teléfonos: `viewport-fit=cover` + `env(safe-area-inset-*)`, `theme-color` por tema, barra de estado translúcida en iOS instalada, hover solo con mouse, la barra inferior se oculta mientras escriben. Revisado en 320–430 px, 768 y 1366, pero falta probar en un iPhone y un Android de verdad (voz, micrófono, teclado, instalación).
+- Turrón fuera de su pestaña: `pdog(variantes, clase, estado, soloCabeza)` en `turron.js`. Su ánimo en Inicio sale de `dogMood()`: feliz con la sesión completa, dormido si se cortó la racha.
 - Todo texto que venga del usuario o de la IA se escapa con `esc()` antes de insertarlo; `plain()` usa un documento inerte (`DOMParser`). Hubo un fallo de seguridad por esto: no lo reintroduzcas.
 
 ### Pruebas
@@ -67,7 +76,7 @@ Se escribieron en otro entorno: pueden necesitar ajustar la ruta de Chrome (`exe
 
 ## Publicar
 
-Subir `index.html` a la rama `main`. GitHub Pages lo publica en 1–2 minutos.
+Subir a `main` `index.html`, `sw.js`, `manifest.webmanifest` e `icons/`. GitHub Pages lo publica en 1–2 minutos.
 
 ---
 

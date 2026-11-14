@@ -2,10 +2,14 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Inglés para la vida en Aruba</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Turrón: aprendiendo con el Jeirer</title>
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#5A2F0E">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#8A4B17">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
   --foam:#F1F9F8; --paper:#FFFFFF; --ink:#0F2F3A; --soft:#5C7680; --line:#D3E6E6;
@@ -110,7 +114,7 @@ table.t td:first-child{font-weight:700;width:30%}
 .mode{text-align:left;border:2px solid var(--line);background:var(--paper);border-radius:16px;padding:16px}
 .mode b{font-family:var(--display);font-size:1.15rem;display:block}
 .mode span{color:var(--soft);font-size:.93rem}
-.mode:hover{border-color:var(--lagoon)}
+@media (hover:hover) and (pointer:fine){.mode:hover{border-color:var(--lagoon)}}
 .mode i{font-style:normal;display:inline-block;width:38px;height:38px;border-radius:11px;margin-bottom:8px;display:grid;place-items:center;font-weight:800;font-family:var(--display)}
 .stage{background:var(--paper);border:2px solid var(--deep);border-radius:20px;padding:22px;margin:16px 0;text-align:center}
 .stage .q{font-family:var(--display);font-size:clamp(1.4rem,5vw,2rem);font-weight:700;margin:10px 0 4px;text-wrap:balance}
@@ -168,9 +172,9 @@ html{-webkit-text-size-adjust:100%}
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <div class="brand">Inglés para la vida en Aruba<small>Guía interactiva para dos</small></div>
+  <div class="brand"><span class="logo"></span><span>Turrón<small>Aprendiendo con el Jeirer</small></span></div>
   <div class="who" role="group" aria-label="¿Quién estudia ahora?">
-    <button data-who="el">Él</button><button data-who="ella">Ella</button>
+    <button data-who="el">Eduardo</button><button data-who="ella">Mariana</button>
   </div>
 </div></header>
 <nav class="tabs" aria-label="Secciones">
@@ -260,7 +264,7 @@ function say(text, slow, el, done){
     });
   } else browser();
 }
-var toastT; function toast(m){ var t=$('#toast'); if(!t){ t=document.createElement('div'); t.id='toast'; t.setAttribute('role','status'); t.style.cssText='position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#0F2F3A;color:#fff;padding:10px 16px;border-radius:12px;z-index:50;max-width:90vw'; document.body.appendChild(t);} t.textContent=m; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(function(){t.hidden=true;},3200); }
+var toastT; function toast(m){ var t=$('#toast'); if(!t){ t=document.createElement('div'); t.id='toast'; t.setAttribute('role','status'); document.body.appendChild(t);} t.textContent=m; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(function(){t.hidden=true;},3200); }
 var PLAY='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>';
 
 /* ---------- block renderers ---------- */

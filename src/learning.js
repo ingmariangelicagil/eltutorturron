@@ -4,6 +4,9 @@ function today(){ var d=new Date(); return Math.floor(Date.UTC(d.getFullYear(),d
 function me(){ var m=mem[mem.who]; ['known','weeks','track','goals','srs','days','sess','cando'].forEach(function(k){ if(!m[k]||typeof m[k]!=='object') m[k]={}; }); if(!Array.isArray(m.mine)) m.mine=[]; return m; }
 function touch(){ var m=me(), t=today(); if(!m.days[t]){ m.days[t]=1; save(); } }
 function streak(){ var d=me().days, t=today(), n=0; if(!d[t]) t--; while(d[t]){ n++; t--; } return n; }
+var NAME={el:'Eduardo',ella:'Mariana'};
+var PAW='<svg viewBox="0 0 7 6" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 0h1v2H2zM4 0h1v2H4zM0 1h1v2H0zM6 1h1v2H6zM2 3h3v1H2zM1 4h5v2H1z"/></svg>';
+function dogMood(nd,sk){ if(nd===4) return 'happy'; if(!sk&&Object.keys(me().days).length) return 'sleep'; return 'idle'; }
 function sess(){ var m=me(); if(m.sess.d!==today()) m.sess={d:today()}; return m.sess; }
 function stepDone(k){ var s=sess(); if(!s[k]){ s[k]=1; save(); } touch(); }
 
@@ -57,18 +60,19 @@ function counts(){ var k=me().known, n=0; ALLPH.forEach(function(p){ if(k[p.en])
 
 var RETOS=['Hagan la lista del supermercado en inglés.','Saluden a un vecino o compañero en inglés y pregunten «How are you?».','Pidan algo en una tienda o restaurante solo en inglés.','Pongan el teléfono en inglés durante todo el día.','Cuenten en la cena tres cosas que hicieron hoy, en pasado.','Vean diez minutos de una serie con subtítulos en inglés y anoten dos frases.','Deletreen su nombre y su correo en voz alta sin leer.','Aprendan una frase nueva de un compañero de trabajo y anótenla en «Mi cuaderno».','Narren en voz alta lo que hacen durante cinco minutos: «I\'m making coffee…».','Pregunten un precio y digan el total en inglés.','Digan su dirección y su teléfono en inglés, de memoria.','Escriban un mensaje corto de WhatsApp en inglés a su pareja.','Hagan un role-play de esta guía sin mirar las frases.','Hagan la «hora en inglés» durante la cena.'];
 
-function vInicio(){ var p=dayPhrase(), c=counts(), who= mem.who==='el'?'él':'ella', s=sess(), sk=streak();
+function vInicio(){ var p=dayPhrase(), c=counts(), who=NAME[mem.who], s=sess(), sk=streak();
   function step(k,label,sub,start){ var d=s[k]; return '<div class="step'+(d?' done':'')+'"><span class="tick" aria-hidden="true">'+(d?'✓':'')+'</span><span><b>'+label+'</b><small>'+sub+'</small></span>'+(start?'<button class="btn small'+(d?'':' fill')+'" data-start="'+start+'" data-deck="all">'+(d?'Repetir':'Empezar')+'</button>':'<input type="checkbox" id="retoChk" aria-label="Reto cumplido"'+(d?' checked':'')+'>')+'</div>'; }
-  var nd=[s.shadow,s.cards,s.quiz,s.reto].filter(Boolean).length;
+  var nd=[s.shadow,s.cards,s.quiz,s.reto].filter(Boolean).length, mood=dogMood(nd,sk);
+  var moodTxt={happy:'Sesión completa. Turrón está feliz; nos vemos mañana.',sleep:'¡Qué bueno verlos! Turrón tomaba una siesta. Con un paso se despierta.',idle:nd?'Van bien: '+(4-nd===1?'falta un paso.':'faltan '+(4-nd)+' pasos.'):'Unos diez minutos, cuatro pasos.'}[mood];
   return '<section class="hero"><div class="wrap"><p class="kicker">La frase de hoy. Díganla en voz alta tres veces.</p>'+
    '<div class="bubble"><p class="daily" lang="en">'+esc(p.en)+'</p><p class="daily-es">'+esc(p.es)+'</p><p class="daily-pr">'+esc(p.pr)+'</p></div>'+
-   '<div class="row"><button class="bigplay" data-say="'+esc(p.en)+'">'+PLAY.replace('<svg','<svg width="18" height="18" fill="#fff"')+' Escuchar</button><button class="bigplay ghost" data-say="'+esc(p.en)+'" data-slow="1">Más lento</button></div></div></section>'+
-   '<div class="wrap"><div class="today"><svg class="ring" viewBox="0 0 72 72" role="img" aria-label="'+nd+' de 4 pasos hechos"><circle class="bg" cx="36" cy="36" r="30"/><circle class="fg" cx="36" cy="36" r="30" stroke-dasharray="188.5" stroke-dashoffset="'+(188.5*(1-nd/4)).toFixed(1)+'"/><text x="36" y="43" text-anchor="middle">'+nd+'/4</text></svg><div><h2>La sesión de hoy de '+who+'</h2><p class="note">'+(nd===4?'Sesión completa. Nos vemos mañana.':'Unos diez minutos, cuatro pasos.')+'</p></div></div>'+
+   '<div class="hrow">'+pdog(mood==='happy'?['happy']:mood==='sleep'?['sleep']:[],'hdog',mood)+'<div class="row"><button class="bigplay" data-say="'+esc(p.en)+'">'+PLAY.replace('<svg','<svg width="18" height="18" fill="currentColor"')+' Escuchar</button><button class="bigplay ghost" data-say="'+esc(p.en)+'" data-slow="1">Más lento</button></div></div></div></section>'+
+   '<div class="wrap"><div class="today"><div><h2>Hoy, '+who+'</h2><p class="note">'+moodTxt+'</p></div><div class="paws" role="img" aria-label="'+nd+' de 4 pasos hechos">'+[0,1,2,3].map(function(i){ return '<span class="paw'+(i<nd?' on':'')+'">'+PAW+'</span>'; }).join('')+'</div></div>'+
    '<div class="steps">'+step('shadow','Escuchar y repetir','Cinco frases, en voz alta','shadow')+step('cards','Repasar tarjetas',c.due?c.due+' pendientes de repaso hoy':'Frases nuevas y repaso','cards')+step('quiz','Quiz rápido','Diez preguntas','quiz')+step('reto','Reto en la vida real',RETOS[today()%RETOS.length],null)+'</div>'+
-   '<div class="stats"><div class="stat"><svg class="sunico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="10" fill="#FFC83A"/><g stroke="#FFC83A" stroke-width="4" stroke-linecap="round"><path d="M24 3v6M24 39v6M3 24h6M39 24h6M9 9l4 4M35 35l4 4M39 9l-4 4M13 35l-4 4"/></g></svg><div><b>'+sk+(sk===1?' día':' días')+'</b><span>seguidos practicando</span></div></div>'+
+   '<div class="stats"><div class="stat streak">'+pdog(sk?['happy']:mood==='sleep'?['sleep']:[],'sdog',sk?'happy':mood==='sleep'?'sleep':'idle',true)+'<div><b>'+sk+(sk===1?' día':' días')+'</b><span>seguidos practicando</span></div></div>'+
    '<div class="stat"><b>'+c.k+' de '+c.t+'</b><span>frases que ya sabe</span><div class="meter"><i style="width:'+(100*c.k/c.t)+'%"></i></div></div>'+
    '<div class="stat"><b>'+c.w+' de 12</b><span>semanas del plan</span><div class="meter"><i style="width:'+(100*c.w/12)+'%"></i></div></div></div>'+
-   '<p class="note">Cada uno tiene su propio progreso. Cambien de persona arriba, en «Él / Ella».</p>'+
+   '<p class="note">Cada uno tiene su propio progreso. Cambien de persona arriba, en «Eduardo / Mariana».</p>'+
    '<h2>Ir a</h2><div class="modes">'+
    '<button class="mode" data-go="frases"><b>Frases por situación</b><span>13 temas con audio y un buscador.</span></button>'+
    '<button class="mode" data-go="trabajo"><b>Inglés para el trabajo</b><span>Técnico de telecomunicaciones y agente de reservaciones.</span></button>'+
@@ -85,15 +89,15 @@ function searchHTML(q){ q=fold(q.trim()); if(q.length<2) return ''; var r=pool('
 function mineView(){ var m=me().mine;
   return '<p>Anoten aquí las frases que escuchan en el trabajo o en la calle. Entran en las tarjetas y en los quizzes.</p>'+
    '<div class="ex"><p><label>En inglés<br><input class="inp w100" id="mEn" lang="en" autocomplete="off" autocapitalize="off"></label></p><p><label>En español<br><input class="inp w100" id="mEs" autocomplete="off"></label></p><div class="bar"><button class="btn fill" id="mAdd">Guardar frase</button><span class="fb" id="mFb" style="margin:0"></span></div></div>'+
-   (m.length? m.map(function(x,i){ return phraseRow(esc(x.en),'',esc(x.es))+'<p style="margin:0 0 10px;text-align:right"><button class="slow" data-mdel="'+i+'">Borrar esta frase</button></p>'; }).join('') : '<p class="note">Todavía no hay frases en el cuaderno de '+(mem.who==='el'?'él':'ella')+'.</p>'); }
+   (m.length? m.map(function(x,i){ return phraseRow(esc(x.en),'',esc(x.es))+'<p style="margin:0 0 10px;text-align:right"><button class="slow" data-mdel="'+i+'">Borrar esta frase</button></p>'; }).join('') : '<div class="empty">'+pdog([],'edog','idle')+'<p>Todavía no hay frases en el cuaderno de '+NAME[mem.who]+'. Turrón espera la primera.</p></div>'); }
 function vFrases(){ var list=TOPICS.filter(function(t){return !t.work;}), all=list.concat([{k:'mio',n:'Mi cuaderno'}]);
   var t=all.filter(function(x){return x.k===st.topic;})[0]||all[0], title, body;
   if(t.k==='mio'){ title='Mi cuaderno'; body=mineView(); }
   else { title=SECS[t.s[0]].title.replace(/^Parte \d+ · /,''); body=(SECS[t.s[0]].sub?'<p class="note">'+SECS[t.s[0]].sub+'</p>':'')+(t.k==='pron'?pronTable():'')+secs(t); }
-  return '<div class="wrap"><p style="margin:18px 0 0"><input class="inp w100" id="q" type="search" placeholder="Buscar una frase en español o inglés" aria-label="Buscar una frase" autocomplete="off"></p><div id="sres"></div>'+
+  return '<div class="wrap"><p style="margin:18px 0 0"><input class="inp w100" id="q" type="search" enterkeyhint="search" placeholder="Buscar una frase en español o inglés" aria-label="Buscar una frase" autocomplete="off"></p><div id="sres"></div>'+
    '<div id="tbody">'+chips(all,t.k,'data-topic')+'<h1>'+title+'</h1><p class="note">Toquen el botón redondo para escuchar. Marquen ✓ cuando ya la digan sin leer.</p>'+body+'</div></div>'; }
 function vTrabajo(){ var k= st.work || (mem.who==='el'?'tec':'res'); var t=TOPICS.filter(function(x){return x.k===k;})[0];
-  return '<div class="wrap"><h1 style="margin-top:22px">'+(k==='tec'?'Técnico de telecomunicaciones':'Agente de reservaciones')+'</h1>'+
+  return '<div class="wrap"><div class="jobhead">'+pdog(k==='tec'?['helmet']:['headset'],'jdog','idle')+'<h1>'+(k==='tec'?'Técnico de telecomunicaciones':'Agente de reservaciones')+'</h1></div>'+
    chips(TOPICS.filter(function(x){return x.work;}),k,'data-work')+
    '<div class="row" style="margin:6px 0 4px"><button class="btn pink small" data-go="tutor">Practicar con Turrón</button><button class="btn small" data-start="quiz" data-deck="'+k+'">Quiz</button><button class="btn small" data-start="cards" data-deck="'+k+'">Tarjetas</button></div>'+secs(t)+'</div>'; }
 
@@ -185,7 +189,7 @@ function autoRun(){ var g0=G, c=G.list[G.i]; function alive(){ return G===g0&&g0
       setTimeout(function(){ if(!alive()) return; g0.i++; shadow(); autoRun(); },gap); }); },gap); }); }
 
 /* micrófono */
-var mic={on:false,text:'',target:''};
+var mic={on:false,text:'',target:'',heardAt:0};
 function wireMic(){ var d=caps.dictation; if(!d||mic.wired) return; mic.wired=true;
   try{ d.onPartial(function(x){ var f=$('#micFb'); if(f&&mic.on){ f.className='fb'; f.textContent=(x&&x.text)||''; } });
     d.onFinal(function(x){ mic.text+=' '+((x&&x.text)||''); if(mic.on){ try{ d.stop(); }catch(e){} } });
@@ -253,7 +257,7 @@ function chatDraw(pending){ var c=$('#chat'); if(!c||!G.chat) return;
     return (p.tip&&!/^Empiecen/.test(p.tip)?'<div class="msg tipm"><b>Corrección:</b> '+esc(p.tip)+'</div>':'')+'<div class="msg bot"><button class="play" data-say="'+esc(p.en)+'" aria-label="Escuchar">'+PLAY+'</button><div><div lang="en"><b>'+esc(p.en)+'</b></div>'+(p.es?'<div class="es">'+esc(p.es)+'</div>':'')+'</div></div>'; }).join('')+(pending?'<div class="msg bot"><i>'+esc(pending)+'</i></div>':'');
   var f=$('#tForm'); if(f){ var n=G.chat.filter(function(m){return m.role==='user';}).length;
     if(G.over||n>=12){ f.innerHTML='<p><b>Buena práctica.</b> Lean otra vez las correcciones y anoten una frase en «Mi cuaderno».</p><button class="btn pink" data-again>Otra situación</button>'; }
-    else if(!f.querySelector('#tIn')){ f.innerHTML='<div class="bar"><input class="inp" id="tIn" style="flex:1;min-width:0" lang="en" autocomplete="off" autocapitalize="sentences" placeholder="Escriban su respuesta en inglés" aria-label="Su respuesta en inglés"><button class="btn fill" id="tSend">Enviar</button></div>'; } }
+    else if(!f.querySelector('#tIn')){ f.innerHTML='<div class="bar"><input class="inp" id="tIn" enterkeyhint="send" style="flex:1;min-width:0" lang="en" autocomplete="off" autocapitalize="sentences" placeholder="Escriban su respuesta en inglés" aria-label="Su respuesta en inglés"><button class="btn fill" id="tSend">Enviar</button></div>'; } }
   c.scrollTop=c.scrollHeight; }
 function tutorTurn(){ var g0=G; if(g0.busy) return; g0.busy=true; chatDraw('Escribiendo…');
   var msgs=[{role:'user',content:tutorPrompt(g0.sc)}]; g0.chat.forEach(function(m){ msgs.push({role:m.role,content:m.role==='user'?m.text:m.raw}); });

@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>El Tutor Turrón: inglés para la vida en Aruba</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Turrón: aprendiendo con el Jeirer</title>
 <script>
 /* Turrón con Gemini (API de Google AI Studio). La clave la pega cada persona
    en su teléfono y se guarda solo en ese navegador; no está en la página. */
@@ -34,13 +34,28 @@
   };
 })();
 </script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Turrón">
+<script>
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
+  window.addEventListener('load',function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
+}
+</script>
 
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#5A2F0E">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#8A4B17">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 22 14' shape-rendering='crispEdges' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='6' y='0' width='10' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='1' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='6' y='1' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='1' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='1' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='16' y='1' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='3' y='2' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='2' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='2' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='2' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='2' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='3' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='3' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='3' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='3' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='3' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='4' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='4' width='5' height='1' fill='%23C47A2C'/%3E%3Crect x='9' y='4' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='4' width='5' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='4' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='5' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='5' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='6' y='5' width='2' height='1' fill='%231B1512'/%3E%3Crect x='8' y='5' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='9' y='5' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='5' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='14' y='5' width='2' height='1' fill='%231B1512'/%3E%3Crect x='16' y='5' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='5' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='6' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='6' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='6' y='6' width='1' height='1' fill='%231B1512'/%3E%3Crect x='7' y='6' width='1' height='1' fill='%23FFFFFF'/%3E%3Crect x='8' y='6' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='9' y='6' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='6' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='14' y='6' width='1' height='1' fill='%231B1512'/%3E%3Crect x='15' y='6' width='1' height='1' fill='%23FFFFFF'/%3E%3Crect x='16' y='6' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='6' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='7' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='7' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='8' y='7' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='14' y='7' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='7' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='8' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='8' width='3' height='1' fill='%23C47A2C'/%3E%3Crect x='7' y='8' width='3' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='8' width='2' height='1' fill='%2326211F'/%3E%3Crect x='12' y='8' width='3' height='1' fill='%23FFF8EE'/%3E%3Crect x='15' y='8' width='3' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='8' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='9' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='9' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='5' y='9' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='9' width='2' height='1' fill='%2326211F'/%3E%3Crect x='12' y='9' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='17' y='9' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='9' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='2' y='10' width='1' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='10' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='9' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='10' y='10' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='13' y='10' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='18' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='10' width='1' height='1' fill='%238A4B17'/%3E%3Crect x='20' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='11' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='11' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='11' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='12' y='11' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='18' y='11' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='3' y='12' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='5' y='12' width='12' height='1' fill='%23FFF8EE'/%3E%3Crect x='17' y='12' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='13' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='5' y='13' width='5' height='1' fill='%23D6336C'/%3E%3Crect x='10' y='13' width='2' height='1' fill='%23FFC83A'/%3E%3Crect x='12' y='13' width='5' height='1' fill='%23D6336C'/%3E%3Crect x='17' y='13' width='1' height='1' fill='%232B1A12'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
-  --foam:#F1F9F8; --paper:#FFFFFF; --ink:#0F2F3A; --soft:#4F6872; --line:#D3E6E6;
-  --lagoon:#0B8A99; --deep:#0A4D63; --flamingo:#D6336C; --sun:#FFC83A; --aloe:#1F7A49;
+  --foam:#F1F9F8; --paper:#FFFFFF; --ink:#0F2F3A; --soft:#5C7680; --line:#D3E6E6;
+  --lagoon:#0B8A99; --deep:#0A4D63; --flamingo:#E4487A; --sun:#FFC83A; --aloe:#2F8F5B;
   --lagoon-t:#DDF2F3; --flamingo-t:#FCE4EC; --sun-t:#FFF3CF; --aloe-t:#DFF2E6;
   --display:"Bricolage Grotesque",system-ui,sans-serif; --body:"Atkinson Hyperlegible",system-ui,sans-serif;
 }
@@ -141,7 +156,7 @@ table.t td:first-child{font-weight:700;width:30%}
 .mode{text-align:left;border:2px solid var(--line);background:var(--paper);border-radius:16px;padding:16px}
 .mode b{font-family:var(--display);font-size:1.15rem;display:block}
 .mode span{color:var(--soft);font-size:.93rem}
-.mode:hover{border-color:var(--lagoon)}
+@media (hover:hover) and (pointer:fine){.mode:hover{border-color:var(--lagoon)}}
 .mode i{font-style:normal;display:inline-block;width:38px;height:38px;border-radius:11px;margin-bottom:8px;display:grid;place-items:center;font-weight:800;font-family:var(--display)}
 .stage{background:var(--paper);border:2px solid var(--deep);border-radius:20px;padding:22px;margin:16px 0;text-align:center}
 .stage .q{font-family:var(--display);font-size:clamp(1.4rem,5vw,2rem);font-weight:700;margin:10px 0 4px;text-wrap:balance}
@@ -210,7 +225,7 @@ html{-webkit-text-size-adjust:100%}
 .tscroll table{margin:0}
 table.t th{text-align:left;padding:9px 12px;background:var(--deep);color:#fff;font-size:.9rem}
 h2.part{margin-top:2.4rem;padding-top:1.2rem;border-top:3px solid var(--deep)}
-.chat{display:flex;flex-direction:column;gap:8px;margin:12px 0;max-height:60vh;overflow-y:auto}
+.chat{display:flex;flex-direction:column;gap:8px;margin:12px 0;max-height:60vh;max-height:60dvh;overscroll-behavior:contain;overflow-y:auto}
 .msg{border-radius:14px;padding:10px 14px;max-width:88%}
 .msg.bot{background:var(--paper);border:2px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:10px;align-self:flex-start}
 .msg.bot .play{width:36px;height:36px}
@@ -366,21 +381,187 @@ h2.part::before{background:var(--flamingo)}
 @keyframes pulse{0%{box-shadow:0 5px 0 #B98F1C,0 0 0 0 rgba(255,200,58,.6)}100%{box-shadow:0 5px 0 #B98F1C,0 0 0 22px rgba(255,200,58,0)}}
 .tabs button{font-size:.72rem}
 @media (min-width:760px){.tabs button{font-size:.9rem}.tlist{grid-template-columns:1fr 1fr}}
+/* ===== v5: identidad Turrón =====
+   La paleta sale del sprite: pelaje caramelo, orejas cacao, hocico crema, contorno tinta,
+   collar rosa y placa amarilla. El turquesa del mar de Aruba queda solo para el audio. */
+:root{
+  --caramel:#C47A2C; --cocoa:#8A4B17; --cream:#FFF8EE; --tink:#2B1A12; --collar:#D6336C; --tag:#FFC83A;
+  --foam:#FBF3E6; --paper:#FFFDF8; --ink:#2B1A12; --soft:#6E5444; --line:#EBDCC7;
+  --deep:#8A4B17; --sea:#5A2F0E; --hero:#C47A2C; --hero-ink:#2B1A12;
+  --lagoon:#0B7F8C; --flamingo:#D6336C; --sun:#FFC83A; --aloe:#1F7A49;
+  --lagoon-t:#DCEFF0; --flamingo-t:#FBE3EB; --sun-t:#FFF0C4; --aloe-t:#E0F0E3;
+  --ok-text:#1F7A49; --bad-text:#B8285C; --shade:#E6D3BA; --paw:#C47A2C;
+  --shadow:0 1px 2px rgba(90,47,14,.07),0 6px 18px rgba(90,47,14,.08); --bar-shadow:0 8px 28px rgba(90,47,14,.2);
+  --display:"Atkinson Hyperlegible",system-ui,sans-serif; --pixel:"Pixelify Sans","Atkinson Hyperlegible",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --foam:#1C120C; --paper:#2A1C14; --ink:#FFF1DF; --soft:#CDB49C; --line:#47321F;
+  --deep:#E7A25A; --sea:#8A4B17; --hero:#4A2C17; --hero-ink:#FFF1DF;
+  --lagoon:#0B7F8C; --flamingo:#D6336C; --aloe:#1F7A49;
+  --lagoon-t:#12343A; --flamingo-t:#3D1A26; --sun-t:#3A2C10; --aloe-t:#15301F;
+  --ok-text:#7FD9A5; --bad-text:#FF86AE; --shade:#0F0906; --paw:#E7A25A;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px rgba(0,0,0,.3); --bar-shadow:0 8px 28px rgba(0,0,0,.45)}}
+
+/* superficies del navegador */
+::selection{background:var(--tag);color:var(--tink)}
+input,textarea{caret-color:var(--flamingo)}
+html{scrollbar-color:var(--line) transparent}
+
+/* tipografía: píxel para la marca y los títulos, Atkinson para leer */
+h1,.brand,.stat b{font-family:var(--pixel)}
+h1{font-weight:700;letter-spacing:0;font-size:clamp(1.9rem,7vw,2.7rem);line-height:1.08;text-wrap:balance}
+h2,h3{font-family:var(--display)}
+h2::before{width:9px;height:9px;border-radius:0;background:var(--caramel);box-shadow:3px 3px 0 var(--cocoa)}
+h2.part::before{background:var(--flamingo);box-shadow:3px 3px 0 #8F1F47}
+.stat b{font-weight:700;letter-spacing:0}
+
+/* Turrón en cualquier lugar */
+.pdog{display:block;flex:none;position:relative}
+.pdog svg{display:block;width:100%;height:100%;image-rendering:pixelated}
+.pdog svg,.tdog svg,.logo svg,#splash svg{stroke:none}
+.sdog[data-state=sleep]::after{content:none}
+.pdog[data-state=happy]{animation:hop .45s ease 2}
+.pdog[data-state=sleep]::after{content:"Zzz";position:absolute;right:-6px;top:-4px;font:700 .95rem var(--pixel);color:var(--hero-ink);opacity:.8}
+
+/* barra superior */
+.top{background:var(--sea)}
+.top .wrap{padding-top:8px;padding-bottom:8px}
+.brand{display:flex;align-items:center;gap:10px;font-size:1.45rem;font-weight:700;line-height:1}
+.brand small{font-family:var(--body);font-size:.8rem;font-weight:400;opacity:.85;margin-top:3px}
+.logo{display:block;width:44px;height:28px;flex:none}
+.logo svg{display:block;width:100%;height:100%}
+.who{background:rgba(255,241,223,.14)}
+.who button{font-size:.86rem;padding:6px 11px}
+.who button[aria-pressed=true]{background:var(--tag);color:var(--tink)}
+
+/* inicio: Turrón dice la frase del día */
+.hero{background:var(--hero);color:var(--hero-ink);padding:20px 0 34px}
+.hero::before{content:none}
+.hero::after{height:8px;background:linear-gradient(90deg,var(--foam) 50%,transparent 50%) 0 0/16px 8px repeat-x}
+.hero .kicker{max-width:none;font-size:1rem}
+.bubble{background:var(--cream);color:var(--tink);box-shadow:0 4px 0 rgba(43,26,18,.28);margin:0 0 22px}
+.bubble::after{border-top-color:var(--cream);left:40px;filter:drop-shadow(0 4px 0 rgba(43,26,18,.28))}
+.bubble .daily-pr{color:#6E5444}
+.hrow{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:end}
+.hdog{width:88px;height:88px;margin-bottom:-6px}
+.hrow .row{align-self:center}
+.bigplay{background:var(--collar);color:#fff}
+.bigplay.ghost{background:rgba(43,26,18,.14);color:var(--hero-ink);--bs:rgba(43,26,18,.3)}
+
+/* sesión de hoy: cuatro huellas */
+.today{justify-content:space-between;margin:26px 0 12px}
+.today h2{font-size:1.5rem}
+.paws{display:flex;gap:6px;flex:none;padding-bottom:6px}
+.paw{display:block;width:28px;height:24px}
+.paw:nth-child(odd){transform:translateY(6px)}
+.paw svg{display:block;width:100%;height:100%;fill:var(--line)}
+.paw.on svg{fill:var(--paw);animation:pop .3s ease}
+.stats .stat.streak{background:var(--sun-t)}
+.sdog{width:44px;height:28px}
+
+/* trabajo y estados vacíos */
+.jobhead{display:flex;align-items:flex-end;gap:12px;margin:22px 0 4px}
+.jobhead h1{margin:0;min-width:0;font-size:clamp(1.45rem,6.4vw,2.4rem);hyphens:auto;overflow-wrap:break-word}
+.jdog{width:clamp(44px,14vw,66px);aspect-ratio:1;height:auto}
+h1{overflow-wrap:break-word}
+.empty{display:flex;align-items:center;gap:14px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:12px 0;box-shadow:var(--shadow)}
+.empty p{margin:0}
+.edog{width:66px;height:66px}
+
+/* respuesta correcta o incorrecta: Turrón reacciona */
+.fb.ok:not(:empty)::before,.fb.bad:not(:empty)::before{content:"";display:inline-block;width:33px;height:21px;margin-right:8px;vertical-align:-4px;background:var(--dog-head) center/contain no-repeat;image-rendering:pixelated}
+.fb.ok:not(:empty)::before{background-image:var(--dog-ok)}
+
+/* avisos */
+#toast{position:fixed;left:50%;bottom:calc(98px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:10px;width:max-content;max-width:calc(100vw - 32px);background:var(--ink);color:var(--foam);padding:10px 16px 10px 12px;border-radius:14px;box-shadow:0 8px 24px rgba(43,26,18,.3);font-size:.95rem}
+#toast::before{content:"";flex:none;width:33px;height:21px;background:var(--dog-head) center/contain no-repeat;image-rendering:pixelated}
+#toast[hidden]{display:none}
+
+/* cajas: sin franja lateral, borde fino teñido */
+.box,.msg.tipm,.msg.okm{border:1px solid color-mix(in srgb,var(--lagoon) 35%,transparent);border-radius:14px}
+.box.tip,.msg.tipm{border-color:color-mix(in srgb,var(--sun) 70%,transparent)}
+.box.warn{border-color:color-mix(in srgb,var(--flamingo) 40%,transparent)}
+.msg.okm{border-color:color-mix(in srgb,var(--aloe) 45%,transparent)}
+@media (hover:hover) and (pointer:fine){.mode:hover{border-color:var(--caramel)}}
+
+/* barra inferior: Turrón al centro */
+.tabs{box-shadow:var(--bar-shadow)}
+.tabs button{font-size:.78rem}
+.tabs button[aria-current=page]{background:var(--sun-t);color:var(--deep)}
+.tabs .tcenter{position:relative;justify-content:flex-end;gap:3px}
+.tabs .tcenter[aria-current=page]{background:none}
+.tdog{display:grid;place-items:center;width:58px;height:58px;margin-top:-30px;border-radius:50%;background:var(--caramel);border:3px solid var(--paper);box-shadow:0 4px 0 var(--cocoa);transition:transform .16s cubic-bezier(.2,.8,.2,1)}
+.tdog svg{width:44px;height:28px;margin-top:4px}
+.tcenter[aria-current=page] .tdog{background:var(--tag);box-shadow:0 4px 0 #B98F1C}
+.tcenter:active .tdog{transform:translateY(3px)}
+
+/* pestaña de Turrón */
+.tstage{background:var(--hero)}
+.tstage::before{content:none}
+.doglab{color:var(--hero-ink)}
+.tb{background:var(--cream);color:var(--tink)}
+.tb::before{border-right-color:var(--cream)}
+.tb .es{color:#6E5444}
+
+/* teléfono: notch, barra de estado, teclado, toques largos */
+.top .wrap{padding-top:calc(8px + env(safe-area-inset-top,0px))}
+.wrap{padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+button,.tabs,.chips,.who,summary,.pdog,.dog{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+@media (display-mode:standalone){html,body{overscroll-behavior-y:none}}
+@media (max-width:759px){body:has(input:focus,textarea:focus,select:focus) .tabs{display:none}}
+.tchat{overscroll-behavior:contain}
+
+/* motor de estados: la escena tiene 8 filas de aire arriba para los glifos (22×30) */
+.tstage .dog{width:112px;height:153px}
+.tstage .dog svg{stroke:none}
+.dog[data-state=fix]{transform:rotate(6deg)}
+.dog[data-state=party]{animation:hop .4s ease 3}
+.dog.g-shake{animation:shake .23s linear 4}
+.dog.g-flip{transform:scaleX(-1)}
+.dog.g-jolt{transform:translateY(-3px)}
+
+/* modo compacto */
+.tmini{position:fixed;z-index:19;top:70px;white-space:nowrap;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;min-height:48px;max-width:calc(100vw - 32px);border:0;border-radius:999px;padding:2px 16px 2px 6px;background:var(--hero);color:var(--hero-ink);font-weight:700;font-size:.9rem;box-shadow:0 6px 18px rgba(43,26,18,.28);animation:miniIn .22s cubic-bezier(.2,.8,.2,1)}
+.tmini[hidden]{display:none}
+.dogmini{display:block;width:44px;height:44px;flex:none}
+.dogmini svg{display:block;width:100%;height:100%;stroke:none}
+@keyframes miniIn{from{opacity:0;transform:translate(-50%,-8px)}to{opacity:1;transform:translate(-50%,0)}}
+
+/* pantalla de inicio de la app instalada */
+#splash{display:none}
+@media (display-mode:standalone){
+  #splash{display:grid;position:fixed;inset:0;z-index:100;place-items:center;align-content:center;gap:16px;background:var(--hero);pointer-events:none;animation:splashOut .45s cubic-bezier(.2,.8,.2,1) .8s forwards}
+  #splash span{display:block;width:132px;height:132px}
+  #splash svg{display:block;width:100%;height:100%}
+  #splash b{font:700 2.2rem var(--pixel);color:var(--hero-ink)}
+}
+@keyframes splashOut{to{opacity:0;visibility:hidden}}
+
+@media (min-width:760px){
+  .tabs .tcenter{justify-content:center}
+  .tdog{width:32px;height:32px;margin:0;border-width:0;box-shadow:none}
+  .tabs{top:calc(10px + env(safe-area-inset-top,0px))}
+  .tdog svg{width:22px;height:14px;margin:0}
+  .hdog{width:132px;height:132px}
+}
+@media (prefers-reduced-motion:reduce){#splash{display:none!important}}
+:root{--dog-head:url("data:image/svg+xml,%3Csvg viewBox='0 0 22 14' shape-rendering='crispEdges' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='6' y='0' width='10' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='1' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='6' y='1' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='1' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='1' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='16' y='1' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='3' y='2' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='2' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='2' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='2' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='2' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='3' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='3' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='3' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='3' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='3' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='4' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='4' width='5' height='1' fill='%23C47A2C'/%3E%3Crect x='9' y='4' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='4' width='5' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='4' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='5' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='5' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='6' y='5' width='2' height='1' fill='%231B1512'/%3E%3Crect x='8' y='5' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='9' y='5' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='5' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='14' y='5' width='2' height='1' fill='%231B1512'/%3E%3Crect x='16' y='5' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='5' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='6' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='6' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='6' y='6' width='1' height='1' fill='%231B1512'/%3E%3Crect x='7' y='6' width='1' height='1' fill='%23FFFFFF'/%3E%3Crect x='8' y='6' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='9' y='6' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='6' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='14' y='6' width='1' height='1' fill='%231B1512'/%3E%3Crect x='15' y='6' width='1' height='1' fill='%23FFFFFF'/%3E%3Crect x='16' y='6' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='6' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='7' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='7' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='8' y='7' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='14' y='7' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='7' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='8' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='8' width='3' height='1' fill='%23C47A2C'/%3E%3Crect x='7' y='8' width='3' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='8' width='2' height='1' fill='%2326211F'/%3E%3Crect x='12' y='8' width='3' height='1' fill='%23FFF8EE'/%3E%3Crect x='15' y='8' width='3' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='8' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='9' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='9' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='5' y='9' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='9' width='2' height='1' fill='%2326211F'/%3E%3Crect x='12' y='9' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='17' y='9' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='9' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='2' y='10' width='1' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='10' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='9' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='10' y='10' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='13' y='10' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='18' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='10' width='1' height='1' fill='%238A4B17'/%3E%3Crect x='20' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='11' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='11' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='11' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='12' y='11' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='18' y='11' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='3' y='12' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='5' y='12' width='12' height='1' fill='%23FFF8EE'/%3E%3Crect x='17' y='12' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='13' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='5' y='13' width='5' height='1' fill='%23D6336C'/%3E%3Crect x='10' y='13' width='2' height='1' fill='%23FFC83A'/%3E%3Crect x='12' y='13' width='5' height='1' fill='%23D6336C'/%3E%3Crect x='17' y='13' width='1' height='1' fill='%232B1A12'/%3E%3C/svg%3E");--dog-ok:url("data:image/svg+xml,%3Csvg viewBox='0 0 22 14' shape-rendering='crispEdges' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='6' y='0' width='10' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='1' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='6' y='1' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='1' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='1' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='16' y='1' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='3' y='2' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='2' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='2' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='2' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='2' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='3' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='3' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='3' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='3' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='3' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='4' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='4' width='5' height='1' fill='%23C47A2C'/%3E%3Crect x='9' y='4' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='4' width='5' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='4' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='5' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='5' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='6' y='5' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='8' y='5' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='9' y='5' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='5' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='14' y='5' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='16' y='5' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='5' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='6' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='6' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='5' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='6' y='6' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='8' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='9' y='6' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='14' y='6' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='16' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='17' y='6' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='6' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='7' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='7' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='8' y='7' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='14' y='7' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='7' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='8' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='8' width='3' height='1' fill='%23C47A2C'/%3E%3Crect x='7' y='8' width='3' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='8' width='2' height='1' fill='%2326211F'/%3E%3Crect x='12' y='8' width='3' height='1' fill='%23FFF8EE'/%3E%3Crect x='15' y='8' width='3' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='8' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='9' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='9' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='5' y='9' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='9' width='2' height='1' fill='%2326211F'/%3E%3Crect x='12' y='9' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='17' y='9' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='9' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='2' y='10' width='1' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='10' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='9' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='10' y='10' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='13' y='10' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='18' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='10' width='1' height='1' fill='%238A4B17'/%3E%3Crect x='20' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='11' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='11' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='11' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='12' y='11' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='18' y='11' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='3' y='12' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='5' y='12' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='12' width='2' height='1' fill='%23F27A9B'/%3E%3Crect x='12' y='12' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='17' y='12' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='13' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='5' y='13' width='5' height='1' fill='%23D6336C'/%3E%3Crect x='10' y='13' width='2' height='1' fill='%23F27A9B'/%3E%3Crect x='12' y='13' width='5' height='1' fill='%23D6336C'/%3E%3Crect x='17' y='13' width='1' height='1' fill='%232B1A12'/%3E%3C/svg%3E");--dog-sleep:url("data:image/svg+xml,%3Csvg viewBox='0 0 22 14' shape-rendering='crispEdges' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='6' y='0' width='10' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='1' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='6' y='1' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='1' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='1' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='16' y='1' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='3' y='2' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='2' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='2' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='2' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='2' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='3' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='3' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='10' y='3' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='3' width='6' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='3' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='4' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='4' width='5' height='1' fill='%23C47A2C'/%3E%3Crect x='9' y='4' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='4' width='5' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='4' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='4' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='5' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='5' width='5' height='1' fill='%23C47A2C'/%3E%3Crect x='9' y='5' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='5' width='5' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='5' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='5' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='6' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='6' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='6' y='6' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='8' y='6' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='9' y='6' width='4' height='1' fill='%23FFF8EE'/%3E%3Crect x='13' y='6' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='14' y='6' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='16' y='6' width='2' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='6' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='6' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='7' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='7' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='8' y='7' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='14' y='7' width='4' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='7' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='7' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='8' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='8' width='3' height='1' fill='%23C47A2C'/%3E%3Crect x='7' y='8' width='3' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='8' width='2' height='1' fill='%2326211F'/%3E%3Crect x='12' y='8' width='3' height='1' fill='%23FFF8EE'/%3E%3Crect x='15' y='8' width='3' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='8' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='8' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='0' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='9' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='9' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='5' y='9' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='9' width='2' height='1' fill='%2326211F'/%3E%3Crect x='12' y='9' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='17' y='9' width='1' height='1' fill='%23C47A2C'/%3E%3Crect x='18' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='9' width='2' height='1' fill='%238A4B17'/%3E%3Crect x='21' y='9' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='2' y='10' width='1' height='1' fill='%238A4B17'/%3E%3Crect x='3' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='10' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='9' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='10' y='10' width='2' height='1' fill='%23FFF8EE'/%3E%3Crect x='12' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='13' y='10' width='5' height='1' fill='%23FFF8EE'/%3E%3Crect x='18' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='19' y='10' width='1' height='1' fill='%238A4B17'/%3E%3Crect x='20' y='10' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='1' y='11' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='11' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='10' y='11' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='12' y='11' width='6' height='1' fill='%23FFF8EE'/%3E%3Crect x='18' y='11' width='3' height='1' fill='%232B1A12'/%3E%3Crect x='3' y='12' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='5' y='12' width='12' height='1' fill='%23FFF8EE'/%3E%3Crect x='17' y='12' width='2' height='1' fill='%232B1A12'/%3E%3Crect x='4' y='13' width='1' height='1' fill='%232B1A12'/%3E%3Crect x='5' y='13' width='5' height='1' fill='%23D6336C'/%3E%3Crect x='10' y='13' width='2' height='1' fill='%23FFC83A'/%3E%3Crect x='12' y='13' width='5' height='1' fill='%23D6336C'/%3E%3Crect x='17' y='13' width='1' height='1' fill='%232B1A12'/%3E%3C/svg%3E")}
 </style>
 </head>
 <body>
+<div id="splash" aria-hidden="true"><span><svg viewBox="0 0 22 22" shape-rendering="crispEdges" aria-hidden="true"><rect x="6" y="0" width="10" height="1" fill="#2B1A12"/><rect x="4" y="1" width="2" height="1" fill="#2B1A12"/><rect x="6" y="1" width="4" height="1" fill="#C47A2C"/><rect x="10" y="1" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="1" width="4" height="1" fill="#C47A2C"/><rect x="16" y="1" width="2" height="1" fill="#2B1A12"/><rect x="3" y="2" width="1" height="1" fill="#2B1A12"/><rect x="4" y="2" width="6" height="1" fill="#C47A2C"/><rect x="10" y="2" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="2" width="6" height="1" fill="#C47A2C"/><rect x="18" y="2" width="1" height="1" fill="#2B1A12"/><rect x="1" y="3" width="3" height="1" fill="#2B1A12"/><rect x="4" y="3" width="6" height="1" fill="#C47A2C"/><rect x="10" y="3" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="3" width="6" height="1" fill="#C47A2C"/><rect x="18" y="3" width="3" height="1" fill="#2B1A12"/><rect x="0" y="4" width="1" height="1" fill="#2B1A12"/><rect x="1" y="4" width="2" height="1" fill="#8A4B17"/><rect x="3" y="4" width="1" height="1" fill="#2B1A12"/><rect x="4" y="4" width="5" height="1" fill="#C47A2C"/><rect x="9" y="4" width="4" height="1" fill="#FFF8EE"/><rect x="13" y="4" width="5" height="1" fill="#C47A2C"/><rect x="18" y="4" width="1" height="1" fill="#2B1A12"/><rect x="19" y="4" width="2" height="1" fill="#8A4B17"/><rect x="21" y="4" width="1" height="1" fill="#2B1A12"/><rect x="0" y="5" width="1" height="1" fill="#2B1A12"/><rect x="1" y="5" width="2" height="1" fill="#8A4B17"/><rect x="3" y="5" width="1" height="1" fill="#2B1A12"/><rect x="4" y="5" width="2" height="1" fill="#C47A2C"/><rect x="6" y="5" width="2" height="1" fill="#1B1512"/><rect x="8" y="5" width="1" height="1" fill="#C47A2C"/><rect x="9" y="5" width="4" height="1" fill="#FFF8EE"/><rect x="13" y="5" width="1" height="1" fill="#C47A2C"/><rect x="14" y="5" width="2" height="1" fill="#1B1512"/><rect x="16" y="5" width="2" height="1" fill="#C47A2C"/><rect x="18" y="5" width="1" height="1" fill="#2B1A12"/><rect x="19" y="5" width="2" height="1" fill="#8A4B17"/><rect x="21" y="5" width="1" height="1" fill="#2B1A12"/><rect x="0" y="6" width="1" height="1" fill="#2B1A12"/><rect x="1" y="6" width="2" height="1" fill="#8A4B17"/><rect x="3" y="6" width="1" height="1" fill="#2B1A12"/><rect x="4" y="6" width="2" height="1" fill="#C47A2C"/><rect x="6" y="6" width="1" height="1" fill="#1B1512"/><rect x="7" y="6" width="1" height="1" fill="#FFFFFF"/><rect x="8" y="6" width="1" height="1" fill="#C47A2C"/><rect x="9" y="6" width="4" height="1" fill="#FFF8EE"/><rect x="13" y="6" width="1" height="1" fill="#C47A2C"/><rect x="14" y="6" width="1" height="1" fill="#1B1512"/><rect x="15" y="6" width="1" height="1" fill="#FFFFFF"/><rect x="16" y="6" width="2" height="1" fill="#C47A2C"/><rect x="18" y="6" width="1" height="1" fill="#2B1A12"/><rect x="19" y="6" width="2" height="1" fill="#8A4B17"/><rect x="21" y="6" width="1" height="1" fill="#2B1A12"/><rect x="0" y="7" width="1" height="1" fill="#2B1A12"/><rect x="1" y="7" width="2" height="1" fill="#8A4B17"/><rect x="3" y="7" width="1" height="1" fill="#2B1A12"/><rect x="4" y="7" width="4" height="1" fill="#C47A2C"/><rect x="8" y="7" width="6" height="1" fill="#FFF8EE"/><rect x="14" y="7" width="4" height="1" fill="#C47A2C"/><rect x="18" y="7" width="1" height="1" fill="#2B1A12"/><rect x="19" y="7" width="2" height="1" fill="#8A4B17"/><rect x="21" y="7" width="1" height="1" fill="#2B1A12"/><rect x="0" y="8" width="1" height="1" fill="#2B1A12"/><rect x="1" y="8" width="2" height="1" fill="#8A4B17"/><rect x="3" y="8" width="1" height="1" fill="#2B1A12"/><rect x="4" y="8" width="3" height="1" fill="#C47A2C"/><rect x="7" y="8" width="3" height="1" fill="#FFF8EE"/><rect x="10" y="8" width="2" height="1" fill="#26211F"/><rect x="12" y="8" width="3" height="1" fill="#FFF8EE"/><rect x="15" y="8" width="3" height="1" fill="#C47A2C"/><rect x="18" y="8" width="1" height="1" fill="#2B1A12"/><rect x="19" y="8" width="2" height="1" fill="#8A4B17"/><rect x="21" y="8" width="1" height="1" fill="#2B1A12"/><rect x="0" y="9" width="1" height="1" fill="#2B1A12"/><rect x="1" y="9" width="2" height="1" fill="#8A4B17"/><rect x="3" y="9" width="1" height="1" fill="#2B1A12"/><rect x="4" y="9" width="1" height="1" fill="#C47A2C"/><rect x="5" y="9" width="5" height="1" fill="#FFF8EE"/><rect x="10" y="9" width="2" height="1" fill="#26211F"/><rect x="12" y="9" width="5" height="1" fill="#FFF8EE"/><rect x="17" y="9" width="1" height="1" fill="#C47A2C"/><rect x="18" y="9" width="1" height="1" fill="#2B1A12"/><rect x="19" y="9" width="2" height="1" fill="#8A4B17"/><rect x="21" y="9" width="1" height="1" fill="#2B1A12"/><rect x="1" y="10" width="1" height="1" fill="#2B1A12"/><rect x="2" y="10" width="1" height="1" fill="#8A4B17"/><rect x="3" y="10" width="1" height="1" fill="#2B1A12"/><rect x="4" y="10" width="5" height="1" fill="#FFF8EE"/><rect x="9" y="10" width="1" height="1" fill="#2B1A12"/><rect x="10" y="10" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="10" width="1" height="1" fill="#2B1A12"/><rect x="13" y="10" width="5" height="1" fill="#FFF8EE"/><rect x="18" y="10" width="1" height="1" fill="#2B1A12"/><rect x="19" y="10" width="1" height="1" fill="#8A4B17"/><rect x="20" y="10" width="1" height="1" fill="#2B1A12"/><rect x="1" y="11" width="3" height="1" fill="#2B1A12"/><rect x="4" y="11" width="6" height="1" fill="#FFF8EE"/><rect x="10" y="11" width="2" height="1" fill="#2B1A12"/><rect x="12" y="11" width="6" height="1" fill="#FFF8EE"/><rect x="18" y="11" width="3" height="1" fill="#2B1A12"/><rect x="3" y="12" width="2" height="1" fill="#2B1A12"/><rect x="5" y="12" width="12" height="1" fill="#FFF8EE"/><rect x="17" y="12" width="2" height="1" fill="#2B1A12"/><rect x="4" y="13" width="1" height="1" fill="#2B1A12"/><rect x="5" y="13" width="5" height="1" fill="#D6336C"/><rect x="10" y="13" width="2" height="1" fill="#FFC83A"/><rect x="12" y="13" width="5" height="1" fill="#D6336C"/><rect x="17" y="13" width="1" height="1" fill="#2B1A12"/><rect x="4" y="14" width="1" height="1" fill="#2B1A12"/><rect x="5" y="14" width="2" height="1" fill="#26211F"/><rect x="7" y="14" width="1" height="1" fill="#C47A2C"/><rect x="8" y="14" width="6" height="1" fill="#FFF8EE"/><rect x="14" y="14" width="1" height="1" fill="#C47A2C"/><rect x="15" y="14" width="2" height="1" fill="#26211F"/><rect x="17" y="14" width="1" height="1" fill="#2B1A12"/><rect x="3" y="15" width="1" height="1" fill="#2B1A12"/><rect x="4" y="15" width="3" height="1" fill="#26211F"/><rect x="7" y="15" width="1" height="1" fill="#C47A2C"/><rect x="8" y="15" width="6" height="1" fill="#FFF8EE"/><rect x="14" y="15" width="1" height="1" fill="#C47A2C"/><rect x="15" y="15" width="3" height="1" fill="#26211F"/><rect x="18" y="15" width="3" height="1" fill="#2B1A12"/><rect x="3" y="16" width="1" height="1" fill="#2B1A12"/><rect x="4" y="16" width="2" height="1" fill="#26211F"/><rect x="6" y="16" width="2" height="1" fill="#C47A2C"/><rect x="8" y="16" width="6" height="1" fill="#FFF8EE"/><rect x="14" y="16" width="2" height="1" fill="#C47A2C"/><rect x="16" y="16" width="2" height="1" fill="#26211F"/><rect x="18" y="16" width="2" height="1" fill="#2B1A12"/><rect x="20" y="16" width="1" height="1" fill="#FFF8EE"/><rect x="21" y="16" width="1" height="1" fill="#2B1A12"/><rect x="3" y="17" width="1" height="1" fill="#2B1A12"/><rect x="4" y="17" width="3" height="1" fill="#C47A2C"/><rect x="7" y="17" width="8" height="1" fill="#FFF8EE"/><rect x="15" y="17" width="3" height="1" fill="#C47A2C"/><rect x="18" y="17" width="1" height="1" fill="#2B1A12"/><rect x="19" y="17" width="1" height="1" fill="#C47A2C"/><rect x="20" y="17" width="1" height="1" fill="#2B1A12"/><rect x="3" y="18" width="1" height="1" fill="#2B1A12"/><rect x="4" y="18" width="1" height="1" fill="#C47A2C"/><rect x="5" y="18" width="2" height="1" fill="#FFF8EE"/><rect x="7" y="18" width="1" height="1" fill="#2B1A12"/><rect x="8" y="18" width="6" height="1" fill="#FFF8EE"/><rect x="14" y="18" width="1" height="1" fill="#2B1A12"/><rect x="15" y="18" width="2" height="1" fill="#FFF8EE"/><rect x="17" y="18" width="1" height="1" fill="#C47A2C"/><rect x="18" y="18" width="2" height="1" fill="#2B1A12"/><rect x="3" y="19" width="1" height="1" fill="#2B1A12"/><rect x="4" y="19" width="3" height="1" fill="#FFF8EE"/><rect x="7" y="19" width="1" height="1" fill="#2B1A12"/><rect x="8" y="19" width="6" height="1" fill="#FFF8EE"/><rect x="14" y="19" width="1" height="1" fill="#2B1A12"/><rect x="15" y="19" width="3" height="1" fill="#FFF8EE"/><rect x="18" y="19" width="1" height="1" fill="#2B1A12"/><rect x="3" y="20" width="1" height="1" fill="#2B1A12"/><rect x="4" y="20" width="3" height="1" fill="#FFF8EE"/><rect x="7" y="20" width="8" height="1" fill="#2B1A12"/><rect x="15" y="20" width="3" height="1" fill="#FFF8EE"/><rect x="18" y="20" width="1" height="1" fill="#2B1A12"/><rect x="4" y="21" width="3" height="1" fill="#2B1A12"/><rect x="15" y="21" width="3" height="1" fill="#2B1A12"/></svg></span><b>Turrón</b></div>
 <header class="top"><div class="wrap">
-  <div class="brand">Inglés para la vida en Aruba<small>Guía interactiva para dos</small></div>
+  <div class="brand"><span class="logo"><svg viewBox="0 0 22 14" shape-rendering="crispEdges" aria-hidden="true"><rect x="6" y="0" width="10" height="1" fill="#2B1A12"/><rect x="4" y="1" width="2" height="1" fill="#2B1A12"/><rect x="6" y="1" width="4" height="1" fill="#C47A2C"/><rect x="10" y="1" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="1" width="4" height="1" fill="#C47A2C"/><rect x="16" y="1" width="2" height="1" fill="#2B1A12"/><rect x="3" y="2" width="1" height="1" fill="#2B1A12"/><rect x="4" y="2" width="6" height="1" fill="#C47A2C"/><rect x="10" y="2" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="2" width="6" height="1" fill="#C47A2C"/><rect x="18" y="2" width="1" height="1" fill="#2B1A12"/><rect x="1" y="3" width="3" height="1" fill="#2B1A12"/><rect x="4" y="3" width="6" height="1" fill="#C47A2C"/><rect x="10" y="3" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="3" width="6" height="1" fill="#C47A2C"/><rect x="18" y="3" width="3" height="1" fill="#2B1A12"/><rect x="0" y="4" width="1" height="1" fill="#2B1A12"/><rect x="1" y="4" width="2" height="1" fill="#8A4B17"/><rect x="3" y="4" width="1" height="1" fill="#2B1A12"/><rect x="4" y="4" width="5" height="1" fill="#C47A2C"/><rect x="9" y="4" width="4" height="1" fill="#FFF8EE"/><rect x="13" y="4" width="5" height="1" fill="#C47A2C"/><rect x="18" y="4" width="1" height="1" fill="#2B1A12"/><rect x="19" y="4" width="2" height="1" fill="#8A4B17"/><rect x="21" y="4" width="1" height="1" fill="#2B1A12"/><rect x="0" y="5" width="1" height="1" fill="#2B1A12"/><rect x="1" y="5" width="2" height="1" fill="#8A4B17"/><rect x="3" y="5" width="1" height="1" fill="#2B1A12"/><rect x="4" y="5" width="2" height="1" fill="#C47A2C"/><rect x="6" y="5" width="2" height="1" fill="#1B1512"/><rect x="8" y="5" width="1" height="1" fill="#C47A2C"/><rect x="9" y="5" width="4" height="1" fill="#FFF8EE"/><rect x="13" y="5" width="1" height="1" fill="#C47A2C"/><rect x="14" y="5" width="2" height="1" fill="#1B1512"/><rect x="16" y="5" width="2" height="1" fill="#C47A2C"/><rect x="18" y="5" width="1" height="1" fill="#2B1A12"/><rect x="19" y="5" width="2" height="1" fill="#8A4B17"/><rect x="21" y="5" width="1" height="1" fill="#2B1A12"/><rect x="0" y="6" width="1" height="1" fill="#2B1A12"/><rect x="1" y="6" width="2" height="1" fill="#8A4B17"/><rect x="3" y="6" width="1" height="1" fill="#2B1A12"/><rect x="4" y="6" width="2" height="1" fill="#C47A2C"/><rect x="6" y="6" width="1" height="1" fill="#1B1512"/><rect x="7" y="6" width="1" height="1" fill="#FFFFFF"/><rect x="8" y="6" width="1" height="1" fill="#C47A2C"/><rect x="9" y="6" width="4" height="1" fill="#FFF8EE"/><rect x="13" y="6" width="1" height="1" fill="#C47A2C"/><rect x="14" y="6" width="1" height="1" fill="#1B1512"/><rect x="15" y="6" width="1" height="1" fill="#FFFFFF"/><rect x="16" y="6" width="2" height="1" fill="#C47A2C"/><rect x="18" y="6" width="1" height="1" fill="#2B1A12"/><rect x="19" y="6" width="2" height="1" fill="#8A4B17"/><rect x="21" y="6" width="1" height="1" fill="#2B1A12"/><rect x="0" y="7" width="1" height="1" fill="#2B1A12"/><rect x="1" y="7" width="2" height="1" fill="#8A4B17"/><rect x="3" y="7" width="1" height="1" fill="#2B1A12"/><rect x="4" y="7" width="4" height="1" fill="#C47A2C"/><rect x="8" y="7" width="6" height="1" fill="#FFF8EE"/><rect x="14" y="7" width="4" height="1" fill="#C47A2C"/><rect x="18" y="7" width="1" height="1" fill="#2B1A12"/><rect x="19" y="7" width="2" height="1" fill="#8A4B17"/><rect x="21" y="7" width="1" height="1" fill="#2B1A12"/><rect x="0" y="8" width="1" height="1" fill="#2B1A12"/><rect x="1" y="8" width="2" height="1" fill="#8A4B17"/><rect x="3" y="8" width="1" height="1" fill="#2B1A12"/><rect x="4" y="8" width="3" height="1" fill="#C47A2C"/><rect x="7" y="8" width="3" height="1" fill="#FFF8EE"/><rect x="10" y="8" width="2" height="1" fill="#26211F"/><rect x="12" y="8" width="3" height="1" fill="#FFF8EE"/><rect x="15" y="8" width="3" height="1" fill="#C47A2C"/><rect x="18" y="8" width="1" height="1" fill="#2B1A12"/><rect x="19" y="8" width="2" height="1" fill="#8A4B17"/><rect x="21" y="8" width="1" height="1" fill="#2B1A12"/><rect x="0" y="9" width="1" height="1" fill="#2B1A12"/><rect x="1" y="9" width="2" height="1" fill="#8A4B17"/><rect x="3" y="9" width="1" height="1" fill="#2B1A12"/><rect x="4" y="9" width="1" height="1" fill="#C47A2C"/><rect x="5" y="9" width="5" height="1" fill="#FFF8EE"/><rect x="10" y="9" width="2" height="1" fill="#26211F"/><rect x="12" y="9" width="5" height="1" fill="#FFF8EE"/><rect x="17" y="9" width="1" height="1" fill="#C47A2C"/><rect x="18" y="9" width="1" height="1" fill="#2B1A12"/><rect x="19" y="9" width="2" height="1" fill="#8A4B17"/><rect x="21" y="9" width="1" height="1" fill="#2B1A12"/><rect x="1" y="10" width="1" height="1" fill="#2B1A12"/><rect x="2" y="10" width="1" height="1" fill="#8A4B17"/><rect x="3" y="10" width="1" height="1" fill="#2B1A12"/><rect x="4" y="10" width="5" height="1" fill="#FFF8EE"/><rect x="9" y="10" width="1" height="1" fill="#2B1A12"/><rect x="10" y="10" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="10" width="1" height="1" fill="#2B1A12"/><rect x="13" y="10" width="5" height="1" fill="#FFF8EE"/><rect x="18" y="10" width="1" height="1" fill="#2B1A12"/><rect x="19" y="10" width="1" height="1" fill="#8A4B17"/><rect x="20" y="10" width="1" height="1" fill="#2B1A12"/><rect x="1" y="11" width="3" height="1" fill="#2B1A12"/><rect x="4" y="11" width="6" height="1" fill="#FFF8EE"/><rect x="10" y="11" width="2" height="1" fill="#2B1A12"/><rect x="12" y="11" width="6" height="1" fill="#FFF8EE"/><rect x="18" y="11" width="3" height="1" fill="#2B1A12"/><rect x="3" y="12" width="2" height="1" fill="#2B1A12"/><rect x="5" y="12" width="12" height="1" fill="#FFF8EE"/><rect x="17" y="12" width="2" height="1" fill="#2B1A12"/><rect x="4" y="13" width="1" height="1" fill="#2B1A12"/><rect x="5" y="13" width="5" height="1" fill="#D6336C"/><rect x="10" y="13" width="2" height="1" fill="#FFC83A"/><rect x="12" y="13" width="5" height="1" fill="#D6336C"/><rect x="17" y="13" width="1" height="1" fill="#2B1A12"/></svg></span><span>Turrón<small>Aprendiendo con el Jeirer</small></span></div>
   <div class="who" role="group" aria-label="¿Quién estudia ahora?">
-    <button data-who="el">Él</button><button data-who="ella">Ella</button>
+    <button data-who="el">Eduardo</button><button data-who="ella">Mariana</button>
   </div>
 </div></header>
 <nav class="tabs" aria-label="Secciones">
   <button data-tab="inicio"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Inicio</button>
   <button data-tab="frases"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Frases</button>
+  <button data-tab="tutor" class="tcenter"><span class="tdog"><svg viewBox="0 0 22 14" shape-rendering="crispEdges" aria-hidden="true"><rect x="6" y="0" width="10" height="1" fill="#2B1A12"/><rect x="4" y="1" width="2" height="1" fill="#2B1A12"/><rect x="6" y="1" width="4" height="1" fill="#C47A2C"/><rect x="10" y="1" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="1" width="4" height="1" fill="#C47A2C"/><rect x="16" y="1" width="2" height="1" fill="#2B1A12"/><rect x="3" y="2" width="1" height="1" fill="#2B1A12"/><rect x="4" y="2" width="6" height="1" fill="#C47A2C"/><rect x="10" y="2" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="2" width="6" height="1" fill="#C47A2C"/><rect x="18" y="2" width="1" height="1" fill="#2B1A12"/><rect x="1" y="3" width="3" height="1" fill="#2B1A12"/><rect x="4" y="3" width="6" height="1" fill="#C47A2C"/><rect x="10" y="3" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="3" width="6" height="1" fill="#C47A2C"/><rect x="18" y="3" width="3" height="1" fill="#2B1A12"/><rect x="0" y="4" width="1" height="1" fill="#2B1A12"/><rect x="1" y="4" width="2" height="1" fill="#8A4B17"/><rect x="3" y="4" width="1" height="1" fill="#2B1A12"/><rect x="4" y="4" width="5" height="1" fill="#C47A2C"/><rect x="9" y="4" width="4" height="1" fill="#FFF8EE"/><rect x="13" y="4" width="5" height="1" fill="#C47A2C"/><rect x="18" y="4" width="1" height="1" fill="#2B1A12"/><rect x="19" y="4" width="2" height="1" fill="#8A4B17"/><rect x="21" y="4" width="1" height="1" fill="#2B1A12"/><rect x="0" y="5" width="1" height="1" fill="#2B1A12"/><rect x="1" y="5" width="2" height="1" fill="#8A4B17"/><rect x="3" y="5" width="1" height="1" fill="#2B1A12"/><rect x="4" y="5" width="2" height="1" fill="#C47A2C"/><rect x="6" y="5" width="2" height="1" fill="#1B1512"/><rect x="8" y="5" width="1" height="1" fill="#C47A2C"/><rect x="9" y="5" width="4" height="1" fill="#FFF8EE"/><rect x="13" y="5" width="1" height="1" fill="#C47A2C"/><rect x="14" y="5" width="2" height="1" fill="#1B1512"/><rect x="16" y="5" width="2" height="1" fill="#C47A2C"/><rect x="18" y="5" width="1" height="1" fill="#2B1A12"/><rect x="19" y="5" width="2" height="1" fill="#8A4B17"/><rect x="21" y="5" width="1" height="1" fill="#2B1A12"/><rect x="0" y="6" width="1" height="1" fill="#2B1A12"/><rect x="1" y="6" width="2" height="1" fill="#8A4B17"/><rect x="3" y="6" width="1" height="1" fill="#2B1A12"/><rect x="4" y="6" width="2" height="1" fill="#C47A2C"/><rect x="6" y="6" width="1" height="1" fill="#1B1512"/><rect x="7" y="6" width="1" height="1" fill="#FFFFFF"/><rect x="8" y="6" width="1" height="1" fill="#C47A2C"/><rect x="9" y="6" width="4" height="1" fill="#FFF8EE"/><rect x="13" y="6" width="1" height="1" fill="#C47A2C"/><rect x="14" y="6" width="1" height="1" fill="#1B1512"/><rect x="15" y="6" width="1" height="1" fill="#FFFFFF"/><rect x="16" y="6" width="2" height="1" fill="#C47A2C"/><rect x="18" y="6" width="1" height="1" fill="#2B1A12"/><rect x="19" y="6" width="2" height="1" fill="#8A4B17"/><rect x="21" y="6" width="1" height="1" fill="#2B1A12"/><rect x="0" y="7" width="1" height="1" fill="#2B1A12"/><rect x="1" y="7" width="2" height="1" fill="#8A4B17"/><rect x="3" y="7" width="1" height="1" fill="#2B1A12"/><rect x="4" y="7" width="4" height="1" fill="#C47A2C"/><rect x="8" y="7" width="6" height="1" fill="#FFF8EE"/><rect x="14" y="7" width="4" height="1" fill="#C47A2C"/><rect x="18" y="7" width="1" height="1" fill="#2B1A12"/><rect x="19" y="7" width="2" height="1" fill="#8A4B17"/><rect x="21" y="7" width="1" height="1" fill="#2B1A12"/><rect x="0" y="8" width="1" height="1" fill="#2B1A12"/><rect x="1" y="8" width="2" height="1" fill="#8A4B17"/><rect x="3" y="8" width="1" height="1" fill="#2B1A12"/><rect x="4" y="8" width="3" height="1" fill="#C47A2C"/><rect x="7" y="8" width="3" height="1" fill="#FFF8EE"/><rect x="10" y="8" width="2" height="1" fill="#26211F"/><rect x="12" y="8" width="3" height="1" fill="#FFF8EE"/><rect x="15" y="8" width="3" height="1" fill="#C47A2C"/><rect x="18" y="8" width="1" height="1" fill="#2B1A12"/><rect x="19" y="8" width="2" height="1" fill="#8A4B17"/><rect x="21" y="8" width="1" height="1" fill="#2B1A12"/><rect x="0" y="9" width="1" height="1" fill="#2B1A12"/><rect x="1" y="9" width="2" height="1" fill="#8A4B17"/><rect x="3" y="9" width="1" height="1" fill="#2B1A12"/><rect x="4" y="9" width="1" height="1" fill="#C47A2C"/><rect x="5" y="9" width="5" height="1" fill="#FFF8EE"/><rect x="10" y="9" width="2" height="1" fill="#26211F"/><rect x="12" y="9" width="5" height="1" fill="#FFF8EE"/><rect x="17" y="9" width="1" height="1" fill="#C47A2C"/><rect x="18" y="9" width="1" height="1" fill="#2B1A12"/><rect x="19" y="9" width="2" height="1" fill="#8A4B17"/><rect x="21" y="9" width="1" height="1" fill="#2B1A12"/><rect x="1" y="10" width="1" height="1" fill="#2B1A12"/><rect x="2" y="10" width="1" height="1" fill="#8A4B17"/><rect x="3" y="10" width="1" height="1" fill="#2B1A12"/><rect x="4" y="10" width="5" height="1" fill="#FFF8EE"/><rect x="9" y="10" width="1" height="1" fill="#2B1A12"/><rect x="10" y="10" width="2" height="1" fill="#FFF8EE"/><rect x="12" y="10" width="1" height="1" fill="#2B1A12"/><rect x="13" y="10" width="5" height="1" fill="#FFF8EE"/><rect x="18" y="10" width="1" height="1" fill="#2B1A12"/><rect x="19" y="10" width="1" height="1" fill="#8A4B17"/><rect x="20" y="10" width="1" height="1" fill="#2B1A12"/><rect x="1" y="11" width="3" height="1" fill="#2B1A12"/><rect x="4" y="11" width="6" height="1" fill="#FFF8EE"/><rect x="10" y="11" width="2" height="1" fill="#2B1A12"/><rect x="12" y="11" width="6" height="1" fill="#FFF8EE"/><rect x="18" y="11" width="3" height="1" fill="#2B1A12"/><rect x="3" y="12" width="2" height="1" fill="#2B1A12"/><rect x="5" y="12" width="12" height="1" fill="#FFF8EE"/><rect x="17" y="12" width="2" height="1" fill="#2B1A12"/><rect x="4" y="13" width="1" height="1" fill="#2B1A12"/><rect x="5" y="13" width="5" height="1" fill="#D6336C"/><rect x="10" y="13" width="2" height="1" fill="#FFC83A"/><rect x="12" y="13" width="5" height="1" fill="#D6336C"/><rect x="17" y="13" width="1" height="1" fill="#2B1A12"/></svg></span>Turrón</button>
   <button data-tab="trabajo"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3M3 13h18"/></svg>Trabajo</button>
-  <button data-tab="tutor"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="16" rx="4.5" ry="3.5"/><circle cx="5.5" cy="11" r="1.8"/><circle cx="9.5" cy="6.5" r="1.8"/><circle cx="14.5" cy="6.5" r="1.8"/><circle cx="18.5" cy="11" r="1.8"/></svg>Turrón</button><button data-tab="practicar"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-3-5.3 3 1.1-6L3.4 9.4l6-.8z"/></svg>Practicar</button>
-  <button data-tab="plan"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M8 15l2.5 2.5L16 13"/></svg>Plan</button>
+  <button data-tab="practicar"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-3-5.3 3 1.1-6L3.4 9.4l6-.8z"/></svg>Practicar</button>
 </nav>
 <main id="view"></main>
 
@@ -463,7 +644,7 @@ function say(text, slow, el, done){
     });
   } else browser();
 }
-var toastT; function toast(m){ var t=$('#toast'); if(!t){ t=document.createElement('div'); t.id='toast'; t.setAttribute('role','status'); t.style.cssText='position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#0F2F3A;color:#fff;padding:10px 16px;border-radius:12px;z-index:50;max-width:90vw'; document.body.appendChild(t);} t.textContent=m; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(function(){t.hidden=true;},3200); }
+var toastT; function toast(m){ var t=$('#toast'); if(!t){ t=document.createElement('div'); t.id='toast'; t.setAttribute('role','status'); document.body.appendChild(t);} t.textContent=m; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(function(){t.hidden=true;},3200); }
 var PLAY='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>';
 
 /* ---------- block renderers ---------- */
@@ -607,6 +788,9 @@ function today(){ var d=new Date(); return Math.floor(Date.UTC(d.getFullYear(),d
 function me(){ var m=mem[mem.who]; ['known','weeks','track','goals','srs','days','sess','cando'].forEach(function(k){ if(!m[k]||typeof m[k]!=='object') m[k]={}; }); if(!Array.isArray(m.mine)) m.mine=[]; return m; }
 function touch(){ var m=me(), t=today(); if(!m.days[t]){ m.days[t]=1; save(); } }
 function streak(){ var d=me().days, t=today(), n=0; if(!d[t]) t--; while(d[t]){ n++; t--; } return n; }
+var NAME={el:'Eduardo',ella:'Mariana'};
+var PAW='<svg viewBox="0 0 7 6" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 0h1v2H2zM4 0h1v2H4zM0 1h1v2H0zM6 1h1v2H6zM2 3h3v1H2zM1 4h5v2H1z"/></svg>';
+function dogMood(nd,sk){ if(nd===4) return 'happy'; if(!sk&&Object.keys(me().days).length) return 'sleep'; return 'idle'; }
 function sess(){ var m=me(); if(m.sess.d!==today()) m.sess={d:today()}; return m.sess; }
 function stepDone(k){ var s=sess(); if(!s[k]){ s[k]=1; save(); } touch(); }
 
@@ -660,18 +844,19 @@ function counts(){ var k=me().known, n=0; ALLPH.forEach(function(p){ if(k[p.en])
 
 var RETOS=['Hagan la lista del supermercado en inglés.','Saluden a un vecino o compañero en inglés y pregunten «How are you?».','Pidan algo en una tienda o restaurante solo en inglés.','Pongan el teléfono en inglés durante todo el día.','Cuenten en la cena tres cosas que hicieron hoy, en pasado.','Vean diez minutos de una serie con subtítulos en inglés y anoten dos frases.','Deletreen su nombre y su correo en voz alta sin leer.','Aprendan una frase nueva de un compañero de trabajo y anótenla en «Mi cuaderno».','Narren en voz alta lo que hacen durante cinco minutos: «I\'m making coffee…».','Pregunten un precio y digan el total en inglés.','Digan su dirección y su teléfono en inglés, de memoria.','Escriban un mensaje corto de WhatsApp en inglés a su pareja.','Hagan un role-play de esta guía sin mirar las frases.','Hagan la «hora en inglés» durante la cena.'];
 
-function vInicio(){ var p=dayPhrase(), c=counts(), who= mem.who==='el'?'él':'ella', s=sess(), sk=streak();
+function vInicio(){ var p=dayPhrase(), c=counts(), who=NAME[mem.who], s=sess(), sk=streak();
   function step(k,label,sub,start){ var d=s[k]; return '<div class="step'+(d?' done':'')+'"><span class="tick" aria-hidden="true">'+(d?'✓':'')+'</span><span><b>'+label+'</b><small>'+sub+'</small></span>'+(start?'<button class="btn small'+(d?'':' fill')+'" data-start="'+start+'" data-deck="all">'+(d?'Repetir':'Empezar')+'</button>':'<input type="checkbox" id="retoChk" aria-label="Reto cumplido"'+(d?' checked':'')+'>')+'</div>'; }
-  var nd=[s.shadow,s.cards,s.quiz,s.reto].filter(Boolean).length;
+  var nd=[s.shadow,s.cards,s.quiz,s.reto].filter(Boolean).length, mood=dogMood(nd,sk);
+  var moodTxt={happy:'Sesión completa. Turrón está feliz; nos vemos mañana.',sleep:'¡Qué bueno verlos! Turrón tomaba una siesta. Con un paso se despierta.',idle:nd?'Van bien: '+(4-nd===1?'falta un paso.':'faltan '+(4-nd)+' pasos.'):'Unos diez minutos, cuatro pasos.'}[mood];
   return '<section class="hero"><div class="wrap"><p class="kicker">La frase de hoy. Díganla en voz alta tres veces.</p>'+
    '<div class="bubble"><p class="daily" lang="en">'+esc(p.en)+'</p><p class="daily-es">'+esc(p.es)+'</p><p class="daily-pr">'+esc(p.pr)+'</p></div>'+
-   '<div class="row"><button class="bigplay" data-say="'+esc(p.en)+'">'+PLAY.replace('<svg','<svg width="18" height="18" fill="#fff"')+' Escuchar</button><button class="bigplay ghost" data-say="'+esc(p.en)+'" data-slow="1">Más lento</button></div></div></section>'+
-   '<div class="wrap"><div class="today"><svg class="ring" viewBox="0 0 72 72" role="img" aria-label="'+nd+' de 4 pasos hechos"><circle class="bg" cx="36" cy="36" r="30"/><circle class="fg" cx="36" cy="36" r="30" stroke-dasharray="188.5" stroke-dashoffset="'+(188.5*(1-nd/4)).toFixed(1)+'"/><text x="36" y="43" text-anchor="middle">'+nd+'/4</text></svg><div><h2>La sesión de hoy de '+who+'</h2><p class="note">'+(nd===4?'Sesión completa. Nos vemos mañana.':'Unos diez minutos, cuatro pasos.')+'</p></div></div>'+
+   '<div class="hrow">'+pdog(mood==='happy'?['happy']:mood==='sleep'?['sleep']:[],'hdog',mood)+'<div class="row"><button class="bigplay" data-say="'+esc(p.en)+'">'+PLAY.replace('<svg','<svg width="18" height="18" fill="currentColor"')+' Escuchar</button><button class="bigplay ghost" data-say="'+esc(p.en)+'" data-slow="1">Más lento</button></div></div></div></section>'+
+   '<div class="wrap"><div class="today"><div><h2>Hoy, '+who+'</h2><p class="note">'+moodTxt+'</p></div><div class="paws" role="img" aria-label="'+nd+' de 4 pasos hechos">'+[0,1,2,3].map(function(i){ return '<span class="paw'+(i<nd?' on':'')+'">'+PAW+'</span>'; }).join('')+'</div></div>'+
    '<div class="steps">'+step('shadow','Escuchar y repetir','Cinco frases, en voz alta','shadow')+step('cards','Repasar tarjetas',c.due?c.due+' pendientes de repaso hoy':'Frases nuevas y repaso','cards')+step('quiz','Quiz rápido','Diez preguntas','quiz')+step('reto','Reto en la vida real',RETOS[today()%RETOS.length],null)+'</div>'+
-   '<div class="stats"><div class="stat"><svg class="sunico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="10" fill="#FFC83A"/><g stroke="#FFC83A" stroke-width="4" stroke-linecap="round"><path d="M24 3v6M24 39v6M3 24h6M39 24h6M9 9l4 4M35 35l4 4M39 9l-4 4M13 35l-4 4"/></g></svg><div><b>'+sk+(sk===1?' día':' días')+'</b><span>seguidos practicando</span></div></div>'+
+   '<div class="stats"><div class="stat streak">'+pdog(sk?['happy']:mood==='sleep'?['sleep']:[],'sdog',sk?'happy':mood==='sleep'?'sleep':'idle',true)+'<div><b>'+sk+(sk===1?' día':' días')+'</b><span>seguidos practicando</span></div></div>'+
    '<div class="stat"><b>'+c.k+' de '+c.t+'</b><span>frases que ya sabe</span><div class="meter"><i style="width:'+(100*c.k/c.t)+'%"></i></div></div>'+
    '<div class="stat"><b>'+c.w+' de 12</b><span>semanas del plan</span><div class="meter"><i style="width:'+(100*c.w/12)+'%"></i></div></div></div>'+
-   '<p class="note">Cada uno tiene su propio progreso. Cambien de persona arriba, en «Él / Ella».</p>'+
+   '<p class="note">Cada uno tiene su propio progreso. Cambien de persona arriba, en «Eduardo / Mariana».</p>'+
    '<h2>Ir a</h2><div class="modes">'+
    '<button class="mode" data-go="frases"><b>Frases por situación</b><span>13 temas con audio y un buscador.</span></button>'+
    '<button class="mode" data-go="trabajo"><b>Inglés para el trabajo</b><span>Técnico de telecomunicaciones y agente de reservaciones.</span></button>'+
@@ -688,15 +873,15 @@ function searchHTML(q){ q=fold(q.trim()); if(q.length<2) return ''; var r=pool('
 function mineView(){ var m=me().mine;
   return '<p>Anoten aquí las frases que escuchan en el trabajo o en la calle. Entran en las tarjetas y en los quizzes.</p>'+
    '<div class="ex"><p><label>En inglés<br><input class="inp w100" id="mEn" lang="en" autocomplete="off" autocapitalize="off"></label></p><p><label>En español<br><input class="inp w100" id="mEs" autocomplete="off"></label></p><div class="bar"><button class="btn fill" id="mAdd">Guardar frase</button><span class="fb" id="mFb" style="margin:0"></span></div></div>'+
-   (m.length? m.map(function(x,i){ return phraseRow(esc(x.en),'',esc(x.es))+'<p style="margin:0 0 10px;text-align:right"><button class="slow" data-mdel="'+i+'">Borrar esta frase</button></p>'; }).join('') : '<p class="note">Todavía no hay frases en el cuaderno de '+(mem.who==='el'?'él':'ella')+'.</p>'); }
+   (m.length? m.map(function(x,i){ return phraseRow(esc(x.en),'',esc(x.es))+'<p style="margin:0 0 10px;text-align:right"><button class="slow" data-mdel="'+i+'">Borrar esta frase</button></p>'; }).join('') : '<div class="empty">'+pdog([],'edog','idle')+'<p>Todavía no hay frases en el cuaderno de '+NAME[mem.who]+'. Turrón espera la primera.</p></div>'); }
 function vFrases(){ var list=TOPICS.filter(function(t){return !t.work;}), all=list.concat([{k:'mio',n:'Mi cuaderno'}]);
   var t=all.filter(function(x){return x.k===st.topic;})[0]||all[0], title, body;
   if(t.k==='mio'){ title='Mi cuaderno'; body=mineView(); }
   else { title=SECS[t.s[0]].title.replace(/^Parte \d+ · /,''); body=(SECS[t.s[0]].sub?'<p class="note">'+SECS[t.s[0]].sub+'</p>':'')+(t.k==='pron'?pronTable():'')+secs(t); }
-  return '<div class="wrap"><p style="margin:18px 0 0"><input class="inp w100" id="q" type="search" placeholder="Buscar una frase en español o inglés" aria-label="Buscar una frase" autocomplete="off"></p><div id="sres"></div>'+
+  return '<div class="wrap"><p style="margin:18px 0 0"><input class="inp w100" id="q" type="search" enterkeyhint="search" placeholder="Buscar una frase en español o inglés" aria-label="Buscar una frase" autocomplete="off"></p><div id="sres"></div>'+
    '<div id="tbody">'+chips(all,t.k,'data-topic')+'<h1>'+title+'</h1><p class="note">Toquen el botón redondo para escuchar. Marquen ✓ cuando ya la digan sin leer.</p>'+body+'</div></div>'; }
 function vTrabajo(){ var k= st.work || (mem.who==='el'?'tec':'res'); var t=TOPICS.filter(function(x){return x.k===k;})[0];
-  return '<div class="wrap"><h1 style="margin-top:22px">'+(k==='tec'?'Técnico de telecomunicaciones':'Agente de reservaciones')+'</h1>'+
+  return '<div class="wrap"><div class="jobhead">'+pdog(k==='tec'?['helmet']:['headset'],'jdog','idle')+'<h1>'+(k==='tec'?'Técnico de telecomunicaciones':'Agente de reservaciones')+'</h1></div>'+
    chips(TOPICS.filter(function(x){return x.work;}),k,'data-work')+
    '<div class="row" style="margin:6px 0 4px"><button class="btn pink small" data-go="tutor">Practicar con Turrón</button><button class="btn small" data-start="quiz" data-deck="'+k+'">Quiz</button><button class="btn small" data-start="cards" data-deck="'+k+'">Tarjetas</button></div>'+secs(t)+'</div>'; }
 
@@ -788,7 +973,7 @@ function autoRun(){ var g0=G, c=G.list[G.i]; function alive(){ return G===g0&&g0
       setTimeout(function(){ if(!alive()) return; g0.i++; shadow(); autoRun(); },gap); }); },gap); }); }
 
 /* micrófono */
-var mic={on:false,text:'',target:''};
+var mic={on:false,text:'',target:'',heardAt:0};
 function wireMic(){ var d=caps.dictation; if(!d||mic.wired) return; mic.wired=true;
   try{ d.onPartial(function(x){ var f=$('#micFb'); if(f&&mic.on){ f.className='fb'; f.textContent=(x&&x.text)||''; } });
     d.onFinal(function(x){ mic.text+=' '+((x&&x.text)||''); if(mic.on){ try{ d.stop(); }catch(e){} } });
@@ -856,7 +1041,7 @@ function chatDraw(pending){ var c=$('#chat'); if(!c||!G.chat) return;
     return (p.tip&&!/^Empiecen/.test(p.tip)?'<div class="msg tipm"><b>Corrección:</b> '+esc(p.tip)+'</div>':'')+'<div class="msg bot"><button class="play" data-say="'+esc(p.en)+'" aria-label="Escuchar">'+PLAY+'</button><div><div lang="en"><b>'+esc(p.en)+'</b></div>'+(p.es?'<div class="es">'+esc(p.es)+'</div>':'')+'</div></div>'; }).join('')+(pending?'<div class="msg bot"><i>'+esc(pending)+'</i></div>':'');
   var f=$('#tForm'); if(f){ var n=G.chat.filter(function(m){return m.role==='user';}).length;
     if(G.over||n>=12){ f.innerHTML='<p><b>Buena práctica.</b> Lean otra vez las correcciones y anoten una frase en «Mi cuaderno».</p><button class="btn pink" data-again>Otra situación</button>'; }
-    else if(!f.querySelector('#tIn')){ f.innerHTML='<div class="bar"><input class="inp" id="tIn" style="flex:1;min-width:0" lang="en" autocomplete="off" autocapitalize="sentences" placeholder="Escriban su respuesta en inglés" aria-label="Su respuesta en inglés"><button class="btn fill" id="tSend">Enviar</button></div>'; } }
+    else if(!f.querySelector('#tIn')){ f.innerHTML='<div class="bar"><input class="inp" id="tIn" enterkeyhint="send" style="flex:1;min-width:0" lang="en" autocomplete="off" autocapitalize="sentences" placeholder="Escriban su respuesta en inglés" aria-label="Su respuesta en inglés"><button class="btn fill" id="tSend">Enviar</button></div>'; } }
   c.scrollTop=c.scrollHeight; }
 function tutorTurn(){ var g0=G; if(g0.busy) return; g0.busy=true; chatDraw('Escribiendo…');
   var msgs=[{role:'user',content:tutorPrompt(g0.sc)}]; g0.chat.forEach(function(m){ msgs.push({role:m.role,content:m.role==='user'?m.text:m.raw}); });
@@ -941,51 +1126,85 @@ function plain(s){ try{ return new DOMParser().parseFromString('<!DOCTYPE html><
 hookCaps();
 
 /* ================= v4: Turrón, tutor IA con voz ================= */
-var DOG={"pal":{"K":"#2B1A12","B":"#C47A2C","D":"#8A4B17","W":"#FFF8EE","N":"#26211F","E":"#1B1512","S":"#FFFFFF","P":"#F27A9B","R":"#D6336C","Y":"#FFC83A"},
-"rows":[
-"......KKKKKKKKKK......",
-"....KKBBBBWWBBBBKK....",
-"...KBBBBBBWWBBBBBBK...",
-".KKKBBBBBBWWBBBBBBKKK.",
-"KDDKBBBBBWWWWBBBBBKDDK",
-"KDDKBBEEBWWWWBEEBBKDDK",
-"KDDKBBESBWWWWBESBBKDDK",
-"KDDKBBBBWWWWWWBBBBKDDK",
-"KDDKBBBWWWNNWWWBBBKDDK",
-"KDDKBWWWWWNNWWWWWBKDDK",
-".KDKWWWWWKWWKWWWWWKDK.",
-".KKKWWWWWWKKWWWWWWKKK.",
-"...KKWWWWWWWWWWWWKK...",
-"....KRRRRRYYRRRRRK....",
-"....KNNBWWWWWWBNNK....",
-"...KNNNBWWWWWWBNNNK...",
-"...KNNBBWWWWWWBBNNK...",
-"...KBBBWWWWWWWWBBBK...",
-"...KBWWKWWWWWWKWWBK...",
-"...KWWWKWWWWWWKWWWK...",
-"...KWWWKKKKKKKKWWWK...",
-"....KKK........KKK...."],
-"blink":{"5":"KDDKBBBBBWWWWBBBBBKDDK","6":"KDDKBBKKBWWWWBKKBBKDDK"},
-"talk":{"10":".KDKWWWWWKKKKWWWWWKDK.","11":".KKKWWWWWKPPKWWWWWKKK.","12":"...KKWWWWKKKKWWWWKK..."},
-"happy":{"5":"KDDKBBKKBWWWWBKKBBKDDK","6":"KDDKBKBBKWWWWKBBKBKDDK","12":"...KKWWWWWPPWWWWWKK...","13":"....KRRRRRPPRRRRRK...."},
-"tailA":[[19,15,"K"],[20,15,"K"],[19,16,"K"],[20,16,"W"],[21,16,"K"],[19,17,"B"],[20,17,"K"],[19,18,"K"]],
-"tailB":[[20,13,"K"],[21,13,"K"],[19,14,"K"],[20,14,"W"],[21,14,"K"],[19,15,"K"],[20,15,"B"],[21,15,"K"],[19,16,"B"],[20,16,"K"],[19,17,"K"]]}
-;
+var DOG={"pal": {"K": "#2B1A12", "B": "#C47A2C", "D": "#8A4B17", "W": "#FFF8EE", "N": "#26211F", "E": "#1B1512", "S": "#FFFFFF", "P": "#F27A9B", "R": "#D6336C", "Y": "#FFC83A"}, "rows": ["......KKKKKKKKKK......", "....KKBBBBWWBBBBKK....", "...KBBBBBBWWBBBBBBK...", ".KKKBBBBBBWWBBBBBBKKK.", "KDDKBBBBBWWWWBBBBBKDDK", "KDDKBBEEBWWWWBEEBBKDDK", "KDDKBBESBWWWWBESBBKDDK", "KDDKBBBBWWWWWWBBBBKDDK", "KDDKBBBWWWNNWWWBBBKDDK", "KDDKBWWWWWNNWWWWWBKDDK", ".KDKWWWWWKWWKWWWWWKDK.", ".KKKWWWWWWKKWWWWWWKKK.", "...KKWWWWWWWWWWWWKK...", "....KRRRRRYYRRRRRK....", "....KNNBWWWWWWBNNK....", "...KNNNBWWWWWWBNNNK...", "...KNNBBWWWWWWBBNNK...", "...KBBBWWWWWWWWBBBK...", "...KBWWKWWWWWWKWWBK...", "...KWWWKWWWWWWKWWWK...", "...KWWWKKKKKKKKWWWK...", "....KKK........KKK...."], "blink": {"5": "KDDKBBBBBWWWWBBBBBKDDK", "6": "KDDKBBKKBWWWWBKKBBKDDK"}, "talk": {"10": ".KDKWWWWWKKKKWWWWWKDK.", "11": ".KKKWWWWWKPPKWWWWWKKK.", "12": "...KKWWWWKKKKWWWWKK..."}, "happy": {"5": "KDDKBBKKBWWWWBKKBBKDDK", "6": "KDDKBKBBKWWWWKBBKBKDDK", "12": "...KKWWWWWPPWWWWWKK...", "13": "....KRRRRRPPRRRRRK...."}, "tailA": [[19, 15, "K"], [20, 15, "K"], [19, 16, "K"], [20, 16, "W"], [21, 16, "K"], [19, 17, "B"], [20, 17, "K"], [19, 18, "K"]], "tailB": [[20, 13, "K"], [21, 13, "K"], [19, 14, "K"], [20, 14, "W"], [21, 14, "K"], [19, 15, "K"], [20, 15, "B"], [21, 15, "K"], [19, 16, "B"], [20, 16, "K"], [19, 17, "K"]], "sleep": [[6, 5, "B"], [7, 5, "B"], [14, 5, "B"], [15, 5, "B"], [6, 6, "K"], [7, 6, "K"], [14, 6, "K"], [15, 6, "K"]], "helmet": [[6, 0, "K"], [7, 0, "K"], [8, 0, "K"], [9, 0, "K"], [10, 0, "K"], [11, 0, "K"], [12, 0, "K"], [13, 0, "K"], [14, 0, "K"], [15, 0, "K"], [4, 1, "K"], [5, 1, "K"], [6, 1, "Y"], [7, 1, "Y"], [8, 1, "Y"], [9, 1, "Y"], [10, 1, "Y"], [11, 1, "Y"], [12, 1, "Y"], [13, 1, "Y"], [14, 1, "Y"], [15, 1, "Y"], [16, 1, "K"], [17, 1, "K"], [3, 2, "K"], [4, 2, "Y"], [5, 2, "Y"], [6, 2, "Y"], [7, 2, "Y"], [8, 2, "Y"], [9, 2, "Y"], [10, 2, "Y"], [11, 2, "Y"], [12, 2, "Y"], [13, 2, "Y"], [14, 2, "Y"], [15, 2, "Y"], [16, 2, "Y"], [17, 2, "Y"], [18, 2, "K"], [1, 3, "Y"], [2, 3, "Y"], [3, 3, "Y"], [4, 3, "Y"], [5, 3, "Y"], [6, 3, "Y"], [7, 3, "Y"], [8, 3, "Y"], [9, 3, "Y"], [10, 3, "Y"], [11, 3, "Y"], [12, 3, "Y"], [13, 3, "Y"], [14, 3, "Y"], [15, 3, "Y"], [16, 3, "Y"], [17, 3, "Y"], [18, 3, "Y"], [19, 3, "Y"], [20, 3, "Y"], [0, 3, "K"], [21, 3, "K"], [1, 2, "K"], [2, 2, "K"], [19, 2, "K"], [20, 2, "K"], [10, 1, "S"], [11, 1, "S"], [10, 2, "D"], [11, 2, "D"]], "headset": [[6, 0, "N"], [7, 0, "N"], [8, 0, "N"], [9, 0, "N"], [10, 0, "N"], [11, 0, "N"], [12, 0, "N"], [13, 0, "N"], [14, 0, "N"], [15, 0, "N"], [4, 1, "N"], [5, 1, "N"], [16, 1, "N"], [17, 1, "N"], [3, 2, "N"], [18, 2, "N"], [2, 3, "N"], [19, 3, "N"], [0, 5, "N"], [1, 5, "N"], [2, 5, "N"], [19, 5, "N"], [20, 5, "N"], [21, 5, "N"], [0, 6, "N"], [1, 6, "N"], [2, 6, "N"], [19, 6, "N"], [20, 6, "N"], [21, 6, "N"], [0, 7, "N"], [1, 7, "N"], [2, 7, "N"], [19, 7, "N"], [20, 7, "N"], [21, 7, "N"], [0, 8, "N"], [1, 8, "N"], [2, 8, "N"], [19, 8, "N"], [20, 8, "N"], [21, 8, "N"], [0, 9, "N"], [1, 9, "N"], [2, 9, "N"], [19, 9, "N"], [20, 9, "N"], [21, 9, "N"], [1, 6, "R"], [1, 7, "R"], [20, 6, "R"], [20, 7, "R"], [3, 10, "N"], [4, 11, "N"], [5, 11, "N"], [6, 11, "R"], [7, 11, "R"]]};
 var T={chat:[],busy:false,sc:null,dog:'idle',voice:true,fix:true,micLang:'en',noSR:false,heard:''};
-function dogSVG(mods,tail){ var rows=DOG.rows.map(function(r){return r.split('');});
-  mods.forEach(function(m){ var o=DOG[m]; for(var i in o) rows[+i]=o[i].split(''); });
-  DOG[tail].forEach(function(p){ rows[p[1]][p[0]]=p[2]; });
-  var out='<svg viewBox="0 0 22 22" shape-rendering="crispEdges" role="img" aria-label="Turrón, un beagle pixelado">';
+/* ---- Turrón: motor de estados ----
+   Estados: idle, listen, think, talk, fix (corrección suave), happy, party (gran celebración), sleep.
+   Encima de la cabeza hay 8 filas para glifos de píxel (y de -8 a -1). Todo se dibuja en el mismo SVG. */
+var GLYPH={q:['.###.','#...#','...#.','..#..','.....','..#..'],ex:['..#..','..#..','..#..','..#..','.....','..#..'],
+ dots:['.....','.....','.....','.....','.....','#.#.#'],heart:['.....','.#.#.','#####','#####','.###.','..#..'],
+ z:['####','..#.','.#..','####'],note:['..##.','..#.#','..#..','###..','###..','.....'],star:['.....','..#..','..#..','#####','..#..','..#..']};
+var GCOL={q:'#FFFFFF',ex:'#FFFFFF',dots:'#FFFFFF',heart:'#D6336C',z:'#FFFFFF',note:'#FFFFFF',star:'#FFC83A'};
+var LOOK={L:[[5,5,'E'],[6,5,'E'],[7,5,'B'],[13,5,'E'],[14,5,'E'],[15,5,'B'],[5,6,'E'],[6,6,'S'],[7,6,'B'],[13,6,'E'],[14,6,'S'],[15,6,'B']],
+ R:[[6,5,'B'],[7,5,'E'],[8,5,'E'],[14,5,'B'],[15,5,'E'],[16,5,'E'],[6,6,'B'],[7,6,'E'],[8,6,'S'],[14,6,'B'],[15,6,'E'],[16,6,'S']]};
+var NIGHTCAP=(function(){ var p=[],x; for(x=5;x<=16;x++) p.push([x,-1,'#FFF8EE']); for(x=6;x<=15;x++) p.push([x,-2,'#D6336C']);
+  for(x=8;x<=15;x++) p.push([x,-3,'#D6336C']); for(x=10;x<=16;x++) p.push([x,-4,'#D6336C']); for(x=13;x<=17;x++) p.push([x,-5,'#D6336C']);
+  for(x=16;x<=18;x++) p.push([x,-6,'#D6336C']); p.push([19,-7,'#FFF8EE'],[20,-7,'#FFF8EE'],[19,-6,'#FFF8EE'],[20,-6,'#FFF8EE']); return p; })();
+var CONF=['#FFC83A','#D6336C','#F27A9B','#FFFFFF','#0B8A99'];
+function glyphPx(g,x0,y0){ var out=[], b=GLYPH[g]; b.forEach(function(r,y){ for(var x=0;x<r.length;x++) if(r[x]==='#') out.push([x0+x,y0+y,GCOL[g]]); }); return out; }
+function dogSVG(mods,tail,extra,vb){ var rows=DOG.rows.map(function(r){return r.split('');});
+  mods.forEach(function(m){ var o=DOG[m]||LOOK[m]; if(!o) return; if(Array.isArray(o)) o.forEach(function(p){ rows[p[1]][p[0]]=p[2]; }); else for(var i in o) rows[+i]=o[i].split(''); });
+  if(tail) DOG[tail].forEach(function(p){ rows[p[1]][p[0]]=p[2]; });
+  var out='<svg viewBox="'+(vb||'0 0 22 22')+'" shape-rendering="crispEdges" aria-hidden="true">';
   rows.forEach(function(r,y){ var x=0; while(x<22){ var c=r[x]; if(c==='.'){ x++; continue; } var x0=x; while(x<22&&r[x]===c) x++; out+='<rect x="'+x0+'" y="'+y+'" width="'+(x-x0)+'" height="1" fill="'+DOG.pal[c]+'"/>'; } });
+  (extra||[]).forEach(function(p){ out+='<rect x="'+p[0]+'" y="'+p[1]+'" width="1" height="1" fill="'+(DOG.pal[p[2]]||p[2])+'"/>'; });
   return out+'</svg>'; }
+/* Turrón fuera de su pestaña: pdog(variantes, clase, estado, soloCabeza) */
+function pdog(mods,cls,state,head){ return '<span class="pdog '+cls+'" data-state="'+(state||'idle')+'">'+dogSVG(mods,head?null:'tailA',null,head?'0 0 22 14':null)+'</span>'; }
+
 var dogTick=0, dogKey='', noMotion=false; try{ noMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
-function dogDraw(){ var el=$('#dog'); if(!el) return; var s=T.dog, mods=[], tail='tailA';
-  if(s==='happy') mods.push('happy'); else if(!noMotion&&dogTick%16===0) mods.push('blink');
-  if(s==='talk'&&(noMotion||dogTick%2===0)) mods.push('talk');
-  if(!noMotion&&s!=='think'&&Math.floor(dogTick/(s==='happy'?1:2))%2===1) tail='tailB';
-  var key=mods.join()+tail; el.setAttribute('data-state',s); if(key!==dogKey||!el.firstChild){ dogKey=key; el.innerHTML=dogSVG(mods,tail); } }
-function setDog(s){ T.dog=s; dogDraw(); var l=$('#dogLab'); if(l) l.textContent={idle:'',listen:'Te escucho…',think:'Pensando…',talk:'',happy:'¡Muy bien!'}[s]||''; }
-if(!noMotion) setInterval(function(){ if(st.tab!=='tutor') return; dogTick++; dogDraw(); },230);
+var DS={base:'idle',timer:0,gag:null,gagEnd:0,nextGag:0,look:'',lookUntil:0,mouthUntil:0,lastWord:0,lastAct:Date.now(),wakeUntil:0};
+var DOGLAB={idle:'',listen:'Te escucho…',think:'Pensando…',talk:'',fix:'Casi…',happy:'¡Muy bien!',party:'¡Conversación completa!',sleep:'Zzz…'};
+function dogFrame(){ var s=T.dog, t=dogTick, mods=[], tail='tailA', extra=[], g=null, gy=-7, cls='', now=Date.now();
+  var gag=(s==='idle'&&DS.gag&&now<DS.gagEnd)?DS.gag:null;
+  // ojos y boca
+  if(s==='happy'||s==='party') mods.push('happy');
+  else if(s==='sleep'||(gag==='sneeze'&&t%6<3)) mods.push('sleep');
+  else if(!noMotion&&t%16===0) mods.push('blink');
+  else if(DS.look&&now<DS.lookUntil&&(s==='idle'||s==='listen')) mods.push(DS.look==='L'?'L':'R');
+  if(s==='talk'||gag==='woof'){ var words=now-DS.lastWord<1200; if(noMotion||(words?now<DS.mouthUntil:t%2===0)) mods.push('talk'); }
+  // cola
+  if(!noMotion&&s!=='think'&&s!=='sleep'){ var sp=(s==='happy'||s==='party'||gag==='chase')?1:2; if(Math.floor(t/sp)%2===1) tail='tailB'; }
+  // glifos
+  if(s==='think') g=(noMotion||Math.floor(t/4)%2===0)?'q':'dots';
+  else if(s==='listen') g=(now-mic.heardAt<700)?'note':'ex';
+  else if(s==='fix') g='dots';
+  else if(s==='happy') { g='heart'; if(!noMotion) gy=-7-(Math.floor(t/2)%2); }
+  else if(s==='party') g='star';
+  else if(s==='sleep'){ g='z'; gy=noMotion?-6:-5-(Math.floor(t/3)%3); extra=extra.concat(NIGHTCAP); }
+  else if(now<DS.wakeUntil) g='ex';
+  else if(gag==='sneeze'&&t%6>=3) g='ex';
+  else if(gag==='woof') g='note';
+  if(g) extra=extra.concat(glyphPx(g,g==='z'?1:16,s==='sleep'?gy:gy));
+  if(s==='party'){ for(var i=0;i<12;i++){ var k=(i*7+(noMotion?0:t)*3)%22, yy=-8+((i*5+(noMotion?0:t))%12); extra.push([k,yy,CONF[i%CONF.length]]); } }
+  if(gag==='shake') cls='g-shake'; else if(gag==='chase') cls=(Math.floor(t/2)%2)?'g-flip':''; else if(gag==='sneeze'&&t%6>=3) cls='g-jolt';
+  return {mods:mods,tail:tail,extra:extra,cls:cls,key:mods.join()+tail+(g||'')+gy+cls+(s==='party'?t:'')}; }
+function dogDraw(){ var el=$('#dog'), mini=$('#dogMini'); if(!el&&!mini) return; var f=dogFrame();
+  if(el){ el.setAttribute('data-state',T.dog); el.className='dog'+(f.cls?' '+f.cls:''); }
+  if(f.key===dogKey&&el&&el.firstChild) return; dogKey=f.key;
+  var svg=dogSVG(f.mods,f.tail,f.extra,'0 -8 22 30');
+  if(el) el.innerHTML=svg; if(mini) mini.innerHTML=svg.replace('viewBox="0 -8 22 30"','viewBox="0 -8 22 22"'); }
+function setDog(s){ clearTimeout(DS.timer); if(s==='idle'||s==='talk'||s==='listen'||s==='think') DS.base=s; T.dog=s; DS.gag=null; dogKey=''; dogDraw();
+  var l=$('#dogLab'); if(l) l.textContent=DOGLAB[s]||''; var m=$('#tMiniLab'); if(m) m.textContent=DOGLAB[s]||'Ver a Turrón'; }
+/* estado de un momento (corrección, acierto, fiesta) que vuelve solo al estado de base */
+function flashDog(s,ms){ var back=DS.base; setDog(s); DS.timer=setTimeout(function(){ if(T.dog===s) setDog(back); },ms); }
+function mouthPulse(){ DS.lastWord=Date.now(); DS.mouthUntil=DS.lastWord+160; }
+function dogWake(){ DS.lastAct=Date.now(); if(T.dog==='sleep'&&st.tab==='tutor'&&navigator.onLine!==false){ DS.wakeUntil=Date.now()+1000; setDog('idle'); } }
+['pointerdown','keydown','scroll'].forEach(function(ev){ window.addEventListener(ev,dogWake,{passive:true}); });
+/* la mirada sigue el dedo o el cursor */
+function dogLook(e){ if(noMotion||st.tab!=='tutor') return; var el=$('#dog'); if(!el) return; var r=el.getBoundingClientRect(), dx=e.clientX-(r.left+r.width/2);
+  if(Math.abs(dx)<40) return; DS.look=dx<0?'L':'R'; DS.lookUntil=Date.now()+2500; }
+window.addEventListener('pointerdown',dogLook,{passive:true});
+/* acariciar a Turrón: si está tranquilo, se pone feliz */
+document.addEventListener('pointerdown',function(e){ if(!e.target.closest||!e.target.closest('#dog')) return; if(T.dog==='idle'||T.dog==='sleep'){ DS.lastAct=Date.now(); DS.base='idle'; flashDog('happy',1100); } }); window.addEventListener('pointermove',function(e){ if(e.pointerType==='mouse') dogLook(e); },{passive:true});
+setInterval(function(){ if(st.tab!=='tutor'||document.hidden) return; var now=Date.now();
+  if(!noMotion){ dogTick++;
+    if(T.dog==='idle'&&!T.busy&&!mic.on){ var typing=document.activeElement&&/INPUT|TEXTAREA/.test(document.activeElement.tagName);
+      if(!DS.nextGag) DS.nextGag=now+30000+Math.random()*15000;
+      if(now>DS.nextGag&&!typing){ DS.gag=['shake','sneeze','chase','woof'][Math.floor(Math.random()*4)]; DS.gagEnd=now+(DS.gag==='woof'?2300:1840); DS.nextGag=now+30000+Math.random()*15000; } }
+    else DS.nextGag=0; }
+  if(T.dog==='idle'&&!T.busy&&!mic.on&&now-DS.lastAct>90000) setDog('sleep');
+  dogDraw(); },230);
 
 var TSC=[
  {who:'ella',t:'Tomar una reserva por teléfono',p:'Role-play: you are a tourist calling to book a hotel room in Aruba. The learner is the reservations agent taking the call.'},
@@ -1017,7 +1236,7 @@ function speakLines(lines,done){ var tok=++sayTok, fin=false; lines=lines.filter
   function browser(){ if(!synth){ finish(false); return; } try{ if(synth.speaking||synth.pending) synth.cancel(); }catch(e){}
     var i=0; (function next(){ if(tok!==sayTok){ finish(false); return; } if(i>=lines.length){ finish(true); return; }
       try{ var l=lines[i++], u=new SpeechSynthesisUtterance(clean(l.text)); u.lang=l.lang==='es'?'es-ES':'en-US'; if(l.lang!=='es'){ if(!voice) pickVoice(); if(voice&&!/Android/i.test(navigator.userAgent)) u.voice=voice; } u.rate=0.95;
-        u.onend=function(){ next(); }; u.onerror=function(){ finish(false); }; curU=u; try{ synth.resume(); }catch(e){} synth.speak(u); }catch(e){ finish(false); } })(); }
+        u.onboundary=function(ev){ if(!ev.name||ev.name==='word') mouthPulse(); }; u.onend=function(){ next(); }; u.onerror=function(){ finish(false); }; curU=u; try{ synth.resume(); }catch(e){} synth.speak(u); }catch(e){ finish(false); } })(); }
   if(ttsCap){ var pr; try{ pr=Promise.resolve(ttsCap.speak(lines.map(function(l){ return {text:clean(l.text),language:l.lang==='es'?'es':'en'}; }))); }catch(e){ pr=Promise.reject(e); }
     pr.then(function(){ finish(true); }).catch(function(err){ var c=err&&err.code; if(tok!==sayTok){ finish(false); return; } if(c==='not_granted'){ ttsCap=null; browser(); } else if(c==='rate_limited'||c==='busy'){ finish(false); } else browser(); }); }
   else browser(); }
@@ -1029,7 +1248,7 @@ function wireMic(){ var d=caps.dictation; if(!d||mic.wired) return; mic.wired=tr
   try{ d.onPartial(function(x){ var tx=(x&&x.text)||''; if(mic.cb){ var h=$('#tHeard'); if(h) h.textContent=(mic.text+' '+tx).trim(); return; } var f=$('#micFb'); if(f&&mic.on){ f.className='fb'; f.textContent=tx; } });
     d.onFinal(function(x){ mic.text+=' '+((x&&x.text)||''); if(mic.on){ try{ d.stop(); }catch(e){} } });
     d.onState(function(x){ if(x&&x.state==='listening'){ mic.on=true; micBtn(); tMicUI(); } else if(x&&x.state==='idle'){ var was=mic.on; mic.on=false; micBtn(); tMicUI(); if(was){ if(mic.cb){ var cb=mic.cb; mic.cb=null; cb(mic.text.trim()); } else micScore(); } } }); }catch(e){} }
-function tMicUI(){ var b=$('#tMic'); if(b){ b.classList.toggle('on',mic.on); b.setAttribute('aria-pressed',mic.on?'true':'false'); var s=b.querySelector('span'); if(s) s.textContent=mic.on?'Toca para terminar':'Toca para hablar'; } if(st.tab==='tutor'&&!T.busy) setDog(mic.on?'listen':'idle'); }
+function tMicUI(){ if(st.tab==='tutor'){ if(mic.on&&T.dog!=='listen') setDog('listen'); else if(!mic.on&&T.dog==='listen') setDog('idle'); } var b=$('#tMic'); if(b){ b.classList.toggle('on',mic.on); b.setAttribute('aria-pressed',mic.on?'true':'false'); var s=b.querySelector('span'); if(s) s.textContent=mic.on?'Toca para terminar':'Toca para hablar'; } if(st.tab==='tutor'&&!T.busy) setDog(mic.on?'listen':'idle'); }
 function tListen(){ if(T.busy) return; stopAll();
   if(mic.on){ if(caps.dictation){ try{ caps.dictation.stop(); }catch(e){} } else if(T.rec){ try{ T.rec.stop(); }catch(e){} } return; }
   mic.text=''; var h=$('#tHeard'); if(h) h.textContent='';
@@ -1038,7 +1257,7 @@ function tListen(){ if(T.busy) return; stopAll();
   var SR=SRClass(); if(!SR) return;
   try{ var r=new SR(), finalT=''; T.rec=r; r.lang=T.micLang==='es'?'es-ES':'en-US'; r.interimResults=true; r.continuous=false;
     r.onstart=function(){ mic.on=true; tMicUI(); };
-    r.onresult=function(ev){ var it=''; for(var i=ev.resultIndex;i<ev.results.length;i++){ if(ev.results[i].isFinal) finalT+=ev.results[i][0].transcript+' '; else it+=ev.results[i][0].transcript; } var h2=$('#tHeard'); if(h2) h2.textContent=(finalT+it).trim(); };
+    r.onresult=function(ev){ mic.heardAt=Date.now(); var it=''; for(var i=ev.resultIndex;i<ev.results.length;i++){ if(ev.results[i].isFinal) finalT+=ev.results[i][0].transcript+' '; else it+=ev.results[i][0].transcript; } var h2=$('#tHeard'); if(h2) h2.textContent=(finalT+it).trim(); };
     r.onerror=function(ev){ var c=ev&&ev.error; if(c==='not-allowed'||c==='service-not-allowed'){ T.noSR=true; mic.on=false; render(true); toast('El micrófono no está permitido aquí. Pueden escribir su respuesta.'); } };
     r.onend=function(){ var was=mic.on; mic.on=false; T.rec=null; tMicUI(); if(was) tHeard(finalT.trim()); };
     r.start(); }catch(e){ T.noSR=true; render(true); } }
@@ -1051,9 +1270,11 @@ function tTurn(){ var sc=T.sc; T.busy=true; tDraw(); setDog('think');
   askAI(msgs).then(function(raw){ if(T.sc!==sc) return; if(!raw) throw {code:'empty'}; T.busy=false; var p=tParse(raw), first=!T.chat.length; T.chat.push({role:'assistant',raw:raw,p:p}); touch(); tDraw();
       var lines=[]; if(!first&&T.fix){ if(p.fix){ lines.push({text:'Casi. Se dice así:',lang:'es'},{text:p.fix,lang:'en'}); if(p.tip) lines.push({text:p.tip,lang:'es'}); } else if(p.tip&&p.tip.length<60) lines.push({text:p.tip,lang:'es'}); }
       lines.push({text:p.en,lang:'en'});
-      if(T.voice&&canSpeak()){ setDog(!first&&!p.fix?'happy':'talk'); setTimeout(function(){ if(T.sc===sc&&T.dog==='happy') setDog('talk'); },700); speakLines(lines,function(){ if(T.sc===sc&&!T.busy&&!mic.on) setDog('idle'); }); }
-      else { setDog(!first&&!p.fix?'happy':'idle'); if(T.dog==='happy') setTimeout(function(){ if(T.sc===sc&&T.dog==='happy') setDog('idle'); },1400); }
-      if(T.chat.filter(function(m){return m.role==='user';}).length>=15) T.over=true; tDraw(); })
+      if(T.chat.filter(function(m){return m.role==='user';}).length>=15) T.over=true;
+      var mood=first?null:p.fix?'fix':'happy';
+      if(T.voice&&canSpeak()){ setDog('talk'); if(mood) flashDog(mood,mood==='fix'?1600:1200); speakLines(lines,function(){ if(T.sc!==sc||T.busy||mic.on) return; DS.base='idle'; if(T.over) flashDog('party',2800); else setDog('idle'); }); }
+      else { setDog('idle'); if(T.over) flashDog('party',2800); else if(mood) flashDog(mood,mood==='fix'?1600:1200); }
+      tDraw(); })
    .catch(function(err){ if(T.sc!==sc) return; T.busy=false; var c=err&&err.code, last=T.chat[T.chat.length-1], back=''; if(last&&last.role==='user'){ back=T.chat.pop().text; }
      setDog('idle'); if(c==='not_granted'){ caps.sample=null; T.sc=null; render(true); return; }
      if(c==='clave'){ T.needPass=true; }
@@ -1074,14 +1295,15 @@ function tDraw(){ var b=$('#tBub'); if(b) b.innerHTML=tBubble(); var c=$('#tLog'
     if(T.needPass){ if(!f.querySelector('#tPass')) f.innerHTML=window.TUTOR_KEY?'<div class="ex" style="text-align:left"><h3 style="margin-top:0">Conecta a Turrón con Gemini</h3><ol><li>Abre <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> con tu cuenta de Google.</li><li>Toca «Create API key» y copia la clave.</li><li>Pégala aquí. Se guarda solo en este teléfono.</li></ol><div class="bar"><input class="inp" id="tPass" type="password" autocomplete="off" style="flex:1;min-width:0" aria-label="Clave de Gemini"><button class="btn fill" id="tPassOk">Guardar</button></div></div>':'<p>Escriban la clave del tutor:</p><div class="bar"><input class="inp" id="tPass" type="password" style="flex:1;min-width:0" aria-label="Clave del tutor"><button class="btn fill" id="tPassOk">Guardar</button></div>'; }
     else if(T.over){ f.innerHTML='<p><b>Buena práctica.</b> Lean otra vez las correcciones y anoten una frase en «Mi cuaderno».</p><button class="btn pink" id="tNew">Otra conversación</button>'; }
     else if(!f.querySelector('#tIn2')){ f.innerHTML=(micAvail()?'<button class="micbig" id="tMic" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>Toca para hablar</span></button><p class="heard" id="tHeard" aria-live="polite"></p>':'<p class="note">El micrófono no está disponible en esta vista. Escriban su respuesta; Turrón igual responde y corrige.</p>')+
-        '<div class="bar"><input class="inp" id="tIn2" style="flex:1;min-width:0" lang="en" autocomplete="off" placeholder="O escriban aquí en inglés" aria-label="Su respuesta"><button class="btn fill" id="tSend2">Enviar</button></div>'+
+        '<div class="bar"><input class="inp" id="tIn2" enterkeyhint="send" style="flex:1;min-width:0" lang="en" autocomplete="off" placeholder="O escriban aquí en inglés" aria-label="Su respuesta"><button class="btn fill" id="tSend2">Enviar</button></div>'+
         '<div class="row tset"><button class="btn small" id="tVoice" aria-pressed="'+T.voice+'">Voz de Turrón: '+(T.voice?'sí':'no')+'</button><button class="btn small" id="tFix" aria-pressed="'+T.fix+'">Corregir en voz alta: '+(T.fix?'sí':'no')+'</button>'+(!caps.dictation&&SRClass()&&!T.noSR?'<button class="btn small" id="tLang">Hablo en: '+(T.micLang==='es'?'español':'inglés')+'</button>':'')+'<button class="btn small" id="tNew">Cambiar de tema</button>'+(window.TUTOR_KEY&&window.TUTOR_KEY.get()?'<button class="btn small" id="tKey">Cambiar clave de Gemini</button>':'')+'</div>'; }
     var bs=f.querySelectorAll('#tMic,#tSend2'); for(var k=0;k<bs.length;k++) bs[k].disabled=!!T.busy; }
   var end=$('#tEnd'); if(end&&T.chat.length>1){ try{ end.scrollIntoView({block:'end'}); }catch(e){} } }
 function vTutor(){ var a=aiState(), mine=mem.who, list=TSC.map(function(s,i){return {s:s,i:i};}).sort(function(x,y){ function r(z){ return z.s.who===mine?0:z.s.who==='both'?1:2; } return r(x)-r(y)||x.i-y.i; });
-  var head='<div class="tstage"><div><div class="dog" id="dog" data-state="'+T.dog+'"></div><p class="doglab" id="dogLab" aria-live="polite"></p></div><div class="tb" id="tBub">'+tBubble()+'</div></div>';
+  var head='<div class="tstage"><div><div class="dog" id="dog" data-state="'+T.dog+'"></div><p class="doglab" id="dogLab" aria-live="polite"></p></div><div class="tb" id="tBub">'+tBubble()+'</div></div>'+(T.sc?'<button class="tmini" id="tMini" hidden><span class="dogmini" id="dogMini" aria-hidden="true"></span><span id="tMiniLab">'+(DOGLAB[T.dog]||'Ver a Turrón')+'</span></button>':'');
   var body;
-  if(a==='wait') body='<p>Buscando a Turrón…</p>';
+  if(a!=='wait'&&!caps.sample&&navigator.onLine===false){ T.dog='sleep'; head=head.replace('data-state="idle"','data-state="sleep"'); body='<div class="empty"><p><b>Sin conexión.</b> Turrón necesita internet para conversar. Todo lo demás funciona sin conexión: frases, juegos y tarjetas.</p></div><button class="btn" data-go="practicar">Ir a los juegos</button>'; }
+  else if(a==='wait') body='<p>Buscando a Turrón…</p>';
   else if(a==='none') body='<aside class="box warn"><strong class="t">Turrón necesita conexión con la IA</strong><p>En esta vista no hay un servicio de IA disponible. Dentro de Claude funciona al abrir la guía con sesión iniciada. Mientras tanto pueden practicar las mismas situaciones en «Role-plays y juegos».</p></aside><button class="btn" data-start="role">Ir a los role-plays</button>';
   else if(!T.sc) body='<h1>Turrón, tu tutor de inglés</h1><p>Elige una situación de tu trabajo. Turrón hace el otro papel, te habla en inglés sencillo y corrige cada respuesta, por voz y por escrito.</p><div class="tlist">'+list.map(function(x){ return '<button class="mode" data-tsc="'+x.i+'"><b>'+x.s.t+'</b><span>'+(x.s.who==='el'?'Técnico':x.s.who==='ella'?'Reservaciones':'Para los dos')+'</span></button>'; }).join('')+'</div><p class="note">La primera vez puede pedir permiso para usar la IA y el micrófono. Turrón es una IA y puede equivocarse.</p>';
   else body='<p class="note" style="margin-top:0">'+esc(T.sc.t)+'</p><div id="tLog" class="chat tchat" aria-live="polite"></div><div id="tCtl" class="tctl"></div><div id="tEnd"></div>';
@@ -1101,7 +1323,18 @@ document.addEventListener('click',function(e){ var t=e.target.closest('button');
 document.addEventListener('keydown',function(e){ if(e.key!=='Enter') return; if(e.target.id==='tIn2'){ e.preventDefault(); $('#tSend2').click(); } if(e.target.id==='tPass'){ $('#tPassOk').click(); } });
 /* el modo «tutor» de Practicar lleva a la pestaña de Turrón */
 function tutor(){ st.mode=null; setTimeout(function(){ go('tutor'); },0); var g=$('#game'); if(g) g.innerHTML='<p>Abriendo a Turrón…</p>'; }
-function afterRender(){ if(st.tab!=='tutor') return; dogKey=''; dogDraw(); if(T.sc) tDraw(); }
+/* modo compacto: si la escena de Turrón sale de la pantalla, queda una barrita con su cabeza y su glifo */
+function afterRender(){ [].forEach.call(document.querySelectorAll('body > .tmini'),function(x){ x.remove(); }); if(st.tab!=='tutor') return;
+  var mv=$('#view .tmini'); if(mv) document.body.appendChild(mv); /* fuera de #view: su animación de entrada rompería position:fixed */ dogKey=''; dogDraw(); if(T.sc) tDraw();
+  miniCheck(); }
+function miniCheck(){ var stg=$('.tstage'), mini=$('#tMini'); if(!stg||!mini) return; var top=0, hd=$('.top'), tb=$('.tabs'); if(hd){ var hr=hd.getBoundingClientRect(); if(hr.bottom>0) top=hr.bottom; } if(tb){ var br=tb.getBoundingClientRect(); if(br.top<140&&br.bottom>top) top=br.bottom; }
+  var hide=stg.getBoundingClientRect().bottom>top+10; mini.style.top=Math.round(top+8)+'px'; if(mini.hidden!==hide){ mini.hidden=hide; dogKey=''; dogDraw(); } }
+var miniRaf=0; window.addEventListener('scroll',function(){ if(st.tab!=='tutor'||miniRaf) return; miniRaf=requestAnimationFrame(function(){ miniRaf=0; miniCheck(); }); },{passive:true});
+document.addEventListener('click',function(e){ if(e.target.closest&&e.target.closest('#tMini')){ var stg=$('.tstage'); if(stg) stg.scrollIntoView({behavior:noMotion?'auto':'smooth',block:'start'}); } });
+
+/* avisos de conexión */
+window.addEventListener('offline',function(){ toast('Sin conexión. Todo funciona menos la conversación con Turrón.'); if(st.tab==='tutor'&&!T.sc) render(true); });
+window.addEventListener('online',function(){ if(st.tab==='tutor'&&!T.sc){ T.dog='idle'; render(true); } });
 
 function stopMic(){ mic.cb=null; if(mic.on){ if(caps.dictation){ try{ caps.dictation.stop(); }catch(e){} } if(T.rec){ try{ T.rec.abort(); }catch(e){} } } mic.on=false; }
 

@@ -1,0 +1,164 @@
+/* ===== v5: identidad Turrón =====
+   La paleta sale del sprite: pelaje caramelo, orejas cacao, hocico crema, contorno tinta,
+   collar rosa y placa amarilla. El turquesa del mar de Aruba queda solo para el audio. */
+:root{
+  --caramel:#C47A2C; --cocoa:#8A4B17; --cream:#FFF8EE; --tink:#2B1A12; --collar:#D6336C; --tag:#FFC83A;
+  --foam:#FBF3E6; --paper:#FFFDF8; --ink:#2B1A12; --soft:#6E5444; --line:#EBDCC7;
+  --deep:#8A4B17; --sea:#5A2F0E; --hero:#C47A2C; --hero-ink:#2B1A12;
+  --lagoon:#0B7F8C; --flamingo:#D6336C; --sun:#FFC83A; --aloe:#1F7A49;
+  --lagoon-t:#DCEFF0; --flamingo-t:#FBE3EB; --sun-t:#FFF0C4; --aloe-t:#E0F0E3;
+  --ok-text:#1F7A49; --bad-text:#B8285C; --shade:#E6D3BA; --paw:#C47A2C;
+  --shadow:0 1px 2px rgba(90,47,14,.07),0 6px 18px rgba(90,47,14,.08); --bar-shadow:0 8px 28px rgba(90,47,14,.2);
+  --display:"Atkinson Hyperlegible",system-ui,sans-serif; --pixel:"Pixelify Sans","Atkinson Hyperlegible",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --foam:#1C120C; --paper:#2A1C14; --ink:#FFF1DF; --soft:#CDB49C; --line:#47321F;
+  --deep:#E7A25A; --sea:#8A4B17; --hero:#4A2C17; --hero-ink:#FFF1DF;
+  --lagoon:#0B7F8C; --flamingo:#D6336C; --aloe:#1F7A49;
+  --lagoon-t:#12343A; --flamingo-t:#3D1A26; --sun-t:#3A2C10; --aloe-t:#15301F;
+  --ok-text:#7FD9A5; --bad-text:#FF86AE; --shade:#0F0906; --paw:#E7A25A;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px rgba(0,0,0,.3); --bar-shadow:0 8px 28px rgba(0,0,0,.45)}}
+
+/* superficies del navegador */
+::selection{background:var(--tag);color:var(--tink)}
+input,textarea{caret-color:var(--flamingo)}
+html{scrollbar-color:var(--line) transparent}
+
+/* tipografía: píxel para la marca y los títulos, Atkinson para leer */
+h1,.brand,.stat b{font-family:var(--pixel)}
+h1{font-weight:700;letter-spacing:0;font-size:clamp(1.9rem,7vw,2.7rem);line-height:1.08;text-wrap:balance}
+h2,h3{font-family:var(--display)}
+h2::before{width:9px;height:9px;border-radius:0;background:var(--caramel);box-shadow:3px 3px 0 var(--cocoa)}
+h2.part::before{background:var(--flamingo);box-shadow:3px 3px 0 #8F1F47}
+.stat b{font-weight:700;letter-spacing:0}
+
+/* Turrón en cualquier lugar */
+.pdog{display:block;flex:none;position:relative}
+.pdog svg{display:block;width:100%;height:100%;image-rendering:pixelated}
+.pdog svg,.tdog svg,.logo svg,#splash svg{stroke:none}
+.sdog[data-state=sleep]::after{content:none}
+.pdog[data-state=happy]{animation:hop .45s ease 2}
+.pdog[data-state=sleep]::after{content:"Zzz";position:absolute;right:-6px;top:-4px;font:700 .95rem var(--pixel);color:var(--hero-ink);opacity:.8}
+
+/* barra superior */
+.top{background:var(--sea)}
+.top .wrap{padding-top:8px;padding-bottom:8px}
+.brand{display:flex;align-items:center;gap:10px;font-size:1.45rem;font-weight:700;line-height:1}
+.brand small{font-family:var(--body);font-size:.8rem;font-weight:400;opacity:.85;margin-top:3px}
+.logo{display:block;width:44px;height:28px;flex:none}
+.logo svg{display:block;width:100%;height:100%}
+.who{background:rgba(255,241,223,.14)}
+.who button{font-size:.86rem;padding:6px 11px}
+.who button[aria-pressed=true]{background:var(--tag);color:var(--tink)}
+
+/* inicio: Turrón dice la frase del día */
+.hero{background:var(--hero);color:var(--hero-ink);padding:20px 0 34px}
+.hero::before{content:none}
+.hero::after{height:8px;background:linear-gradient(90deg,var(--foam) 50%,transparent 50%) 0 0/16px 8px repeat-x}
+.hero .kicker{max-width:none;font-size:1rem}
+.bubble{background:var(--cream);color:var(--tink);box-shadow:0 4px 0 rgba(43,26,18,.28);margin:0 0 22px}
+.bubble::after{border-top-color:var(--cream);left:40px;filter:drop-shadow(0 4px 0 rgba(43,26,18,.28))}
+.bubble .daily-pr{color:#6E5444}
+.hrow{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:end}
+.hdog{width:88px;height:88px;margin-bottom:-6px}
+.hrow .row{align-self:center}
+.bigplay{background:var(--collar);color:#fff}
+.bigplay.ghost{background:rgba(43,26,18,.14);color:var(--hero-ink);--bs:rgba(43,26,18,.3)}
+
+/* sesión de hoy: cuatro huellas */
+.today{justify-content:space-between;margin:26px 0 12px}
+.today h2{font-size:1.5rem}
+.paws{display:flex;gap:6px;flex:none;padding-bottom:6px}
+.paw{display:block;width:28px;height:24px}
+.paw:nth-child(odd){transform:translateY(6px)}
+.paw svg{display:block;width:100%;height:100%;fill:var(--line)}
+.paw.on svg{fill:var(--paw);animation:pop .3s ease}
+.stats .stat.streak{background:var(--sun-t)}
+.sdog{width:44px;height:28px}
+
+/* trabajo y estados vacíos */
+.jobhead{display:flex;align-items:flex-end;gap:12px;margin:22px 0 4px}
+.jobhead h1{margin:0;min-width:0;font-size:clamp(1.45rem,6.4vw,2.4rem);hyphens:auto;overflow-wrap:break-word}
+.jdog{width:clamp(44px,14vw,66px);aspect-ratio:1;height:auto}
+h1{overflow-wrap:break-word}
+.empty{display:flex;align-items:center;gap:14px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:12px 0;box-shadow:var(--shadow)}
+.empty p{margin:0}
+.edog{width:66px;height:66px}
+
+/* respuesta correcta o incorrecta: Turrón reacciona */
+.fb.ok:not(:empty)::before,.fb.bad:not(:empty)::before{content:"";display:inline-block;width:33px;height:21px;margin-right:8px;vertical-align:-4px;background:var(--dog-head) center/contain no-repeat;image-rendering:pixelated}
+.fb.ok:not(:empty)::before{background-image:var(--dog-ok)}
+
+/* avisos */
+#toast{position:fixed;left:50%;bottom:calc(98px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:10px;width:max-content;max-width:calc(100vw - 32px);background:var(--ink);color:var(--foam);padding:10px 16px 10px 12px;border-radius:14px;box-shadow:0 8px 24px rgba(43,26,18,.3);font-size:.95rem}
+#toast::before{content:"";flex:none;width:33px;height:21px;background:var(--dog-head) center/contain no-repeat;image-rendering:pixelated}
+#toast[hidden]{display:none}
+
+/* cajas: sin franja lateral, borde fino teñido */
+.box,.msg.tipm,.msg.okm{border:1px solid color-mix(in srgb,var(--lagoon) 35%,transparent);border-radius:14px}
+.box.tip,.msg.tipm{border-color:color-mix(in srgb,var(--sun) 70%,transparent)}
+.box.warn{border-color:color-mix(in srgb,var(--flamingo) 40%,transparent)}
+.msg.okm{border-color:color-mix(in srgb,var(--aloe) 45%,transparent)}
+@media (hover:hover) and (pointer:fine){.mode:hover{border-color:var(--caramel)}}
+
+/* barra inferior: Turrón al centro */
+.tabs{box-shadow:var(--bar-shadow)}
+.tabs button{font-size:.78rem}
+.tabs button[aria-current=page]{background:var(--sun-t);color:var(--deep)}
+.tabs .tcenter{position:relative;justify-content:flex-end;gap:3px}
+.tabs .tcenter[aria-current=page]{background:none}
+.tdog{display:grid;place-items:center;width:58px;height:58px;margin-top:-30px;border-radius:50%;background:var(--caramel);border:3px solid var(--paper);box-shadow:0 4px 0 var(--cocoa);transition:transform .16s cubic-bezier(.2,.8,.2,1)}
+.tdog svg{width:44px;height:28px;margin-top:4px}
+.tcenter[aria-current=page] .tdog{background:var(--tag);box-shadow:0 4px 0 #B98F1C}
+.tcenter:active .tdog{transform:translateY(3px)}
+
+/* pestaña de Turrón */
+.tstage{background:var(--hero)}
+.tstage::before{content:none}
+.doglab{color:var(--hero-ink)}
+.tb{background:var(--cream);color:var(--tink)}
+.tb::before{border-right-color:var(--cream)}
+.tb .es{color:#6E5444}
+
+/* teléfono: notch, barra de estado, teclado, toques largos */
+.top .wrap{padding-top:calc(8px + env(safe-area-inset-top,0px))}
+.wrap{padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+button,.tabs,.chips,.who,summary,.pdog,.dog{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+@media (display-mode:standalone){html,body{overscroll-behavior-y:none}}
+@media (max-width:759px){body:has(input:focus,textarea:focus,select:focus) .tabs{display:none}}
+.tchat{overscroll-behavior:contain}
+
+/* motor de estados: la escena tiene 8 filas de aire arriba para los glifos (22×30) */
+.tstage .dog{width:112px;height:153px}
+.tstage .dog svg{stroke:none}
+.dog[data-state=fix]{transform:rotate(6deg)}
+.dog[data-state=party]{animation:hop .4s ease 3}
+.dog.g-shake{animation:shake .23s linear 4}
+.dog.g-flip{transform:scaleX(-1)}
+.dog.g-jolt{transform:translateY(-3px)}
+
+/* modo compacto */
+.tmini{position:fixed;z-index:19;top:70px;white-space:nowrap;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;min-height:48px;max-width:calc(100vw - 32px);border:0;border-radius:999px;padding:2px 16px 2px 6px;background:var(--hero);color:var(--hero-ink);font-weight:700;font-size:.9rem;box-shadow:0 6px 18px rgba(43,26,18,.28);animation:miniIn .22s cubic-bezier(.2,.8,.2,1)}
+.tmini[hidden]{display:none}
+.dogmini{display:block;width:44px;height:44px;flex:none}
+.dogmini svg{display:block;width:100%;height:100%;stroke:none}
+@keyframes miniIn{from{opacity:0;transform:translate(-50%,-8px)}to{opacity:1;transform:translate(-50%,0)}}
+
+/* pantalla de inicio de la app instalada */
+#splash{display:none}
+@media (display-mode:standalone){
+  #splash{display:grid;position:fixed;inset:0;z-index:100;place-items:center;align-content:center;gap:16px;background:var(--hero);pointer-events:none;animation:splashOut .45s cubic-bezier(.2,.8,.2,1) .8s forwards}
+  #splash span{display:block;width:132px;height:132px}
+  #splash svg{display:block;width:100%;height:100%}
+  #splash b{font:700 2.2rem var(--pixel);color:var(--hero-ink)}
+}
+@keyframes splashOut{to{opacity:0;visibility:hidden}}
+
+@media (min-width:760px){
+  .tabs .tcenter{justify-content:center}
+  .tdog{width:32px;height:32px;margin:0;border-width:0;box-shadow:none}
+  .tabs{top:calc(10px + env(safe-area-inset-top,0px))}
+  .tdog svg{width:22px;height:14px;margin:0}
+  .hdog{width:132px;height:132px}
+}
+@media (prefers-reduced-motion:reduce){#splash{display:none!important}}
