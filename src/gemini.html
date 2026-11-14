@@ -1,0 +1,30 @@
+<script>
+/* Turrón con Gemini (API de Google AI Studio). La clave la pega cada persona
+   en su teléfono y se guarda solo en ese navegador; no está en la página. */
+(function(){
+  var MODEL = "gemini-3.5-flash-lite", KEY = "turron-gemini-key";
+  function getKey(){ try{ return localStorage.getItem(KEY) || ""; }catch(e){ return ""; } }
+  window.TUTOR_KEY = { get: getKey, set: function(v){ try{ if(v) localStorage.setItem(KEY, v); else localStorage.removeItem(KEY); }catch(e){} } };
+  window.TUTOR_GEMINI = function(msgs){
+    var key = getKey();
+    if (!key) return Promise.reject({ code: "clave" });
+    var sys = msgs[0].content, rest = msgs.slice(1);
+    var contents = rest.length ? rest.map(function(m){ return { role: m.role === "assistant" ? "model" : "user", parts: [{ text: m.content }] }; })
+                               : [{ role: "user", parts: [{ text: "Start the conversation now." }] }];
+    return fetch("https://generativelanguage.googleapis.com/v1beta/models/" + MODEL + ":generateContent", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-goog-api-key": key },
+      body: JSON.stringify({ systemInstruction: { parts: [{ text: sys }] }, contents: contents,
+        generationConfig: { maxOutputTokens: 400, temperature: 0.7 } })
+    }).then(function(r){
+      if (r.status === 429) throw { code: "rate_limited" };
+      if (r.status === 400 || r.status === 401 || r.status === 403) return r.text().then(function(t){ throw { code: /API_KEY|API key|PERMISSION|unauth/i.test(t) ? "clave" : "gemini", message: t.slice(0, 300) }; });
+      if (!r.ok) throw { code: "gemini", message: "HTTP " + r.status };
+      return r.json();
+    }).then(function(j){
+      var c = j && j.candidates && j.candidates[0], parts = c && c.content && c.content.parts || [];
+      return parts.map(function(p){ return p.text || ""; }).join("");
+    }, function(e){ if (e && e.code) throw e; throw { code: "gemini", message: String(e) }; });
+  };
+})();
+</script>
