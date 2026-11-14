@@ -5,6 +5,10 @@ function me(){ var m=mem[mem.who]; ['known','weeks','track','goals','srs','days'
 function touch(){ var m=me(), t=today(); if(!m.days[t]){ m.days[t]=1; save(); } }
 function streak(){ var d=me().days, t=today(), n=0; if(!d[t]) t--; while(d[t]){ n++; t--; } return n; }
 var NAME={el:'Eduardo',ella:'Mariana'};
+/* puente para la sincronización (src/sync.html, solo en jeirer.web.app) */
+window.TURRON_APP={ get:function(){ return mem; }, esc:esc,
+  put:function(m){ if(!m||!m.el||!m.ella) return; m.who=mem.who; mem=m; try{ localStorage.setItem(KEY,JSON.stringify(mem)); }catch(e){} if(st.tab==='inicio'||(st.tab!=='practicar'&&st.tab!=='tutor')) render(true); },
+  who:function(w){ if((w==='el'||w==='ella')&&w!==mem.who){ mem.who=w; save(); render(true); } } };
 var PAW='<svg viewBox="0 0 7 6" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 0h1v2H2zM4 0h1v2H4zM0 1h1v2H0zM6 1h1v2H6zM2 3h3v1H2zM1 4h5v2H1z"/></svg>';
 function dogMood(nd,sk){ if(nd===4) return 'happy'; if(!sk&&Object.keys(me().days).length) return 'sleep'; return 'idle'; }
 function sess(){ var m=me(); if(m.sess.d!==today()) m.sess={d:today()}; return m.sess; }
@@ -72,7 +76,7 @@ function vInicio(){ var p=dayPhrase(), c=counts(), who=NAME[mem.who], s=sess(), 
    '<div class="stats"><div class="stat streak">'+pdog(sk?['happy']:mood==='sleep'?['sleep']:[],'sdog',sk?'happy':mood==='sleep'?'sleep':'idle',true)+'<div><b>'+sk+(sk===1?' día':' días')+'</b><span>seguidos practicando</span></div></div>'+
    '<div class="stat"><b>'+c.k+' de '+c.t+'</b><span>frases que ya sabe</span><div class="meter"><i style="width:'+(100*c.k/c.t)+'%"></i></div></div>'+
    '<div class="stat"><b>'+c.w+' de 12</b><span>semanas del plan</span><div class="meter"><i style="width:'+(100*c.w/12)+'%"></i></div></div></div>'+
-   '<p class="note">Cada uno tiene su propio progreso. Cambien de persona arriba, en «Eduardo / Mariana».</p>'+
+   '<p class="note">Cada uno tiene su propio progreso. Cambien de persona arriba, en «Eduardo / Mariana».</p>'+(window.TURRON_SYNC?window.TURRON_SYNC.card():'')+
    '<h2>Ir a</h2><div class="modes">'+
    '<button class="mode" data-go="frases"><b>Frases por situación</b><span>13 temas con audio y un buscador.</span></button>'+
    '<button class="mode" data-go="trabajo"><b>Inglés para el trabajo</b><span>Técnico de telecomunicaciones y agente de reservaciones.</span></button>'+

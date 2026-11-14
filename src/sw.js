@@ -21,6 +21,8 @@ function keep(req, res) {
 self.addEventListener('fetch', function (e) {
   var r = e.request; if (r.method !== 'GET') return;
   var u = new URL(r.url);
+  // Las páginas de inicio de sesión de Firebase (/__/auth/...) nunca pasan por aquí.
+  if (u.origin === location.origin && u.pathname.indexOf('/__/') === 0) return;
   // La página: primero la red (para recibir actualizaciones), si no hay conexión la copia guardada.
   if (r.mode === 'navigate') {
     e.respondWith(fetch(r).then(function (res) { return keep('./index.html', res); }).catch(function () {
@@ -29,8 +31,9 @@ self.addEventListener('fetch', function (e) {
     return;
   }
   // Archivos propios y fuentes: primero la caché.
-  if (u.origin === location.origin || u.hostname === 'fonts.googleapis.com' || u.hostname === 'fonts.gstatic.com') {
+  if (u.origin === location.origin || u.hostname === 'fonts.googleapis.com' || u.hostname === 'fonts.gstatic.com' ||
+      (u.hostname === 'www.gstatic.com' && u.pathname.indexOf('/firebasejs/') === 0)) {
     e.respondWith(caches.match(r).then(function (hit) { return hit || fetch(r).then(function (res) { return keep(r, res); }); }));
   }
-  // Todo lo demás (Gemini incluido) va directo a la red y nunca se guarda.
+  // Todo lo demás (Gemini, Firestore, inicio de sesión) va directo a la red y nunca se guarda.
 });

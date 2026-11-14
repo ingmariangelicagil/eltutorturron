@@ -1,0 +1,44 @@
+rules_version = '2';
+// Turrón: progreso compartido por hogar.
+// - users/{uid}: a qué hogar pertenece cada persona y quién es (el / ella). Solo su dueño.
+// - hogares/{hid}: progreso de los dos (el, ella). Solo sus miembros (máximo 4).
+// - codes/{code}: código corto para unirse a un hogar. Cualquiera con sesión puede leer UN código
+//   que ya conoce (get), nunca listarlos.
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function signedIn() { return request.auth != null; }
+    function me() { return request.auth.uid; }
+
+    match /users/{uid} {
+      allow get: if signedIn() && me() == uid;
+      allow create, update: if signedIn() && me() == uid
+        && request.resource.data.keys().hasOnly(['hogar', 'who', 'updated'])
+        && request.resource.data.who in ['el', 'ella'];
+      allow delete: if signedIn() && me() == uid;
+    }
+
+    match /codes/{code} {
+      allow get: if signedIn();
+      allow create: if signedIn()
+        && request.resource.data.keys().hasOnly(['hogar', 'owner'])
+        && request.resource.data.owner == me()
+        && me() in get(/databases/$(db)/documents/hogares/$(request.resource.data.hogar)).data.members;
+    }
+
+    match /hogares/{hid} {
+      allow get: if signedIn() && me() in resource.data.members;
+      allow create: if signedIn()
+        && request.resource.data.members == [me()]
+        && request.resource.data.keys().hasOnly(['members', 'code', 'el', 'ella', 'updated']);
+      // Un miembro guarda el progreso, sin tocar la lista de miembros.
+      allow update: if signedIn() && me() in resource.data.members
+        && request.resource.data.members == resource.data.members
+        && request.resource.data.keys().hasOnly(['members', 'code', 'el', 'ella', 'updated']);
+      // Alguien con el código se une: solo se agrega a sí mismo y no cambia nada más.
+      allow update: if signedIn() && !(me() in resource.data.members)
+        && resource.data.members.size() < 4
+        && request.resource.data.members == resource.data.members.concat([me()])
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members']);
+    }
+  }
+}

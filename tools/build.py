@@ -118,7 +118,7 @@ wr(s, 'dist', 'claude.html')
 # ---------- sitio público (GitHub Pages): Gemini + app instalable ----------
 a = '<title>Turrón: aprendiendo con el Jeirer</title>'
 assert a in s
-web = s.replace(a, a + '\n' + rd('src', 'gemini.html') + rd('src', 'pwa.html'))
+web = s.replace(a, a + '\n' + rd('src', 'gemini.html') + rd('src', 'pwa.html') + rd('src', 'sync.html'))
 assert web.count('</head>\n<body>') == 1
 web = web.replace('</head>\n<body>', '</head>\n<body>\n<div id="splash" aria-hidden="true"><span>' + svg() + '</span><b>Turrón</b></div>', 1)
 wr(web, 'index.html')

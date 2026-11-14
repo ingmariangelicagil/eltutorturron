@@ -217,7 +217,7 @@ var ALLPH = pool('all').filter(function(x){return x.ph;});
 /* ---------- storage (per person) ---------- */
 var KEY='aruba-ingles-v1', mem={who:'ella',el:{},ella:{}};
 try{ var raw=localStorage.getItem(KEY); if(raw){ var o=JSON.parse(raw); if(o&&o.el&&o.ella) mem=o; } }catch(e){}
-function save(){ try{ localStorage.setItem(KEY,JSON.stringify(mem)); }catch(e){} }
+function save(){ if(window.TURRON_SYNC){ try{ window.TURRON_SYNC.changed(); }catch(e){} } try{ localStorage.setItem(KEY,JSON.stringify(mem)); }catch(e){} }
 function me(){ var m=mem[mem.who]; ['known','weeks','track','goals'].forEach(function(k){ if(!m[k]) m[k]={}; }); return m; }
 
 /* ---------- speech ---------- */

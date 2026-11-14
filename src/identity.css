@@ -128,6 +128,13 @@ button,.tabs,.chips,.who,summary,.pdog,.dog{-webkit-user-select:none;user-select
 @media (max-width:759px){body:has(input:focus,textarea:focus,select:focus) .tabs{display:none}}
 .tchat{overscroll-behavior:contain}
 
+/* sincronizar entre teléfonos */
+.sync{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:4px 16px 12px;margin:18px 0;box-shadow:var(--shadow)}
+.sync h2{margin-top:14px;font-size:1.2rem}
+.sync [data-sync=who][aria-pressed=true]{background:var(--sea);border-color:var(--sea);color:#fff}
+.hcode{font-family:var(--pixel);font-size:1.5rem;letter-spacing:.12em;color:var(--deep)}
+a.btn{display:inline-flex;align-items:center;text-decoration:none}
+
 /* motor de estados: la escena tiene 8 filas de aire arriba para los glifos (22×30) */
 .tstage .dog{width:112px;height:153px}
 .tstage .dog svg{stroke:none}
