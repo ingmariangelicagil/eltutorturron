@@ -84,7 +84,7 @@ Se escribieron en otro entorno: pueden necesitar ajustar la ruta de Chrome (`exe
 - Login con Google; cada persona con su cuenta. «Hogar» = `hogares/{id}` con `members`, `code` y el progreso de `el` y `ella` como JSON. `codes/{código}` lleva del código de 6 letras al hogar. `users/{uid}` guarda su hogar y quién es. Reglas en `firestore.rules`.
 - El progreso sigue en `localStorage`; `mergeAll()` une teléfono y nube sin perder nada (frases, días, tarjetas, cuaderno se suman; plan y metas gana el más reciente por persona, campo `u`).
 - Con sesión, Turrón usa Gemini por **Firebase AI Logic** (`firebase-ai.js`, modelo en `AIM`). La clave propia de Gemini queda solo como respaldo.
-- La config web de Firebase en `sync.html` es pública por diseño. Pendiente: App Check para que nadie más use la cuota de Gemini.
+- La config web de Firebase en `sync.html` es pública por diseño. Gemini está protegido con App Check (Fraud Defense, clave `APPCHECK_KEY`, en el proyecto `jeirer`, dominios jeirer.web.app y jeirer.firebaseapp.com): sin token válido, Firebase rechaza la llamada. En localhost App Check no se inicia, así que Gemini no responde ahí.
 
 ---
 

@@ -5,7 +5,7 @@
    La configuración de abajo es pública por diseño: la seguridad está en firestore.rules. */
 (function(){
   var CFG={apiKey:"AIzaSyDp_7oEY4YRsRxOsjyzbhhefSRKm5dc84Q",authDomain:"jeirer.firebaseapp.com",projectId:"jeirer",appId:"1:542831715434:web:0a269a1de3c63486dbd613",messagingSenderId:"542831715434"};
-  /* App Check (obligatorio para Gemini por Firebase desde nov. 2026): clave de sitio reCAPTCHA v3, pública por diseño. */
+  /* App Check (obligatorio para Gemini por Firebase desde nov. 2026): clave de sitio de Fraud Defense (reCAPTCHA Enterprise), pública por diseño. */
   var APPCHECK_KEY="6LetvSAuAAAAAGkggZKzPpXpfhjb1rHWyT9WV4M_";
   var SDK="https://www.gstatic.com/firebasejs/12.0.0/", HOME="https://jeirer.web.app/", FLAG="turron-sync", HKEY="turron-hogar";
   var host=location.hostname, onFirebase=/^jeirer\.(web\.app|firebaseapp\.com)$/.test(host), local=/^(localhost|127\.0\.0\.1)$/.test(host);
@@ -38,7 +38,7 @@
     S.loading=Promise.all([import(SDK+'firebase-app.js'),import(SDK+'firebase-auth.js'),import(SDK+'firebase-firestore.js')]).then(function(m){
       var cfg={}; for(var k in CFG) cfg[k]=CFG[k]; if(onFirebase) cfg.authDomain=host; // mismo dominio: el login funciona en iPhone
       var a=m[0].initializeApp(cfg);
-      var ac=APPCHECK_KEY&&!local?import(SDK+'firebase-app-check.js').then(function(c){ c.initializeAppCheck(a,{provider:new c.ReCaptchaV3Provider(APPCHECK_KEY),isTokenAutoRefreshEnabled:true}); }).catch(function(){}):Promise.resolve();
+      var ac=APPCHECK_KEY&&!local?import(SDK+'firebase-app-check.js').then(function(c){ c.initializeAppCheck(a,{provider:new c.ReCaptchaEnterpriseProvider(APPCHECK_KEY),isTokenAutoRefreshEnabled:true}); }).catch(function(){}):Promise.resolve();
       return ac.then(function(){ F={app:a,A:m[1],D:m[2],auth:m[1].getAuth(a),db:m[2].getFirestore(a)};
         m[1].onAuthStateChanged(F.auth,onUser); return F; }); });
     return S.loading; }
