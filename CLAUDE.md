@@ -1,4 +1,4 @@
-# El Tutor Turrón — guía para Claude Code
+# English Dog (antes El Tutor Turrón) — guía para Claude Code
 
 App web para que una pareja hispanohablante recién llegada a Aruba aprenda el
 inglés que necesita en casa, en la calle y en el trabajo. Ella es agente de
@@ -8,7 +8,17 @@ va en español; el contenido de práctica, en inglés.
 Publicada en: https://ingmariangelicagil.github.io/eltutorturron/ (GitHub Pages,
 rama `main`, archivo `index.html` en la raíz).
 
-## Estado: identidad Turrón (v5) hecha
+## Estado: English Dog (v6)
+
+La app se llama **English Dog** («Aprendiendo inglés con {mascota}») y tiene tres mascotas a elegir:
+**Turrón** (beagle, la original; es el perro real de la familia), **Sam** (cocker spaniel beige, 9 años) y
+**Roma** (poodle blanca, hembra, 3 años). Sprites de Sam y Roma en `src/pets.json`; las variantes (ojos,
+boca, cola, casco, auriculares, gorro) son las mismas para las tres. `setPet()` en `turron.js` cambia nombre,
+logo, botón central, caras de los avisos y título; `PN()` da el nombre y `PET.f` el género. La mascota se
+guarda por persona (`pet`). Perfiles: Eduardo (`el`), Mariana (`ella`), Camila (`camila`, la hija) y
+invitados (`inv`). El ícono de la app muestra las tres cabezas.
+
+## Antes: identidad Turrón (v5)
 
 La app ya gira en torno a **Turrón**: paleta del sprite, títulos en Pixelify Sans,
 Turrón al centro de la barra inferior, sus estados en todas las pantallas, e
@@ -81,8 +91,9 @@ Se escribieron en otro entorno: pueden necesitar ajustar la ruta de Chrome (`exe
 
 ### Firebase (`src/sync.html`, solo en el sitio público)
 
-- Login con Google; cada persona con su cuenta. «Hogar» = `hogares/{id}` con `members`, `code` y el progreso de `el` y `ella` como JSON. `codes/{código}` lleva del código de 6 letras al hogar. `users/{uid}` guarda su hogar y quién es. Reglas en `firestore.rules`.
-- El progreso sigue en `localStorage`; `mergeAll()` une teléfono y nube sin perder nada (frases, días, tarjetas, cuaderno se suman; plan y metas gana el más reciente por persona, campo `u`).
+- Entrada: «Entrar con Google» o el botón **CAMILA** (inicio de sesión anónimo, sin cuenta). El perfil sale del correo (`personOf()`): ejesil@gmail.com o «eduardo» → `el`; «mariana»/«mariangelica» → `ella`; cualquier otro → invitado con su propio progreso (`g_{uid}`). Luego, si la persona no tiene mascota, elige una. No hay «hogar» ni códigos.
+- Firestore: un documento por perfil, `perfiles/{el|ella|camila|g_uid}` con el progreso como JSON en `data`. Reglas en `firestore.rules` (por correo verificado; Camila por inicio anónimo). Es una app familiar: cualquiera con un correo que contenga esos nombres entra a ese perfil, y cualquiera que toque CAMILA entra al de Camila.
+- El progreso sigue en `localStorage`; `mergeP()` une teléfono y nube sin perder nada (frases, días, tarjetas, cuaderno se suman; plan, metas y mascota gana el más reciente, campo `u`).
 - Con sesión, Turrón usa Gemini por **Firebase AI Logic** (`firebase-ai.js`, modelo en `AIM`). La clave propia de Gemini queda solo como respaldo.
 - La config web de Firebase en `sync.html` es pública por diseño. Gemini está protegido con App Check (Fraud Defense, clave `APPCHECK_KEY`, en el proyecto `jeirer`, dominios jeirer.web.app y jeirer.firebaseapp.com): sin token válido, Firebase rechaza la llamada. En localhost App Check no se inicia, así que Gemini no responde ahí.
 

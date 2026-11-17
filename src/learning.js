@@ -4,11 +4,16 @@ function today(){ var d=new Date(); return Math.floor(Date.UTC(d.getFullYear(),d
 function me(){ var m=mem[mem.who]; ['known','weeks','track','goals','srs','days','sess','cando'].forEach(function(k){ if(!m[k]||typeof m[k]!=='object') m[k]={}; }); if(!Array.isArray(m.mine)) m.mine=[]; return m; }
 function touch(){ var m=me(), t=today(); if(!m.days[t]){ m.days[t]=1; save(); } }
 function streak(){ var d=me().days, t=today(), n=0; if(!d[t]) t--; while(d[t]){ n++; t--; } return n; }
-var NAME={el:'Eduardo',ella:'Mariana'};
+var NAME={el:'Eduardo',ella:'Mariana',camila:'Camila',inv:'Invitado'};
 /* puente para la sincronización (src/sync.html, solo en jeirer.web.app) */
 window.TURRON_APP={ get:function(){ return mem; }, esc:esc,
   put:function(m){ if(!m||!m.el||!m.ella) return; m.who=mem.who; mem=m; try{ localStorage.setItem(KEY,JSON.stringify(mem)); }catch(e){} if(st.tab==='inicio'||(st.tab!=='practicar'&&st.tab!=='tutor')) render(true); },
-  who:function(w){ if((w==='el'||w==='ella')&&w!==mem.who){ mem.who=w; save(); render(true); } } };
+  who:function(w){ if((w==='el'||w==='ella')&&w!==mem.who){ mem.who=w; save(); render(true); } },
+  /* perfil según quién entró (Eduardo, Mariana, Camila o un invitado con su propio progreso) */
+  putPerson:function(k,data){ mem[k]=data; try{ localStorage.setItem(KEY,JSON.stringify(mem)); }catch(e){} if(k===mem.who&&(st.tab==='inicio'||(st.tab!=='practicar'&&st.tab!=='tutor'))) render(true); },
+  login:function(k,name,uid){ if(k==='inv'){ if(mem.invUid!==uid){ mem.inv={}; mem.invUid=uid; } NAME.inv=name||'Invitado'; }
+    if(!mem[k]||typeof mem[k]!=='object') mem[k]={}; mem.who=k; document.documentElement.classList.add('logged'); try{ localStorage.setItem(KEY,JSON.stringify(mem)); }catch(e){} render(true); },
+  logout:function(){ document.documentElement.classList.remove('logged'); render(true); } };
 var PAW='<svg viewBox="0 0 7 6" shape-rendering="crispEdges" aria-hidden="true"><path d="M2 0h1v2H2zM4 0h1v2H4zM0 1h1v2H0zM6 1h1v2H6zM2 3h3v1H2zM1 4h5v2H1z"/></svg>';
 function dogMood(nd,sk){ if(nd===4) return 'happy'; if(!sk&&Object.keys(me().days).length) return 'sleep'; return 'idle'; }
 function sess(){ var m=me(); if(m.sess.d!==today()) m.sess={d:today()}; return m.sess; }
@@ -67,7 +72,7 @@ var RETOS=['Hagan la lista del supermercado en inglés.','Saluden a un vecino o 
 function vInicio(){ var p=dayPhrase(), c=counts(), who=NAME[mem.who], s=sess(), sk=streak();
   function step(k,label,sub,start){ var d=s[k]; return '<div class="step'+(d?' done':'')+'"><span class="tick" aria-hidden="true">'+(d?'✓':'')+'</span><span><b>'+label+'</b><small>'+sub+'</small></span>'+(start?'<button class="btn small'+(d?'':' fill')+'" data-start="'+start+'" data-deck="all">'+(d?'Repetir':'Empezar')+'</button>':'<input type="checkbox" id="retoChk" aria-label="Reto cumplido"'+(d?' checked':'')+'>')+'</div>'; }
   var nd=[s.shadow,s.cards,s.quiz,s.reto].filter(Boolean).length, mood=dogMood(nd,sk);
-  var moodTxt={happy:'Sesión completa. Turrón está feliz; nos vemos mañana.',sleep:'¡Qué bueno verlos! Turrón tomaba una siesta. Con un paso se despierta.',idle:nd?'Van bien: '+(4-nd===1?'falta un paso.':'faltan '+(4-nd)+' pasos.'):'Unos diez minutos, cuatro pasos.'}[mood];
+  var moodTxt={happy:'Sesión completa. '+PN()+' está feliz; nos vemos mañana.',sleep:'¡Qué bueno verte! '+PN()+' tomaba una siesta. Con un paso se despierta.',idle:nd?'Van bien: '+(4-nd===1?'falta un paso.':'faltan '+(4-nd)+' pasos.'):'Unos diez minutos, cuatro pasos.'}[mood];
   return '<section class="hero"><div class="wrap"><p class="kicker">La frase de hoy. Díganla en voz alta tres veces.</p>'+
    '<div class="bubble"><p class="daily" lang="en">'+esc(p.en)+'</p><p class="daily-es">'+esc(p.es)+'</p><p class="daily-pr">'+esc(p.pr)+'</p></div>'+
    '<div class="hrow">'+pdog(mood==='happy'?['happy']:mood==='sleep'?['sleep']:[],'hdog',mood)+'<div class="row"><button class="bigplay" data-say="'+esc(p.en)+'">'+PLAY.replace('<svg','<svg width="18" height="18" fill="currentColor"')+' Escuchar</button><button class="bigplay ghost" data-say="'+esc(p.en)+'" data-slow="1">Más lento</button></div></div></div></section>'+
@@ -76,11 +81,11 @@ function vInicio(){ var p=dayPhrase(), c=counts(), who=NAME[mem.who], s=sess(), 
    '<div class="stats"><div class="stat streak">'+pdog(sk?['happy']:mood==='sleep'?['sleep']:[],'sdog',sk?'happy':mood==='sleep'?'sleep':'idle',true)+'<div><b>'+sk+(sk===1?' día':' días')+'</b><span>seguidos practicando</span></div></div>'+
    '<div class="stat"><b>'+c.k+' de '+c.t+'</b><span>frases que ya sabe</span><div class="meter"><i style="width:'+(100*c.k/c.t)+'%"></i></div></div>'+
    '<div class="stat"><b>'+c.w+' de 12</b><span>semanas del plan</span><div class="meter"><i style="width:'+(100*c.w/12)+'%"></i></div></div></div>'+
-   '<p class="note">Cada uno tiene su propio progreso. Cambien de persona arriba, en «Eduardo / Mariana».</p>'+(window.TURRON_SYNC?window.TURRON_SYNC.card():'')+
+   (document.documentElement.classList.contains('logged')?'':'<p class="note">Cada uno tiene su propio progreso. Cambien de persona arriba, en «Eduardo / Mariana».</p>')+(window.TURRON_SYNC?window.TURRON_SYNC.card():'')+
    '<h2>Ir a</h2><div class="modes">'+
    '<button class="mode" data-go="frases"><b>Frases por situación</b><span>13 temas con audio y un buscador.</span></button>'+
    '<button class="mode" data-go="trabajo"><b>Inglés para el trabajo</b><span>Técnico de telecomunicaciones y agente de reservaciones.</span></button>'+
-   '<button class="mode" data-go="tutor"><b>Hablar con Turrón</b><span>El tutor con IA: conversa y te corrige por voz.</span></button>'+
+   '<button class="mode" data-go="tutor"><b>Hablar con '+PN()+'</b><span>El tutor con IA: conversa y te corrige por voz.</span></button>'+
    '<button class="mode" data-go="practicar"><b>Todos los juegos</b><span>Números al oído, sonidos difíciles, tarjetas y más.</span></button>'+
    '<button class="mode" data-go="plan"><b>Plan y nivel</b><span>12 semanas, «Ya puedo…» y el método.</span></button></div>'+
    '<div class="sos"><b>Emergencias en Aruba</b><p>Ambulancia y bomberos: <b>911</b><br>Policía: <b>100</b></p><p>Practiquen decir su dirección: <span lang="en">«My address is…»</span>. Las frases están en Frases, en «Médico y emergencias».</p></div>'+
@@ -93,7 +98,7 @@ function searchHTML(q){ q=fold(q.trim()); if(q.length<2) return ''; var r=pool('
 function mineView(){ var m=me().mine;
   return '<p>Anoten aquí las frases que escuchan en el trabajo o en la calle. Entran en las tarjetas y en los quizzes.</p>'+
    '<div class="ex"><p><label>En inglés<br><input class="inp w100" id="mEn" lang="en" autocomplete="off" autocapitalize="off"></label></p><p><label>En español<br><input class="inp w100" id="mEs" autocomplete="off"></label></p><div class="bar"><button class="btn fill" id="mAdd">Guardar frase</button><span class="fb" id="mFb" style="margin:0"></span></div></div>'+
-   (m.length? m.map(function(x,i){ return phraseRow(esc(x.en),'',esc(x.es))+'<p style="margin:0 0 10px;text-align:right"><button class="slow" data-mdel="'+i+'">Borrar esta frase</button></p>'; }).join('') : '<div class="empty">'+pdog([],'edog','idle')+'<p>Todavía no hay frases en el cuaderno de '+NAME[mem.who]+'. Turrón espera la primera.</p></div>'); }
+   (m.length? m.map(function(x,i){ return phraseRow(esc(x.en),'',esc(x.es))+'<p style="margin:0 0 10px;text-align:right"><button class="slow" data-mdel="'+i+'">Borrar esta frase</button></p>'; }).join('') : '<div class="empty">'+pdog([],'edog','idle')+'<p>Todavía no hay frases en el cuaderno de '+NAME[mem.who]+'. '+PN()+' espera la primera.</p></div>'); }
 function vFrases(){ var list=TOPICS.filter(function(t){return !t.work;}), all=list.concat([{k:'mio',n:'Mi cuaderno'}]);
   var t=all.filter(function(x){return x.k===st.topic;})[0]||all[0], title, body;
   if(t.k==='mio'){ title='Mi cuaderno'; body=mineView(); }
@@ -103,7 +108,7 @@ function vFrases(){ var list=TOPICS.filter(function(t){return !t.work;}), all=li
 function vTrabajo(){ var k= st.work || (mem.who==='el'?'tec':'res'); var t=TOPICS.filter(function(x){return x.k===k;})[0];
   return '<div class="wrap"><div class="jobhead">'+pdog(k==='tec'?['helmet']:['headset'],'jdog','idle')+'<h1>'+(k==='tec'?'Técnico de telecomunicaciones':'Agente de reservaciones')+'</h1></div>'+
    chips(TOPICS.filter(function(x){return x.work;}),k,'data-work')+
-   '<div class="row" style="margin:6px 0 4px"><button class="btn pink small" data-go="tutor">Practicar con Turrón</button><button class="btn small" data-start="quiz" data-deck="'+k+'">Quiz</button><button class="btn small" data-start="cards" data-deck="'+k+'">Tarjetas</button></div>'+secs(t)+'</div>'; }
+   '<div class="row" style="margin:6px 0 4px"><button class="btn pink small" data-go="tutor">Practicar con '+PN()+'</button><button class="btn small" data-start="quiz" data-deck="'+k+'">Quiz</button><button class="btn small" data-start="cards" data-deck="'+k+'">Tarjetas</button></div>'+secs(t)+'</div>'; }
 
 /* ---------- practicar ---------- */
 var ICONS={shadow:'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',
@@ -119,7 +124,7 @@ var ICONS={shadow:'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width
  role:'<circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M2.5 20a5.5 5.5 0 0 1 11 0M14 20a4.2 4.2 0 0 1 7.5-2.5"/>'};
 MODES=[['shadow','Escuchar y repetir','Imiten la frase en voz alta. Tiene modo manos libres para el carro.','--sun'],
  ['cards','Tarjetas con repaso','Vuelven justo cuando están por olvidarse: al día, a los 2, 4, 8 y 16 días.','--sun-t'],
- ['tutor','Turrón, el tutor con IA','Conversen por voz o por escrito y reciban correcciones.','--flamingo-t'],
+ ['tutor','Tu mascota tutora con IA','Conversen por voz o por escrito y reciban correcciones.','--flamingo-t'],
  ['quiz','Quiz de 10 preguntas','Elijan la respuesta correcta. Incluye preguntas de escuchar.','--flamingo-t'],
  ['nums','Números al oído','Precios, horas, fechas, teléfonos y el 13 contra el 30.','--lagoon-t'],
  ['pairs','Sonidos difíciles','¿Dijo ship o sheep? Entrenen el oído con pares de palabras.','--aloe-t'],

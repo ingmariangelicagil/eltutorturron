@@ -1,7 +1,7 @@
 {
-  "name": "Turrón: aprendiendo con el Jeirer",
-  "short_name": "Turrón",
-  "description": "Inglés para la casa, la calle y el trabajo en Aruba, con Turrón.",
+  "name": "English Dog",
+  "short_name": "English Dog",
+  "description": "Aprendiendo inglés con Turrón, Sam y Roma.",
   "lang": "es",
   "start_url": "./",
   "scope": "./",

@@ -15,21 +15,33 @@ def wr(text, *p):
 # ---------- Turrón: el sprite como fuente de la marca ----------
 DOG = json.loads(rd('src', 'turron_sprite.json'))
 HEAD_ROWS = 14  # cabeza y collar: filas 0-13
+# las tres mascotas: Turrón (turron_sprite.json) + Sam y Roma (pets.json)
+PETS = {'turron': {'n': 'Turrón', 'breed': 'Beagle', 'age': 0, 'f': False, 'en': 'a friendly, playful beagle',
+                   'pal': DOG['pal'], 'rows': DOG['rows'], 'base': []}}
+PETS.update(json.loads(rd('src', 'pets.json')))
+# variantes por filas -> diferencias de píxel respecto a Turrón, así sirven para las tres mascotas
+def rowdiff(rowmod):
+    out = []
+    for i, r in rowmod.items():
+        for x, c in enumerate(r):
+            if c != DOG['rows'][int(i)][x]: out.append([x, int(i), c])
+    return out
+MODS = {k: (rowdiff(v) if isinstance(v, dict) else v) for k, v in DOG.items() if k not in ('pal', 'rows')}
+JSDOG = dict(MODS, pal=DOG['pal'], rows=DOG['rows'], pets=PETS)
 
-def grid(mods=(), tail='tailA'):
-    rows = [list(r) for r in DOG['rows']]
+def grid(mods=(), tail='tailA', pet='turron'):
+    P = PETS[pet]
+    rows = [list(r) for r in P['rows']]
+    for x, y, c in P['base']: rows[y][x] = c
     for m in mods:
-        o = DOG[m]
-        if isinstance(o, list):
-            for x, y, c in o: rows[y][x] = c
-        else:
-            for i, r in o.items(): rows[int(i)] = list(r)
+        for x, y, c in MODS[m]: rows[y][x] = c
     if tail:
-        for x, y, c in DOG[tail]: rows[y][x] = c
+        for x, y, c in MODS[tail]: rows[y][x] = c
     return rows
 
-def svg(mods=(), head=False, label=None):
-    rows = grid(mods, None if head else 'tailA')[:HEAD_ROWS if head else 22]
+def svg(mods=(), head=False, label=None, pet='turron'):
+    pal = PETS[pet]['pal']
+    rows = grid(mods, None if head else 'tailA', pet)[:HEAD_ROWS if head else 22]
     h = len(rows)
     a = ' role="img" aria-label="%s"' % label if label else ' aria-hidden="true"'
     out = '<svg viewBox="0 0 22 %d" shape-rendering="crispEdges"%s>' % (h, a)
@@ -40,7 +52,7 @@ def svg(mods=(), head=False, label=None):
             if c == '.': x += 1; continue
             x0 = x
             while x < 22 and r[x] == c: x += 1
-            out += '<rect x="%d" y="%d" width="%d" height="1" fill="%s"/>' % (x0, y, x - x0, DOG['pal'][c])
+            out += '<rect x="%d" y="%d" width="%d" height="1" fill="%s"/>' % (x0, y, x - x0, pal[c])
     return out + '</svg>'
 
 def uri(s):
@@ -50,16 +62,17 @@ def uri(s):
 def icons():
     from PIL import Image
     BG = (255, 200, 58, 255)  # placa del collar
-    def head(scale):
-        rows = grid((), None)[:HEAD_ROWS]
-        im = Image.new('RGBA', (22, HEAD_ROWS), (0, 0, 0, 0))
-        for y, r in enumerate(rows):
-            for x, c in enumerate(r):
-                if c != '.':
-                    h = '#B7791F' if c == 'Y' else DOG['pal'][c]  # la placa, más oscura para que se vea sobre el fondo amarillo
-                    im.putpixel((x, y), tuple(int(h[i:i + 2], 16) for i in (1, 3, 5)) + (255,))
-        return im.resize((22 * scale, HEAD_ROWS * scale), Image.NEAREST)
-    for size, scale, name in [(512, 16, 'icon-512.png'), (192, 6, 'icon-192.png'), (180, 6, 'apple-touch-icon.png'), (512, 14, 'icon-maskable-512.png')]:
+    def head(scale):  # Sam, Turrón y Roma juntos (English Dog)
+        im = Image.new('RGBA', (22 * 3 + 2, HEAD_ROWS), (0, 0, 0, 0))
+        for n, pet in enumerate(['sam', 'turron', 'roma']):
+            pal = PETS[pet]['pal']
+            for y, r in enumerate(grid((), None, pet)[:HEAD_ROWS]):
+                for x, c in enumerate(r):
+                    if c != '.':
+                        h = '#B7791F' if c == 'Y' else pal[c]  # la placa, más oscura para que se vea sobre el fondo amarillo
+                        im.putpixel((x + n * 23, y), tuple(int(h[i:i + 2], 16) for i in (1, 3, 5)) + (255,))
+        return im.resize((im.width * scale, HEAD_ROWS * scale), Image.NEAREST)
+    for size, scale, name in [(512, 7, 'icon-512.png'), (192, 2, 'icon-192.png'), (180, 2, 'apple-touch-icon.png'), (512, 5, 'icon-maskable-512.png')]:
         im = Image.new('RGBA', (size, size), BG)
         h = head(scale)
         im.paste(h, ((size - h.width) // 2, (size - h.height) // 2 + scale), h)
@@ -82,7 +95,7 @@ assert s.count('function render(keep){') == 1
 s = s.replace('function render(keep){', 'function renderV1(keep){')
 m = 'var VIEWS={inicio:vInicio'
 assert s.count(m) == 1
-v4 = rd('src', 'turron.js').replace('__DOG__', json.dumps(DOG, ensure_ascii=False))
+v4 = rd('src', 'turron.js').replace('__DOG__', json.dumps(JSDOG, ensure_ascii=False))
 v4 += "\nfunction stopMic(){ mic.cb=null; if(mic.on){ if(caps.dictation){ try{ caps.dictation.stop(); }catch(e){} } if(T.rec){ try{ T.rec.abort(); }catch(e){} } } mic.on=false; }\n"
 s = s.replace(m, rd('src', 'learning.js') + v4 + '\nvar VIEWS={tutor:vTutor,inicio:vInicio')
 
@@ -92,7 +105,7 @@ old = s[a:b]
 def tab(k):
     i = old.index('<button data-tab="%s">' % k); return old[i:old.index('</button>', i) + 9]
 nav = ('<nav class="tabs" aria-label="Secciones">\n  ' + tab('inicio') + '\n  ' + tab('frases') +
-       '\n  <button data-tab="tutor" class="tcenter"><span class="tdog">' + svg(head=True) + '</span>Turrón</button>\n  ' +
+       '\n  <button data-tab="tutor" class="tcenter"><span class="tdog">' + svg(head=True) + '</span><span class="petname">Turrón</span></button>\n  ' +
        tab('trabajo') + '\n  ' + tab('practicar') + '\n</nav>')
 s = s[:a] + nav + s[b:]
 # ícono de pestaña incrustado (funciona también dentro de Claude, donde no hay carpeta icons/)
@@ -116,11 +129,11 @@ for a, c in P:
 wr(s, 'dist', 'claude.html')
 
 # ---------- sitio público (GitHub Pages): Gemini + app instalable ----------
-a = '<title>Turrón: aprendiendo con el Jeirer</title>'
+a = '<title>English Dog: aprendiendo inglés con Turrón</title>'
 assert a in s
 web = s.replace(a, a + '\n' + rd('src', 'gemini.html') + rd('src', 'pwa.html') + rd('src', 'sync.html'))
 assert web.count('</head>\n<body>') == 1
-web = web.replace('</head>\n<body>', '</head>\n<body>\n<div id="splash" aria-hidden="true"><span>' + svg() + '</span><b>Turrón</b></div>', 1)
+web = web.replace('</head>\n<body>', '</head>\n<body>\n<div id="splash" aria-hidden="true"><span>' + svg() + '</span><b>English Dog</b></div>', 1)
 wr(web, 'index.html')
 icons()
 h = hashlib.sha256((web + rd('src', 'sw.js') + rd('src', 'manifest.webmanifest')).encode('utf-8'))

@@ -8,6 +8,8 @@ web
 
 ## Users
 
+App name: **English Dog**. Family users: Eduardo, Mariana and their daughter Camila (button login, child-friendly tutor); other Google accounts get a guest profile.
+
 Eduardo and Mariana, a Spanish-speaking couple who recently moved to Aruba. Adult
 beginners in English, using the app on their phones in short sessions. Mariana works as a
 reservations agent; Eduardo as a telecommunications technician. Each has their own
@@ -45,7 +47,8 @@ reflects their progress.
 
 ## Brand Commitments
 
-- Name: El Tutor Turrón. Turrón is an original pixel beagle (22×22 sprite in
+- Name: English Dog (formerly El Tutor Turrón). Three original pixel dogs to learn with: Turrón (beagle, the family's real dog), Sam (beige cocker spaniel, 9) and Roma (white female poodle, 3).
+- Former name: El Tutor Turrón. Turrón is an original pixel beagle (22×22 sprite in
   `src/turron_sprite.json`) and must stay original; "Pokémon-like" refers only to the pixel style.
 - Turrón is the brand, the guide and the progress meter, not a decoration.
 

@@ -1,6 +1,10 @@
 
 /* ================= v4: Turrón, tutor IA con voz ================= */
 var DOG=__DOG__;
+/* mascotas: Turrón (beagle), Sam (cocker spaniel, 9 años) y Roma (poodle, 3 años). Cada una tiene su sprite,
+   su paleta y su personalidad; las variantes (ojos, boca, cola, casco…) son las mismas para las tres. */
+var PET=DOG.pets.turron; PET.k='turron';
+function PN(){ return PET.n; }
 var T={chat:[],busy:false,sc:null,dog:'idle',voice:true,fix:true,micLang:'en',noSR:false,heard:''};
 /* ---- Turrón: motor de estados ----
    Estados: idle, listen, think, talk, fix (corrección suave), happy, party (gran celebración), sleep.
@@ -16,14 +20,24 @@ var NIGHTCAP=(function(){ var p=[],x; for(x=5;x<=16;x++) p.push([x,-1,'#FFF8EE']
   for(x=16;x<=18;x++) p.push([x,-6,'#D6336C']); p.push([19,-7,'#FFF8EE'],[20,-7,'#FFF8EE'],[19,-6,'#FFF8EE'],[20,-6,'#FFF8EE']); return p; })();
 var CONF=['#FFC83A','#D6336C','#F27A9B','#FFFFFF','#0B8A99'];
 function glyphPx(g,x0,y0){ var out=[], b=GLYPH[g]; b.forEach(function(r,y){ for(var x=0;x<r.length;x++) if(r[x]==='#') out.push([x0+x,y0+y,GCOL[g]]); }); return out; }
-function dogSVG(mods,tail,extra,vb){ var rows=DOG.rows.map(function(r){return r.split('');});
+function dogSVG(mods,tail,extra,vb,pet){ var P=(pet&&DOG.pets[pet])||PET, rows=P.rows.map(function(r){return r.split('');});
+  (P.base||[]).forEach(function(p){ rows[p[1]][p[0]]=p[2]; });
   mods.forEach(function(m){ var o=DOG[m]||LOOK[m]; if(!o) return; if(Array.isArray(o)) o.forEach(function(p){ rows[p[1]][p[0]]=p[2]; }); else for(var i in o) rows[+i]=o[i].split(''); });
   if(tail) DOG[tail].forEach(function(p){ rows[p[1]][p[0]]=p[2]; });
   var out='<svg viewBox="'+(vb||'0 0 22 22')+'" shape-rendering="crispEdges" aria-hidden="true">';
-  rows.forEach(function(r,y){ var x=0; while(x<22){ var c=r[x]; if(c==='.'){ x++; continue; } var x0=x; while(x<22&&r[x]===c) x++; out+='<rect x="'+x0+'" y="'+y+'" width="'+(x-x0)+'" height="1" fill="'+DOG.pal[c]+'"/>'; } });
-  (extra||[]).forEach(function(p){ out+='<rect x="'+p[0]+'" y="'+p[1]+'" width="1" height="1" fill="'+(DOG.pal[p[2]]||p[2])+'"/>'; });
+  rows.forEach(function(r,y){ var x=0; while(x<22){ var c=r[x]; if(c==='.'){ x++; continue; } var x0=x; while(x<22&&r[x]===c) x++; out+='<rect x="'+x0+'" y="'+y+'" width="'+(x-x0)+'" height="1" fill="'+(P.pal[c]||DOG.pal[c])+'"/>'; } });
+  (extra||[]).forEach(function(p){ out+='<rect x="'+p[0]+'" y="'+p[1]+'" width="1" height="1" fill="'+(P.pal[p[2]]||p[2])+'"/>'; });
   return out+'</svg>'; }
-/* Turrón fuera de su pestaña: pdog(variantes, clase, estado, soloCabeza) */
+/* cambiar de mascota: nombre, logo, botón central, caras de los avisos y título */
+function petHead(mods,pet){ return dogSVG(mods||[],null,null,'0 0 22 14',pet); }
+function svgURI(x){ return 'url("data:image/svg+xml,'+encodeURIComponent(x.replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" '))+'")'; }
+function setPet(k){ if(!DOG.pets[k]) k='turron'; if(PET.k===k&&setPet.done) return; setPet.done=true; PET=DOG.pets[k]; PET.k=k; dogKey='';
+  [].forEach.call(document.querySelectorAll('.petname'),function(e){ e.textContent=PET.n; });
+  var h=petHead(); [].forEach.call(document.querySelectorAll('.logo,.tdog'),function(e){ e.innerHTML=h; });
+  var r=document.documentElement.style; r.setProperty('--dog-head',svgURI(h)); r.setProperty('--dog-ok',svgURI(petHead(['happy']))); r.setProperty('--dog-sleep',svgURI(petHead(['sleep'])));
+  document.title='English Dog: aprendiendo inglés con '+PET.n; }
+function applyPet(){ var m=mem[mem.who]; setPet((m&&m.pet)||'turron'); }
+/* la mascota fuera de su pestaña: pdog(variantes, clase, estado, soloCabeza) */
 function pdog(mods,cls,state,head){ return '<span class="pdog '+cls+'" data-state="'+(state||'idle')+'">'+dogSVG(mods,head?null:'tailA',null,head?'0 0 22 14':null)+'</span>'; }
 
 var dogTick=0, dogKey='', noMotion=false; try{ noMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
@@ -59,7 +73,7 @@ function dogDraw(){ var el=$('#dog'), mini=$('#dogMini'); if(!el&&!mini) return;
   var svg=dogSVG(f.mods,f.tail,f.extra,'0 -8 22 30');
   if(el) el.innerHTML=svg; if(mini) mini.innerHTML=svg.replace('viewBox="0 -8 22 30"','viewBox="0 -8 22 22"'); }
 function setDog(s){ clearTimeout(DS.timer); if(s==='idle'||s==='talk'||s==='listen'||s==='think') DS.base=s; T.dog=s; DS.gag=null; dogKey=''; dogDraw();
-  var l=$('#dogLab'); if(l) l.textContent=DOGLAB[s]||''; var m=$('#tMiniLab'); if(m) m.textContent=DOGLAB[s]||'Ver a Turrón'; }
+  var l=$('#dogLab'); if(l) l.textContent=DOGLAB[s]||''; var m=$('#tMiniLab'); if(m) m.textContent=DOGLAB[s]||'Ver a '+PN(); }
 /* estado de un momento (corrección, acierto, fiesta) que vuelve solo al estado de base */
 function flashDog(s,ms){ var back=DS.base; setDog(s); DS.timer=setTimeout(function(){ if(T.dog===s) setDog(back); },ms); }
 function mouthPulse(){ DS.lastWord=Date.now(); DS.mouthUntil=DS.lastWord+160; }
@@ -91,9 +105,12 @@ var TSC=[
  {who:'el',t:'Pedir materiales a un compañero',p:'Role-play: you are a co-worker at the telecom warehouse. The learner is a field technician asking for cable, connectors and tools.'},
  {who:'both',t:'Hablar con mi supervisor',p:'Role-play: you are the learner\'s supervisor at work in Aruba. Ask how today is going, what problems came up, and discuss tomorrow\'s schedule.'},
  {who:'both',t:'Charla libre sobre mi trabajo',p:'Have a relaxed conversation about the learner\'s job and work day. Ask simple questions about what they do, their co-workers, schedule and customers.'},
- {who:'both',t:'Pregúntale a Turrón: ¿cómo se dice…?',ask:1,p:'The learner will ask, in Spanish or broken English, how to say things they need at work. In EN give the best natural English phrase for work and one short example. Then ask what else they need.'}];
+ {who:'both',t:'Pregúntale a tu mascota: ¿cómo se dice…?',ask:1,p:'The learner will ask, in Spanish or broken English, how to say things they need at work. In EN give the best natural English phrase for work and one short example. Then ask what else they need.'}];
+function studentLine(){ if(mem.who==='camila') return 'Camila, a Spanish-speaking girl who lives in Aruba with her parents and is learning English. Be extra warm, playful and encouraging, use very simple words, and keep every topic child-friendly.';
+  if(mem.who==='el'||mem.who==='ella') return 'a Spanish-speaking adult beginner (CEFR A1-A2) who recently moved to Aruba and works as '+jobLine()+'. The goal is the English they need at work.';
+  return 'a Spanish-speaking adult beginner (CEFR A1-A2) living in Aruba. The goal is everyday English for home, shopping, school and work.'; }
 function jobLine(){ return mem.who==='el'?'a telecommunications field technician':'a reservations agent'; }
-function tPrompt(sc){ return 'You are Turrón, a friendly beagle who tutors English. Your student is a Spanish-speaking adult beginner (CEFR A1-A2) who recently moved to Aruba and works as '+jobLine()+'. The goal is the English they need at work.\n\nTask: '+sc.p+'\n\nRules:\n- Use short, simple, natural spoken English: one or two sentences, common words. It will be read aloud.\n- Always end with something the student can answer.\n- Check the student\'s last message. Small typos, missing capitals or punctuation do not count as mistakes (it may be voice transcription).\n- Reply in EXACTLY this format, four lines, nothing else:\nEN: <your next line in English>\nES: <Spanish translation of your EN line>\nFIX: <the student\'s last message rewritten in correct, natural English; write OK if it was already fine or if this is your first turn>\nTIP: <one short sentence in Spanish explaining the correction, or a short praise in Spanish if it was fine>\n\nStart now with your first line.'; }
+function tPrompt(sc){ return 'You are '+PET.n+', '+PET.en+' who tutors English. Stay in character as this dog. Your student is '+studentLine()+'\n\nTask: '+sc.p+'\n\nRules:\n- Use short, simple, natural spoken English: one or two sentences, common words. It will be read aloud.\n- Always end with something the student can answer.\n- Check the student\'s last message. Small typos, missing capitals or punctuation do not count as mistakes (it may be voice transcription).\n- Reply in EXACTLY this format, four lines, nothing else:\nEN: <your next line in English>\nES: <Spanish translation of your EN line>\nFIX: <the student\'s last message rewritten in correct, natural English; write OK if it was already fine or if this is your first turn>\nTIP: <one short sentence in Spanish explaining the correction, or a short praise in Spanish if it was fine>\n\nStart now with your first line.'; }
 function tParse(t){ function pick(k){ var m=new RegExp('(?:^|\\n)\\s*'+k+':\\s*([\\s\\S]*?)(?=\\n\\s*(?:EN|ES|FIX|TIP):|$)').exec(t); return m?m[1].trim():''; }
   var en=pick('EN'), fix=pick('FIX'); if(/^ok\.?$/i.test(fix)) fix=''; return {en:en||t.trim(),es:pick('ES'),fix:fix,tip:pick('TIP')}; }
 function aiState(){ if(caps.sample) return 'ok'; try{ if(window.TUTOR_GEMINI||window.TUTOR_API) return 'ok'; }catch(e){} return caps.sample===undefined?'wait':'none'; }
@@ -155,31 +172,31 @@ function tTurn(){ var sc=T.sc; T.busy=true; tDraw(); setDog('think');
      if(!T.chat.length&&c!=='clave'){ T.sc=null; render(true); } else tDraw();
      var i=$('#tIn2'); if(i&&back) i.value=back;
      if(c==='clave'&&window.TUTOR_KEY&&window.TUTOR_KEY.get()){ window.TUTOR_KEY.set(''); }
-     toast(c==='rate_limited'?'Se alcanzó el límite gratuito de Gemini por ahora. Esperen un minuto.':c==='clave'?(window.TUTOR_KEY?'Falta la clave de Gemini o no es válida.':'Hace falta la clave del tutor.'):'Turrón no pudo responder. Prueben otra vez.'); }); }
+     toast(c==='rate_limited'?'Se alcanzó el límite gratuito de Gemini por ahora. Esperen un minuto.':c==='clave'?(window.TUTOR_KEY?'Falta la clave de Gemini o no es válida.':'Hace falta la clave del tutor.'):PN()+' no pudo responder. Prueben otra vez.'); }); }
 function tBubble(){ var last=null; for(var i=T.chat.length-1;i>=0;i--) if(T.chat[i].role==='assistant'){ last=T.chat[i].p; break; }
   if(T.busy) return '<p class="en"><i>…</i></p>';
   if(last) return '<p class="en" lang="en">'+esc(last.en)+'</p>'+(last.es?'<p class="es">'+esc(last.es)+'</p>':'')+'<button class="play" data-say="'+esc(last.en)+'" aria-label="Escuchar otra vez">'+PLAY+'</button>';
-  return '<p class="en" lang="en">Woof! I\'m Turrón. Let\'s practice your work English.</p><p class="es">¡Guau! Soy Turrón. Practiquemos tu inglés para el trabajo.</p>'; }
+  return '<p class="en" lang="en">Woof! I\'m '+esc(PN())+'. Let\'s practice your English.</p><p class="es">¡Guau! Soy '+esc(PN())+'. Practiquemos tu inglés.</p>'; }
 function tDraw(){ var b=$('#tBub'); if(b) b.innerHTML=tBubble(); var c=$('#tLog'); if(!c) return;
   c.innerHTML=T.chat.map(function(m,i){ if(m.role==='user') return '<div class="msg me" lang="en">'+esc(m.text)+'</div>'; var p=m.p, out='';
     if(i>0&&p.fix) out+='<div class="msg tipm"><b>Se dice así:</b> <span lang="en">'+esc(p.fix)+'</span> <button class="slow" data-say="'+esc(p.fix)+'">escuchar</button>'+(p.tip?'<br>'+esc(p.tip):'')+'</div>';
     else if(i>0&&p.tip) out+='<div class="msg okm">'+esc(p.tip)+'</div>';
     return out+'<div class="msg bot"><button class="play" data-say="'+esc(p.en)+'" aria-label="Escuchar">'+PLAY+'</button><div><div lang="en"><b>'+esc(p.en)+'</b></div>'+(p.es?'<div class="es">'+esc(p.es)+'</div>':'')+'</div></div>'; }).join('');
   var f=$('#tCtl'); if(f){ var dis=T.busy?' disabled':'';
-    if(T.needPass){ if(!f.querySelector('#tPass')) f.innerHTML=window.TUTOR_KEY?'<div class="ex" style="text-align:left"><h3 style="margin-top:0">Conecta a Turrón con Gemini</h3><ol><li>Abre <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> con tu cuenta de Google.</li><li>Toca «Create API key» y copia la clave.</li><li>Pégala aquí. Se guarda solo en este teléfono.</li></ol><div class="bar"><input class="inp" id="tPass" type="password" autocomplete="off" style="flex:1;min-width:0" aria-label="Clave de Gemini"><button class="btn fill" id="tPassOk">Guardar</button></div></div>':'<p>Escriban la clave del tutor:</p><div class="bar"><input class="inp" id="tPass" type="password" style="flex:1;min-width:0" aria-label="Clave del tutor"><button class="btn fill" id="tPassOk">Guardar</button></div>'; }
+    if(T.needPass){ if(!f.querySelector('#tPass')) f.innerHTML=window.TUTOR_KEY?'<div class="ex" style="text-align:left"><h3 style="margin-top:0">Conecta a '+PN()+' con Gemini</h3><ol><li>Abre <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> con tu cuenta de Google.</li><li>Toca «Create API key» y copia la clave.</li><li>Pégala aquí. Se guarda solo en este teléfono.</li></ol><div class="bar"><input class="inp" id="tPass" type="password" autocomplete="off" style="flex:1;min-width:0" aria-label="Clave de Gemini"><button class="btn fill" id="tPassOk">Guardar</button></div></div>':'<p>Escriban la clave del tutor:</p><div class="bar"><input class="inp" id="tPass" type="password" style="flex:1;min-width:0" aria-label="Clave del tutor"><button class="btn fill" id="tPassOk">Guardar</button></div>'; }
     else if(T.over){ f.innerHTML='<p><b>Buena práctica.</b> Lean otra vez las correcciones y anoten una frase en «Mi cuaderno».</p><button class="btn pink" id="tNew">Otra conversación</button>'; }
-    else if(!f.querySelector('#tIn2')){ f.innerHTML=(micAvail()?'<button class="micbig" id="tMic" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>Toca para hablar</span></button><p class="heard" id="tHeard" aria-live="polite"></p>':'<p class="note">El micrófono no está disponible en esta vista. Escriban su respuesta; Turrón igual responde y corrige.</p>')+
+    else if(!f.querySelector('#tIn2')){ f.innerHTML=(micAvail()?'<button class="micbig" id="tMic" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg><span>Toca para hablar</span></button><p class="heard" id="tHeard" aria-live="polite"></p>':'<p class="note">El micrófono no está disponible en esta vista. Escriban su respuesta; '+PN()+' igual responde y corrige.</p>')+
         '<div class="bar"><input class="inp" id="tIn2" enterkeyhint="send" style="flex:1;min-width:0" lang="en" autocomplete="off" placeholder="O escriban aquí en inglés" aria-label="Su respuesta"><button class="btn fill" id="tSend2">Enviar</button></div>'+
-        '<div class="row tset"><button class="btn small" id="tVoice" aria-pressed="'+T.voice+'">Voz de Turrón: '+(T.voice?'sí':'no')+'</button><button class="btn small" id="tFix" aria-pressed="'+T.fix+'">Corregir en voz alta: '+(T.fix?'sí':'no')+'</button>'+(!caps.dictation&&SRClass()&&!T.noSR?'<button class="btn small" id="tLang">Hablo en: '+(T.micLang==='es'?'español':'inglés')+'</button>':'')+'<button class="btn small" id="tNew">Cambiar de tema</button>'+(window.TUTOR_KEY&&window.TUTOR_KEY.get()?'<button class="btn small" id="tKey">Cambiar clave de Gemini</button>':'')+'</div>'; }
+        '<div class="row tset"><button class="btn small" id="tVoice" aria-pressed="'+T.voice+'">Voz de '+PN()+': '+(T.voice?'sí':'no')+'</button><button class="btn small" id="tFix" aria-pressed="'+T.fix+'">Corregir en voz alta: '+(T.fix?'sí':'no')+'</button>'+(!caps.dictation&&SRClass()&&!T.noSR?'<button class="btn small" id="tLang">Hablo en: '+(T.micLang==='es'?'español':'inglés')+'</button>':'')+'<button class="btn small" id="tNew">Cambiar de tema</button>'+(window.TUTOR_KEY&&window.TUTOR_KEY.get()?'<button class="btn small" id="tKey">Cambiar clave de Gemini</button>':'')+'</div>'; }
     var bs=f.querySelectorAll('#tMic,#tSend2'); for(var k=0;k<bs.length;k++) bs[k].disabled=!!T.busy; }
   var end=$('#tEnd'); if(end&&T.chat.length>1){ try{ end.scrollIntoView({block:'end'}); }catch(e){} } }
 function vTutor(){ var a=aiState(), mine=mem.who, list=TSC.map(function(s,i){return {s:s,i:i};}).sort(function(x,y){ function r(z){ return z.s.who===mine?0:z.s.who==='both'?1:2; } return r(x)-r(y)||x.i-y.i; });
-  var head='<div class="tstage"><div><div class="dog" id="dog" data-state="'+T.dog+'"></div><p class="doglab" id="dogLab" aria-live="polite"></p></div><div class="tb" id="tBub">'+tBubble()+'</div></div>'+(T.sc?'<button class="tmini" id="tMini" hidden><span class="dogmini" id="dogMini" aria-hidden="true"></span><span id="tMiniLab">'+(DOGLAB[T.dog]||'Ver a Turrón')+'</span></button>':'');
+  var head='<div class="tstage"><div><div class="dog" id="dog" data-state="'+T.dog+'"></div><p class="doglab" id="dogLab" aria-live="polite"></p></div><div class="tb" id="tBub">'+tBubble()+'</div></div>'+(T.sc?'<button class="tmini" id="tMini" hidden><span class="dogmini" id="dogMini" aria-hidden="true"></span><span id="tMiniLab">'+(DOGLAB[T.dog]||'Ver a '+PN())+'</span></button>':'');
   var body;
-  if(a!=='wait'&&!caps.sample&&navigator.onLine===false){ T.dog='sleep'; head=head.replace('data-state="idle"','data-state="sleep"'); body='<div class="empty"><p><b>Sin conexión.</b> Turrón necesita internet para conversar. Todo lo demás funciona sin conexión: frases, juegos y tarjetas.</p></div><button class="btn" data-go="practicar">Ir a los juegos</button>'; }
-  else if(a==='wait') body='<p>Buscando a Turrón…</p>';
-  else if(a==='none') body='<aside class="box warn"><strong class="t">Turrón necesita conexión con la IA</strong><p>En esta vista no hay un servicio de IA disponible. Dentro de Claude funciona al abrir la guía con sesión iniciada. Mientras tanto pueden practicar las mismas situaciones en «Role-plays y juegos».</p></aside><button class="btn" data-start="role">Ir a los role-plays</button>';
-  else if(!T.sc) body='<h1>Turrón, tu tutor de inglés</h1><p>Elige una situación de tu trabajo. Turrón hace el otro papel, te habla en inglés sencillo y corrige cada respuesta, por voz y por escrito.</p><div class="tlist">'+list.map(function(x){ return '<button class="mode" data-tsc="'+x.i+'"><b>'+x.s.t+'</b><span>'+(x.s.who==='el'?'Técnico':x.s.who==='ella'?'Reservaciones':'Para los dos')+'</span></button>'; }).join('')+'</div><p class="note">La primera vez puede pedir permiso para usar la IA y el micrófono. Turrón es una IA y puede equivocarse.</p>';
+  if(a!=='wait'&&!caps.sample&&navigator.onLine===false){ T.dog='sleep'; head=head.replace('data-state="idle"','data-state="sleep"'); body='<div class="empty"><p><b>Sin conexión.</b> '+PN()+' necesita internet para conversar. Todo lo demás funciona sin conexión: frases, juegos y tarjetas.</p></div><button class="btn" data-go="practicar">Ir a los juegos</button>'; }
+  else if(a==='wait') body='<p>Buscando a '+PN()+'…</p>';
+  else if(a==='none') body='<aside class="box warn"><strong class="t">'+PN()+' necesita conexión con la IA</strong><p>En esta vista no hay un servicio de IA disponible. Dentro de Claude funciona al abrir la guía con sesión iniciada. Mientras tanto pueden practicar las mismas situaciones en «Role-plays y juegos».</p></aside><button class="btn" data-start="role">Ir a los role-plays</button>';
+  else if(!T.sc) body='<h1>'+PN()+', tu '+(PET.f?'tutora':'tutor')+' de inglés</h1><p>Elige una situación. '+PN()+' hace el otro papel, te habla en inglés sencillo y corrige cada respuesta, por voz y por escrito.</p><div class="tlist">'+list.map(function(x){ return '<button class="mode" data-tsc="'+x.i+'"><b>'+x.s.t+'</b><span>'+(x.s.who==='el'?'Técnico':x.s.who==='ella'?'Reservaciones':'Para los dos')+'</span></button>'; }).join('')+'</div><p class="note">La primera vez puede pedir permiso para usar la IA y el micrófono. '+PN()+' es una IA y puede equivocarse.</p>';
   else body='<p class="note" style="margin-top:0">'+esc(T.sc.t)+'</p><div id="tLog" class="chat tchat" aria-live="polite"></div><div id="tCtl" class="tctl"></div><div id="tEnd"></div>';
   return '<div class="wrap tutor">'+head+body+'</div>'; }
 
@@ -196,9 +213,9 @@ document.addEventListener('click',function(e){ var t=e.target.closest('button');
 });
 document.addEventListener('keydown',function(e){ if(e.key!=='Enter') return; if(e.target.id==='tIn2'){ e.preventDefault(); $('#tSend2').click(); } if(e.target.id==='tPass'){ $('#tPassOk').click(); } });
 /* el modo «tutor» de Practicar lleva a la pestaña de Turrón */
-function tutor(){ st.mode=null; setTimeout(function(){ go('tutor'); },0); var g=$('#game'); if(g) g.innerHTML='<p>Abriendo a Turrón…</p>'; }
+function tutor(){ st.mode=null; setTimeout(function(){ go('tutor'); },0); var g=$('#game'); if(g) g.innerHTML='<p>Abriendo a '+PN()+'…</p>'; }
 /* modo compacto: si la escena de Turrón sale de la pantalla, queda una barrita con su cabeza y su glifo */
-function afterRender(){ [].forEach.call(document.querySelectorAll('body > .tmini'),function(x){ x.remove(); }); if(st.tab!=='tutor') return;
+function afterRender(){ applyPet(); [].forEach.call(document.querySelectorAll('body > .tmini'),function(x){ x.remove(); }); if(st.tab!=='tutor') return;
   var mv=$('#view .tmini'); if(mv) document.body.appendChild(mv); /* fuera de #view: su animación de entrada rompería position:fixed */ dogKey=''; dogDraw(); if(T.sc) tDraw();
   miniCheck(); }
 function miniCheck(){ var stg=$('.tstage'), mini=$('#tMini'); if(!stg||!mini) return; var top=0, hd=$('.top'), tb=$('.tabs'); if(hd){ var hr=hd.getBoundingClientRect(); if(hr.bottom>0) top=hr.bottom; } if(tb){ var br=tb.getBoundingClientRect(); if(br.top<140&&br.bottom>top) top=br.bottom; }
@@ -207,16 +224,21 @@ var miniRaf=0; window.addEventListener('scroll',function(){ if(st.tab!=='tutor'|
 document.addEventListener('click',function(e){ if(e.target.closest&&e.target.closest('#tMini')){ var stg=$('.tstage'); if(stg) stg.scrollIntoView({behavior:noMotion?'auto':'smooth',block:'start'}); } });
 
 /* avisos de conexión */
-window.addEventListener('offline',function(){ toast('Sin conexión. Todo funciona menos la conversación con Turrón.'); if(st.tab==='tutor'&&!T.sc) render(true); });
+window.addEventListener('offline',function(){ toast('Sin conexión. Todo funciona menos la conversación con '+PN()+'.'); if(st.tab==='tutor'&&!T.sc) render(true); });
 window.addEventListener('online',function(){ if(st.tab==='tutor'&&!T.sc){ T.dog='idle'; render(true); } });
 
 /* Gemini por Firebase listo (src/sync.html): si Turrón esperaba una clave, sigue solo */
 window.TURRON_APP.aiReady=function(){ if(st.tab!=='tutor'||!T.needPass) return; T.needPass=false; var f=$('#tCtl'); if(f) f.innerHTML=''; if(T.sc&&!T.busy&&(!T.chat.length||T.chat[T.chat.length-1].role==='user')) tTurn(); else tDraw(); };
 
 /* Turrón de bienvenida (pantalla de entrar con Google): saluda hablando, después mueve la cola feliz */
-window.TURRON_APP.welcomeFrame=function(t){ var mods=[], extra=[], tail='tailA', c=t%24;
-  if(noMotion) return dogSVG(['happy'],'tailA',glyphPx('heart',16,-7),'0 -8 22 30');
+window.TURRON_APP.welcomeFrame=function(t,pet){ var mods=[], extra=[], tail='tailA', c=t%24;
+  if(noMotion) return dogSVG(['happy'],'tailA',glyphPx('heart',16,-7),'0 -8 22 30',pet);
   if(t<12){ if(t%2===0) mods.push('talk'); if(t%4<2) tail='tailB'; extra=glyphPx('note',16,-7); }
   else if(c<12){ mods.push('happy'); if(t%2) tail='tailB'; extra=glyphPx('heart',16,-7-(Math.floor(t/2)%2)); }
   else { if(c===20) mods.push('blink'); if(Math.floor(t/2)%2) tail='tailB'; }
-  return dogSVG(mods,tail,extra,'0 -8 22 30'); };
+  return dogSVG(mods,tail,extra,'0 -8 22 30',pet); };
+/* elegir mascota (pantalla de bienvenida y tarjeta de Inicio) */
+window.TURRON_APP.pets=function(){ return Object.keys(DOG.pets).map(function(k){ var p=DOG.pets[k]; return {k:k,n:p.n,breed:p.breed,age:p.age,f:p.f}; }); };
+window.TURRON_APP.pet=function(){ var m=mem[mem.who]; return (m&&m.pet)||''; };
+window.TURRON_APP.setPet=function(k){ if(!DOG.pets[k]) return; me().pet=k; save(); setPet(k); render(true); };
+applyPet();

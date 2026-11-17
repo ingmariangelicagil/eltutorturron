@@ -135,7 +135,28 @@ button,.tabs,.chips,.who,summary,.pdog,.dog{-webkit-user-select:none;user-select
 .hcode{font-family:var(--pixel);font-size:1.5rem;letter-spacing:.12em;color:var(--deep)}
 a.btn{display:inline-flex;align-items:center;text-decoration:none}
 
-/* bienvenida: entrar con Google antes de usar la app (solo jeirer.web.app) */
+/* con sesión, cada uno ve solo su perfil: no hay selector de persona */
+.logged .who{display:none}
+/* entrada: las tres mascotas, Google y CAMILA; luego elegir mascota */
+.gtrio{display:flex;justify-content:center;align-items:flex-end;gap:4px;margin:0 auto 4px}
+.gtrio .gdog{width:96px;height:131px;margin:0;animation:gateIn .6s cubic-bezier(.2,.8,.2,1) both}
+.gtrio .gdog:nth-child(2){width:120px;height:164px;animation-delay:.08s}
+.gtrio .gdog:nth-child(3){animation-delay:.16s}
+.gcam{width:100%;margin-top:12px;min-height:54px;font-size:1.1rem;letter-spacing:.12em;background:var(--tag);border-color:var(--tag);color:var(--tink);--bs:#B98F1C}
+.gload{font-weight:700}
+.gq{font-size:1.15rem;font-weight:700;margin:6px 0 16px}
+.gpets{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.gpet{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid transparent;border-radius:18px;background:var(--paper);color:var(--ink);padding:10px 4px 12px;box-shadow:0 4px 0 rgba(43,26,18,.25);min-height:44px}
+.gpet.on{border-color:var(--sea)}
+.gpet b{font-family:var(--pixel);font-size:1.25rem}
+.gpet small{font-size:.8rem;color:var(--soft);text-align:center;line-height:1.2}
+.gpdog{display:block;width:72px;height:98px}
+.gpdog svg{display:block;width:100%;height:100%;stroke:none}
+.gpick .slow{color:var(--hero-ink)}
+@media (max-width:360px){.gtrio .gdog{width:80px;height:109px}.gtrio .gdog:nth-child(2){width:96px;height:131px}.gpdog{width:60px;height:82px}}
+@media (hover:hover) and (pointer:fine){.gpet:hover{border-color:var(--caramel)}}
+
+/* bienvenida: entrar antes de usar la app (solo jeirer.web.app) */
 html.gated,html.gated body{overflow:hidden}
 #gate{position:fixed;inset:0;z-index:90;overflow-y:auto;overscroll-behavior:contain;background:var(--hero);color:var(--hero-ink);display:grid;place-items:center;padding:calc(24px + env(safe-area-inset-top,0px)) 20px calc(24px + env(safe-area-inset-bottom,0px))}
 .gate-in{width:100%;max-width:420px;text-align:center}
