@@ -61,25 +61,70 @@ def uri(s):
     s = s.replace(' aria-hidden="true"', ' xmlns="http://www.w3.org/2000/svg"').replace('"', "'")
     return 'url("data:image/svg+xml,%s")' % quote(s, safe=" =:/';,")
 
+def icon_grid(total, m):
+    """Ícono de English Dog en píxeles lógicos: cuadrícula 2x2 con Turrón, Sam, Roma y «EG».
+    total = lado en píxeles lógicos; m = margen exterior. Devuelve una lista de filas de colores (None = fondo)."""
+    g = 2; c = (total - 2 * m - g) // 2
+    px = [[None] * total for _ in range(total)]
+    def hx(h): return tuple(int(h[i:i + 2], 16) for i in (1, 3, 5))
+    INK = hx('#2B1A12'); SHADOW = hx('#B7791F'); TAG = hx('#FFC83A')
+    tiles = [('turron', '#FFF8EE'), ('sam', '#E1ECF8'), ('roma', '#FCE8F0'), ('EG', '#2B1A12')]
+    E = ['11111', '10000', '10000', '11110', '10000', '10000', '11111']
+    G = ['01111', '10000', '10000', '10111', '10001', '10001', '01110']
+    for n, (what, bg) in enumerate(tiles):
+        x0 = m + (n % 2) * (c + g); y0 = m + (n // 2) * (c + g)
+        for y in range(c):
+            for x in range(c):
+                # esquinas redondeadas de píxel, como los botones de la app
+                if (x in (0, c - 1) and y in (0, 1, c - 2, c - 1)) or (y in (0, c - 1) and x in (0, 1, c - 2, c - 1)): continue
+                px[y0 + y][x0 + x] = hx(bg)
+        # sombra de 1 píxel bajo cada baldosa (la sombra sólida de los botones)
+        if y0 + c < total:
+            for x in range(2, c - 2): px[y0 + c][x0 + x] = SHADOW
+        if what == 'EG':
+            ox = x0 + (c - 22) // 2; oy = y0 + (c - 14) // 2
+            for li, L in enumerate((E, G)):
+                for y, r in enumerate(L):
+                    for x, v in enumerate(r):
+                        if v == '1':
+                            for dy in (0, 1):
+                                for dx in (0, 1): px[oy + y * 2 + dy][ox + li * 12 + x * 2 + dx] = TAG
+        else:
+            pal = PETS[what]['pal']
+            ox = x0 + (c - 22) // 2; oy = y0 + (c - HEAD_ROWS) // 2
+            for y, r in enumerate(grid((), None, what)[:HEAD_ROWS]):
+                for x, ch in enumerate(r):
+                    if ch != '.': px[oy + y][ox + x] = hx(pal[ch])
+    return px
+
 def icons():
     from PIL import Image
     BG = (255, 200, 58, 255)  # placa del collar
-    def head(scale):  # Sam, Turrón y Roma juntos (English Dog)
-        im = Image.new('RGBA', (22 * 3 + 2, HEAD_ROWS), (0, 0, 0, 0))
-        for n, pet in enumerate(['sam', 'turron', 'roma']):
-            pal = PETS[pet]['pal']
-            for y, r in enumerate(grid((), None, pet)[:HEAD_ROWS]):
-                for x, c in enumerate(r):
-                    if c != '.':
-                        h = '#B7791F' if c == 'Y' else pal[c]  # la placa, más oscura para que se vea sobre el fondo amarillo
-                        im.putpixel((x + n * 23, y), tuple(int(h[i:i + 2], 16) for i in (1, 3, 5)) + (255,))
-        return im.resize((im.width * scale, HEAD_ROWS * scale), Image.NEAREST)
-    for size, scale, name in [(512, 7, 'icon-512.png'), (192, 2, 'icon-192.png'), (180, 2, 'apple-touch-icon.png'), (512, 5, 'icon-maskable-512.png')]:
-        im = Image.new('RGBA', (size, size), BG)
-        h = head(scale)
-        im.paste(h, ((size - h.width) // 2, (size - h.height) // 2 + scale), h)
-        os.makedirs(os.path.join(ROOT, 'icons'), exist_ok=True)
+    def render(total, m, scale):
+        px = icon_grid(total, m); im = Image.new('RGBA', (total, total), BG)
+        for y, r in enumerate(px):
+            for x, col in enumerate(r):
+                if col: im.putpixel((x, y), col + (255,))
+        return im.resize((total * scale, total * scale), Image.NEAREST)
+    os.makedirs(os.path.join(ROOT, 'icons'), exist_ok=True)
+    for name, total, m, scale, size in [('icon-512.png', 64, 3, 8, 512), ('icon-192.png', 64, 3, 3, 192),
+                                        ('apple-touch-icon.png', 60, 2, 3, 180), ('icon-maskable-512.png', 58, 0, 6, 512)]:
+        im = Image.new('RGBA', (size, size), BG); g = render(total, m, scale)
+        im.paste(g, ((size - g.width) // 2, (size - g.height) // 2))
         im.save(os.path.join(ROOT, 'icons', name), optimize=True)
+
+def icon_svg():
+    px = icon_grid(64, 3)
+    out = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" shape-rendering="crispEdges"><rect width="64" height="64" fill="#FFC83A"/>'
+    for y, r in enumerate(px):
+        x = 0
+        while x < 64:
+            col = r[x]
+            if not col: x += 1; continue
+            x0 = x
+            while x < 64 and r[x] == col: x += 1
+            out += '<rect x="%d" y="%d" width="%d" height="1" fill="#%02X%02X%02X"/>' % ((x0, y, x - x0) + col)
+    return out + '</svg>'
 
 # ---------- página ----------
 s = rd('src', 'base.html')
@@ -117,7 +162,7 @@ s = s[:a] + nav + s[b:]
 # ícono de pestaña incrustado (funciona también dentro de Claude, donde no hay carpeta icons/)
 fav = '<link rel="icon" href="icons/icon-192.png">'
 assert s.count(fav) == 1
-s = s.replace(fav, '<link rel="icon" href="%s">' % uri(svg(head=True))[4:-1].strip('"'))
+s = s.replace(fav, '<link rel="icon" href="data:image/svg+xml,%s">' % quote(icon_svg().replace('"', "'"), safe=" =:/';,"))
 # logo en la barra superior
 s = s.replace('<span class="logo"></span>', '<span class="logo">' + svg(head=True) + '</span>', 1)
 
