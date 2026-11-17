@@ -18,6 +18,22 @@ logo, botón central, caras de los avisos y título; `PN()` da el nombre y `PET.
 guarda por persona (`pet`). Perfiles: Eduardo (`el`), Mariana (`ella`), Camila (`camila`, la hija) y
 invitados (`inv`). El ícono de la app muestra las tres cabezas.
 
+### Caminos de aprendizaje (v7)
+
+- **Mi camino** (pestaña central-derecha, antes «Trabajo»): 20 unidades en 5 etapas con puntaje de 0 a 100 (cada unidad vale 5; sube con las frases marcadas ✓; una unidad está lista al 80 %). `pathTopics()`, `kidScore()`, `vCamino()` en `learning.js`.
+- **Camila** (`src/content_camila.py`): 20 unidades propias, Pre-A1 a B1, sobre su vida (salón Montessori, casa, amigos, Aruba), con trucos para errores de hispanohablantes, retos y notas «Para mamá y papá»; 12 situaciones de conversación (`KID_SCENARIOS`) y su «Ya puedo…» (`KID_CANDO`). Siempre son las **últimas 20 secciones** (`KID0`).
+- **Eduardo y Mariana** (`src/content_adult.py`): camino A1 a B1 con 13 secciones de la guía + 7 unidades nuevas (small talk, pasado, futuro, quejas, mensajes, reuniones, entrevistas). Las 2 unidades de trabajo cambian por persona (técnico 9/20 o reservaciones 10/21). Las 7 nuevas van justo antes de las de Camila (`AD0`) y también aparecen en Frases. «Todo el inglés de trabajo» sigue a un toque desde el camino.
+- **Selector de mascota**: tocar el logo de arriba (o «Cambiar de mascota» en la pestaña de la mascota) abre `openPicker()`. La **paleta cambia con la mascota** (`html[data-pet=sam|roma]` en `identity.css`, claro y oscuro, contraste AA comprobado) y la barra del teléfono la sigue (`theme-color`).
+
+### Correr las pruebas
+
+```
+pip install playwright
+CHROME="%LOCALAPPDATA%/Google/Chrome/Application/chrome.exe" python tests/turron_test.py
+CHROME=... python -u tests/audit_test.py
+```
+Desde la raíz del repo, después de construir. La barra inferior solo se oculta al escribir en pantallas táctiles (`pointer:coarse`).
+
 ## Antes: identidad Turrón (v5)
 
 La app ya gira en torno a **Turrón**: paleta del sprite, títulos en Pixelify Sans,

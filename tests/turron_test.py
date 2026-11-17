@@ -4,7 +4,7 @@ CL="window.__log=[];window.claude={use:n=>Promise.resolve(n==='tts'?{speak:(t,o)
 WEB="""window.__log=[];window.TUTOR_API='/api/tutor';window.fetch=(u,o)=>{window.__req=JSON.parse(o.body);return Promise.resolve({ok:!!window.__passok||(__req.clave==='abc'),status:401,json:()=>Promise.resolve({text:'EN: Hi there! How is work today?\\nES: Hola, como va el trabajo?\\nFIX: OK\\nTIP: Bien.'})})};
 window.SpeechRecognition=window.webkitSpeechRecognition=function(){var r=this;r.start=()=>{setTimeout(()=>r.onstart(),10);setTimeout(()=>{r.onresult({resultIndex:0,results:[Object.assign([{transcript:'It is busy today'}],{isFinal:true})]});r.onend()},80)};r.stop=r.abort=()=>{}};"""
 with sync_playwright() as p:
-    b=p.chromium.launch(executable_path='/usr/bin/google-chrome',args=['--no-sandbox'])
+    b=p.chromium.launch(executable_path=__import__('os').environ.get('CHROME','/usr/bin/google-chrome'),args=['--no-sandbox'])
     def page(init,scheme='light',w=390):
         pg=b.new_page(viewport={'width':w,'height':844},color_scheme=scheme); pg.errs=[]
         pg.on('pageerror',lambda e:pg.errs.append(str(e))); pg.on('console',lambda m:pg.errs.append(m.text) if m.type=='error' else None)
@@ -17,7 +17,7 @@ with sync_playwright() as p:
     pg.evaluate('window.scrollTo(0,document.body.scrollHeight)'); pg.wait_for_timeout(200); pg.screenshot(path='t4.png')
     print('spoken:',pg.evaluate('__log')); print('msgs sent roles:',pg.evaluate('__msgs.map(m=>m.role).join()'),'| state',pg.get_attribute('#dog','data-state'),'| msgs',len(pg.query_selector_all('.msg')))
     pg.click('#tFix'); pg.click('#tVoice'); pg.click('#tNew'); pg.wait_for_timeout(100); assert pg.query_selector('[data-tsc]')
-    pg.click('[data-tab=trabajo]'); pg.click('[data-go=tutor]'); pg.click('[data-tab=practicar]'); pg.click('.mode[data-start=tutor]'); pg.wait_for_timeout(200); assert pg.query_selector('#dog')
+    pg.click('[data-tab=trabajo]'); pg.click('[data-work=tec]'); pg.click('[data-go=tutor]'); pg.click('[data-tab=practicar]'); pg.click('.mode[data-start=tutor]'); pg.wait_for_timeout(200); assert pg.query_selector('#dog')
     pg.click('[data-who=el]'); pg.wait_for_timeout(100); print('first for el:',pg.inner_text('.tlist .mode b'))
     print('claude errs',pg.errs,'overflow',pg.evaluate('document.documentElement.scrollWidth')); pg.close()
     # standalone website (Firebase): fetch + browser speech recognition, password flow

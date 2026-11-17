@@ -9,7 +9,7 @@ fails=[]
 def check(c,msg):
     if not c: fails.append(msg); print('  FAIL',msg)
 def new(pw,init=None,w=390,h=800):
-    b=pw.chromium.launch(executable_path='/usr/bin/google-chrome',args=['--no-sandbox'])
+    b=pw.chromium.launch(executable_path=__import__('os').environ.get('CHROME','/usr/bin/google-chrome'),args=['--no-sandbox'])
     pg=b.new_page(viewport={'width':w,'height':h},reduced_motion='reduce'); pg.errs=[]
     pg.on('pageerror',lambda e:pg.errs.append(str(e))); pg.on('console',lambda m:pg.errs.append(m.text) if m.type=='error' else None)
     if init: pg.add_init_script(init)
@@ -19,8 +19,9 @@ def tour(pg,label,deep=True):
     ov=[]
     def O(where):
         if pg.evaluate('document.documentElement.scrollWidth>window.innerWidth+1'): ov.append(where)
-    for tab in ['inicio','frases','trabajo','practicar','plan']:
+    for tab in ['inicio','frases','tutor','trabajo','practicar']:
         pg.click(f'[data-tab={tab}]'); O(tab)
+    pg.click('[data-tab=inicio]'); pg.click('.mode[data-go=plan]'); O('plan')  # el Plan vive dentro de Inicio
     pg.click('[data-tab=frases]')
     for k in pg.eval_on_selector_all('[data-topic]','e=>e.map(x=>x.dataset.topic)'):
         pg.click(f'[data-topic={k}]'); O('frases/'+k)
@@ -77,13 +78,14 @@ with sync_playwright() as pw:
             check(len(pg.inner_html('#view'))>500,name+': blank page')
             tour(pg,'inject: '+name,deep=name.startswith(('tts','storage throws','no audio','dictation')))
             if 'sample' in name:
-                pg.click('[data-tab=practicar]'); pg.click('.mode[data-start=tutor]'); pg.wait_for_timeout(80)
-                if pg.query_selector('#tStart'):
-                    pg.click('#tStart'); pg.wait_for_timeout(200)
-                    if pg.query_selector('#tIn') and pg.is_visible('#tIn'): pg.fill('#tIn','<img src=x onerror=window.__xss=1> hi'); pg.click('#tSend'); pg.wait_for_timeout(200)
-                    st=pg.evaluate("({start:(document.querySelector('#tStart')||{}).disabled, toast:(document.getElementById('toast')||{}).textContent, msgs:document.querySelectorAll('.msg').length, xss:!!window.__xss})")
-                    print('   tutor state',st); check(not st['xss'],name+' xss')
-                else: print('   tutor hidden:',pg.inner_text('#game')[:60])
+                pg.click('[data-tab=practicar]'); pg.click('.mode[data-start=tutor]'); pg.wait_for_timeout(150)
+                check(pg.evaluate('location.hash')=='#tutor',name+': practicar->tutor opens the pet tab')
+                if pg.query_selector('[data-tsc]'):
+                    pg.click('[data-tsc="0"]'); pg.wait_for_timeout(300)
+                    if pg.query_selector('#tIn2') and pg.is_visible('#tIn2') and pg.is_enabled('#tIn2'): pg.fill('#tIn2','<img src=x onerror=window.__xss=1> hi'); pg.click('#tSend2'); pg.wait_for_timeout(300)
+                    st=pg.evaluate("({toast:(document.getElementById('toast')||{}).textContent, msgs:document.querySelectorAll('.msg').length, dog:(document.getElementById('dog')||{}).dataset&&document.getElementById('dog').dataset.state, xss:!!window.__xss})")
+                    print('   tutor state',st); check(not st['xss'],name+' xss'); check(st['dog']!='think',name+': pet stuck thinking')
+                else: print('   tutor without AI:',pg.inner_text('#view')[:60])
             if name=='no audio at all':
                 pg.click('[data-tab=inicio]'); pg.click('.bigplay'); pg.wait_for_timeout(100); check('audio' in (pg.evaluate("(document.getElementById('toast')||{}).textContent") or ''),'no toast when audio missing')
         except Exception as e: check(False,f'{name}: exception {str(e)[:200]}')
@@ -104,7 +106,7 @@ with sync_playwright() as pw:
         else: pg.click(f'[data-topic={k}]')
         for t in pg.eval_on_selector_all('[data-say]','e=>e.map(x=>x.dataset.say)'):
             n+=1
-            if not re.sub(r'<[^>]+>','',t).strip() or re.search(r'_|&[a-z]+;',t): bad.append((k,t))
+            if k!='mio' and (not re.sub(r'<[^>]+>','',t).strip() or re.search(r'_|&[a-z]+;',t)): bad.append((k,t))  # «Mi cuaderno» lo escribe la persona
         rows=pg.eval_on_selector_all('.phr','e=>e.map(x=>[x.querySelector(".en").textContent.trim(),x.querySelector(".es").textContent.trim()])')
         for en,es in rows:
             if not en or not es: bad.append((k,'empty row',en,es))
@@ -160,7 +162,7 @@ with sync_playwright() as pw:
     check(pg.inner_text('.stats').startswith('1 día'),'streak kept before practising day1: '+pg.inner_text('.stats')[:12])
     n1,_=cards_run(); check(pg.evaluate('1') and True,''); check('pendientes' not in due(),'still due after review day1')
     check(pg.inner_text('.stats').startswith('2 días'),'streak day1 '+pg.inner_text('.stats')[:12])
-    day(2); check('pendientes' not in due(),'box2 should not be due on day2 (interval 2)')
+    day(2); d2=due(); print('day2:',re.search(r'(\d+) pendientes',d2).group(0) if 'pendientes' in d2 else 'none due'); check(f'{n1-n0} pendientes' in d2,'box2 should not be due on day2 (interval 2): only the new cards of day1')
     day(3); d3=due(); print('day3:',re.search(r'(\d+) pendientes',d3).group(0) if 'pendientes' in d3 else 'none due'); check('pendientes' in d3,'box2 due on day3')
     check(pg.inner_text('.stats').startswith('0 días'),'streak should break after a missed day: '+pg.inner_text('.stats')[:12])
     # person separation

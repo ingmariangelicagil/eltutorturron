@@ -38,8 +38,20 @@ TOPICS=[
  {k:'vec',n:'Vecinos y trámites',s:[7]},{k:'med',n:'Médico y emergencias',s:[8]},{k:'tel',n:'Por teléfono',s:[16]},{k:'serv',n:'Carro y servicios',s:[17]},
  {k:'cort',n:'Cortesía',s:[22]},{k:'pron',n:'Pronunciación',s:[2],nopool:1},{k:'gram',n:'Gramática',s:[3]},{k:'verbs',n:'Verbos',s:[19]},{k:'err',n:'Errores típicos',s:[18],nopool:1},
  {k:'tec',n:'Técnico',s:[9,20],work:1},{k:'res',n:'Reservaciones',s:[10,21],work:1}];
+/* Camila: su propio camino de 20 unidades (secciones de content_camila.py, después de las de los adultos) */
+var KID0=SECS.length-20, CTOPICS=[]; for(var ci=0;ci<20;ci++) CTOPICS.push({k:'c'+(ci+1),n:SECS[KID0+ci].title,s:[KID0+ci],kid:1});
+/* unidades nuevas de los adultos (content_adult.py): van en Frases y en su camino */
+var AD0=KID0-D.adult.n, ANEW=['Small talk','Contar el pasado','Planes y citas','Problemas y quejas','Mensajes y correos','Reuniones','Entrevistas'];
+for(var ai=0;ai<D.adult.n;ai++) TOPICS.splice(TOPICS.length-2,0,{k:'n'+ai,n:ANEW[ai],s:[AD0+ai]});
+/* camino de 0 a 100 de cada persona: Camila tiene el suyo; Eduardo y Mariana comparten 18 unidades y cambian las 2 de su trabajo */
+function adultPath(){ var tec=mem.who==='el'; return D.adult.path.map(function(x,i){ var s=x==='job1'?(tec?9:10):x==='job2'?(tec?20:21):typeof x==='string'?AD0+(+x.slice(1)):x;
+    return {k:'p'+(i+1),n:(i+1)+'. '+SECS[s].title.replace(/^Parte \d+ · /,''),s:[s],path:1}; }); }
+function pathTopics(){ return isKid()?CTOPICS:adultPath(); }
+function pathStages(){ return isKid()?D.kid.stages:D.adult.stages; }
+function isKid(){ return !!(mem&&mem.who==='camila'); }
+function TOP(){ return isKid()?CTOPICS:TOPICS; }
 function pool(k,noMine){ var out=[], seen={};
-  TOPICS.forEach(function(t){ if((k!=='all'&&t.k!==k)||t.nopool) return;
+  TOP().forEach(function(t){ if((k!=='all'&&t.k!==k)||t.nopool) return;
     [].concat(t.s).forEach(function(i){ SECS[i].blocks.forEach(function(b){
       if(b.t==='phrases') b.rows.forEach(function(r){ var en=plain(r[0]); if(seen[en]) return; seen[en]=1; out.push({en:en,pr:r[1],es:plain(r[2]),ph:1}); });
       if(b.t==='vocab') b.rows.forEach(function(r){ var en=plain(r[0]); if(seen[en]) return; seen[en]=1; out.push({en:en,pr:'',es:plain(r[1])}); });
@@ -47,6 +59,10 @@ function pool(k,noMine){ var out=[], seen={};
   if(!noMine&&mem&&(k==='all'||k==='mio')) me().mine.forEach(function(x){ if(!seen[x.en]){ seen[x.en]=1; out.push({en:x.en,pr:'',es:x.es,ph:1,mine:1}); } });
   return out; }
 ALLPH=pool('all',true).filter(function(x){return x.ph;});
+var PHC={}; function allPh(){ var key=isKid()?'k':'a'; if(!PHC[key]) PHC[key]=pool('all',true).filter(function(x){return x.ph;}); return PHC[key]; }
+/* puntaje de Camila de 0 a 100: cada unidad vale 5, según las frases que ya dice sin leer */
+function unitPct(t){ var k=me().known, n=0, tot=0; [].concat(t.s).forEach(function(i){ SECS[i].blocks.forEach(function(b){ if(b.t==='phrases') b.rows.forEach(function(r){ tot++; if(k[plain(r[0])]) n++; }); }); }); return tot?n/tot:0; }
+function kidScore(){ var sum=0, P=pathTopics(); P.forEach(function(t){ sum+=unitPct(t)*100/P.length; }); return Math.round(sum); }
 
 function block(b){
   switch(b.t){
@@ -64,9 +80,10 @@ function block(b){
     default: return '';
   } }
 function secs(t){ return [].concat(t.s).map(function(i,n){ return (n?'<h2 class="part">'+SECS[i].title+'</h2>'+(SECS[i].sub?'<p class="note">'+SECS[i].sub+'</p>':''):'')+section(i); }).join(''); }
-function counts(){ var k=me().known, n=0; ALLPH.forEach(function(p){ if(k[p.en]) n++; }); var w=0; for(var i in me().weeks) if(me().weeks[i]) w++;
-  var s=me().srs, t=today(), due=0; for(var e in s) if(s[e].d<=t) due++; return {k:n,t:ALLPH.length,w:w,due:due}; }
+function counts(){ var k=me().known, n=0, AP=allPh(); AP.forEach(function(p){ if(k[p.en]) n++; }); var w=0; for(var i in me().weeks) if(me().weeks[i]) w++;
+  var s=me().srs, t=today(), due=0; for(var e in s) if(s[e].d<=t) due++; return {k:n,t:AP.length,w:w,due:due}; }
 
+var KRETOS=['Saluda a tu maestra en inglés al llegar: «Good morning!».','Di en inglés el color de 5 cosas de tu salón.','Cuenta en inglés hasta 20 mientras te lavas las manos.','Presenta a Turrón, Sam o Roma en inglés a alguien de tu familia.','Juega a «Simon says» con mamá o papá.','Di en inglés qué hay en tu lonchera.','Invita a un amigo a jugar en inglés: «Do you want to play?».','Da el reporte del clima en inglés por la mañana.','Di tres animales de Aruba y de qué color son.','Lee un cuento corto en inglés en voz alta.','Cuenta tu fin de semana en inglés con first, then, finally.','Escribe tres frases en inglés en tu cuaderno.','Pide algo con «May I…, please?» en el colegio.','Explica en inglés un trabajo Montessori que te guste.'];
 var RETOS=['Hagan la lista del supermercado en inglés.','Saluden a un vecino o compañero en inglés y pregunten «How are you?».','Pidan algo en una tienda o restaurante solo en inglés.','Pongan el teléfono en inglés durante todo el día.','Cuenten en la cena tres cosas que hicieron hoy, en pasado.','Vean diez minutos de una serie con subtítulos en inglés y anoten dos frases.','Deletreen su nombre y su correo en voz alta sin leer.','Aprendan una frase nueva de un compañero de trabajo y anótenla en «Mi cuaderno».','Narren en voz alta lo que hacen durante cinco minutos: «I\'m making coffee…».','Pregunten un precio y digan el total en inglés.','Digan su dirección y su teléfono en inglés, de memoria.','Escriban un mensaje corto de WhatsApp en inglés a su pareja.','Hagan un role-play de esta guía sin mirar las frases.','Hagan la «hora en inglés» durante la cena.'];
 
 function vInicio(){ var p=dayPhrase(), c=counts(), who=NAME[mem.who], s=sess(), sk=streak();
@@ -77,18 +94,20 @@ function vInicio(){ var p=dayPhrase(), c=counts(), who=NAME[mem.who], s=sess(), 
    '<div class="bubble"><p class="daily" lang="en">'+esc(p.en)+'</p><p class="daily-es">'+esc(p.es)+'</p><p class="daily-pr">'+esc(p.pr)+'</p></div>'+
    '<div class="hrow">'+pdog(mood==='happy'?['happy']:mood==='sleep'?['sleep']:[],'hdog',mood)+'<div class="row"><button class="bigplay" data-say="'+esc(p.en)+'">'+PLAY.replace('<svg','<svg width="18" height="18" fill="currentColor"')+' Escuchar</button><button class="bigplay ghost" data-say="'+esc(p.en)+'" data-slow="1">Más lento</button></div></div></div></section>'+
    '<div class="wrap"><div class="today"><div><h2>Hoy, '+who+'</h2><p class="note">'+moodTxt+'</p></div><div class="paws" role="img" aria-label="'+nd+' de 4 pasos hechos">'+[0,1,2,3].map(function(i){ return '<span class="paw'+(i<nd?' on':'')+'">'+PAW+'</span>'; }).join('')+'</div></div>'+
-   '<div class="steps">'+step('shadow','Escuchar y repetir','Cinco frases, en voz alta','shadow')+step('cards','Repasar tarjetas',c.due?c.due+' pendientes de repaso hoy':'Frases nuevas y repaso','cards')+step('quiz','Quiz rápido','Diez preguntas','quiz')+step('reto','Reto en la vida real',RETOS[today()%RETOS.length],null)+'</div>'+
+   '<div class="steps">'+step('shadow','Escuchar y repetir','Cinco frases, en voz alta','shadow')+step('cards','Repasar tarjetas',c.due?c.due+' pendientes de repaso hoy':'Frases nuevas y repaso','cards')+step('quiz','Quiz rápido','Diez preguntas','quiz')+step('reto','Reto en la vida real',(isKid()?KRETOS:RETOS)[today()%(isKid()?KRETOS:RETOS).length],null)+'</div>'+
    '<div class="stats"><div class="stat streak">'+pdog(sk?['happy']:mood==='sleep'?['sleep']:[],'sdog',sk?'happy':mood==='sleep'?'sleep':'idle',true)+'<div><b>'+sk+(sk===1?' día':' días')+'</b><span>seguidos practicando</span></div></div>'+
    '<div class="stat"><b>'+c.k+' de '+c.t+'</b><span>frases que ya sabe</span><div class="meter"><i style="width:'+(100*c.k/c.t)+'%"></i></div></div>'+
    '<div class="stat"><b>'+c.w+' de 12</b><span>semanas del plan</span><div class="meter"><i style="width:'+(100*c.w/12)+'%"></i></div></div></div>'+
    (document.documentElement.classList.contains('logged')?'':'<p class="note">Cada uno tiene su propio progreso. Cambien de persona arriba, en «Eduardo / Mariana».</p>')+(window.TURRON_SYNC?window.TURRON_SYNC.card():'')+
    '<h2>Ir a</h2><div class="modes">'+
-   '<button class="mode" data-go="frases"><b>Frases por situación</b><span>13 temas con audio y un buscador.</span></button>'+
-   '<button class="mode" data-go="trabajo"><b>Inglés para el trabajo</b><span>Técnico de telecomunicaciones y agente de reservaciones.</span></button>'+
+   (isKid()?'<button class="mode" data-go="trabajo"><b>Mi camino de 0 a 100</b><span>Vas en '+kidScore()+' de 100. Escoge tu próxima unidad.</span></button>'+
+     '<button class="mode" data-go="frases"><b>Mis unidades</b><span>20 unidades con audio: colegio, casa, amigos y Aruba.</span></button>':
+   '<button class="mode" data-go="trabajo"><b>Mi camino de A1 a B1</b><span>Vas en '+kidScore()+' de 100. Veinte unidades, incluidas las de tu trabajo.</span></button>'+
+   '<button class="mode" data-go="frases"><b>Frases por situación</b><span>'+TOPICS.filter(function(t){return !t.work;}).length+' temas con audio y un buscador.</span></button>')+
    '<button class="mode" data-go="tutor"><b>Hablar con '+PN()+'</b><span>El tutor con IA: conversa y te corrige por voz.</span></button>'+
    '<button class="mode" data-go="practicar"><b>Todos los juegos</b><span>Números al oído, sonidos difíciles, tarjetas y más.</span></button>'+
-   '<button class="mode" data-go="plan"><b>Plan y nivel</b><span>12 semanas, «Ya puedo…» y el método.</span></button></div>'+
-   '<div class="sos"><b>Emergencias en Aruba</b><p>Ambulancia y bomberos: <b>911</b><br>Policía: <b>100</b></p><p>Practiquen decir su dirección: <span lang="en">«My address is…»</span>. Las frases están en Frases, en «Médico y emergencias».</p></div>'+
+   '<button class="mode" data-go="plan"><b>'+(isKid()?'Ya puedo…':'Plan y nivel')+'</b><span>'+(isKid()?'Marca lo que ya logras hacer en inglés.':'12 semanas, «Ya puedo…» y el método.')+'</span></button></div>'+
+   '<div class="sos"><b>Emergencias en Aruba</b><p>Ambulancia y bomberos: <b>911</b><br>Policía: <b>100</b></p>'+(isKid()?'<p>Si pasa algo, busca a un adulto y di: <span lang="en">«Help, please!»</span>. Aprende de memoria tu dirección: <span lang="en">«I live at…»</span>.</p>':'<p>Practiquen decir su dirección: <span lang="en">«My address is…»</span>. Las frases están en Frases, en «Médico y emergencias».</p>')+'</div>'+
    '<details><summary>Cómo usar esta guía</summary>'+section(0)+'</details>'+
    '<p class="note">Toquen cualquier botón de escuchar para oír la frase en inglés. El progreso se guarda en este navegador; en otro teléfono empieza de cero.</p></div>'; }
 
@@ -99,14 +118,23 @@ function mineView(){ var m=me().mine;
   return '<p>Anoten aquí las frases que escuchan en el trabajo o en la calle. Entran en las tarjetas y en los quizzes.</p>'+
    '<div class="ex"><p><label>En inglés<br><input class="inp w100" id="mEn" lang="en" autocomplete="off" autocapitalize="off"></label></p><p><label>En español<br><input class="inp w100" id="mEs" autocomplete="off"></label></p><div class="bar"><button class="btn fill" id="mAdd">Guardar frase</button><span class="fb" id="mFb" style="margin:0"></span></div></div>'+
    (m.length? m.map(function(x,i){ return phraseRow(esc(x.en),'',esc(x.es))+'<p style="margin:0 0 10px;text-align:right"><button class="slow" data-mdel="'+i+'">Borrar esta frase</button></p>'; }).join('') : '<div class="empty">'+pdog([],'edog','idle')+'<p>Todavía no hay frases en el cuaderno de '+NAME[mem.who]+'. '+PN()+' espera la primera.</p></div>'); }
-function vFrases(){ var list=TOPICS.filter(function(t){return !t.work;}), all=list.concat([{k:'mio',n:'Mi cuaderno'}]);
-  var t=all.filter(function(x){return x.k===st.topic;})[0]||all[0], title, body;
+function vFrases(){ var list=TOP().filter(function(t){return !t.work;}), all=list.concat([{k:'mio',n:'Mi cuaderno'}]);
+  var t=all.concat(isKid()?[]:adultPath()).filter(function(x){return x.k===st.topic;})[0]||all[0], title, body;
   if(t.k==='mio'){ title='Mi cuaderno'; body=mineView(); }
   else { title=SECS[t.s[0]].title.replace(/^Parte \d+ · /,''); body=(SECS[t.s[0]].sub?'<p class="note">'+SECS[t.s[0]].sub+'</p>':'')+(t.k==='pron'?pronTable():'')+secs(t); }
   return '<div class="wrap"><p style="margin:18px 0 0"><input class="inp w100" id="q" type="search" enterkeyhint="search" placeholder="Buscar una frase en español o inglés" aria-label="Buscar una frase" autocomplete="off"></p><div id="sres"></div>'+
    '<div id="tbody">'+chips(all,t.k,'data-topic')+'<h1>'+title+'</h1><p class="note">Toquen el botón redondo para escuchar. Marquen ✓ cuando ya la digan sin leer.</p>'+body+'</div></div>'; }
-function vTrabajo(){ var k= st.work || (mem.who==='el'?'tec':'res'); var t=TOPICS.filter(function(x){return x.k===k;})[0];
-  return '<div class="wrap"><div class="jobhead">'+pdog(k==='tec'?['helmet']:['headset'],'jdog','idle')+'<h1>'+(k==='tec'?'Técnico de telecomunicaciones':'Agente de reservaciones')+'</h1></div>'+
+function vCamino(){ var sc=kidScore(), next=null, P=pathTopics();
+  var body=pathStages().map(function(g){ var cards=P.slice(g[2]-1,g[3]).map(function(t,j){ var pc=Math.round(unitPct(t)*100), n=g[2]+j; if(!next&&pc<80) next=t;
+      return '<button class="unit'+(pc>=80?' done':'')+'" data-unit="'+t.k+'"><span class="un">'+n+'</span><span class="ut"><b>'+esc(t.n.replace(/^\d+\.\s*/,''))+'</b><small>'+(pc>=80?'¡Lista! ':'')+pc+'% de las frases</small></span><span class="ubar" aria-hidden="true"><i style="width:'+pc+'%"></i></span></button>'; }).join('');
+    return '<h2>'+g[0]+' <small class="lvl">'+g[1]+'</small></h2>'+cards; }).join('');
+  return '<div class="wrap"><div class="jobhead">'+pdog(sc>=100?['happy']:[],'jdog',sc>=100?'happy':'idle')+'<div><h1>Mi camino</h1><p class="note" style="margin:0">'+(isKid()?'De 0 a 100, a tu ritmo, como en Montessori.':'De A1 a B1: la vida en Aruba y el inglés de '+(mem.who==='el'?'técnico de telecomunicaciones':'agente de reservaciones')+'.')+'</p></div></div>'+
+   '<div class="score" role="img" aria-label="'+sc+' de 100"><b>'+sc+'</b><span>de 100</span><span class="sbar" aria-hidden="true"><i style="width:'+sc+'%"></i></span></div>'+
+   (next?'<p>Te sugerimos seguir con <b>'+esc(next.n)+'</b>. <button class="btn pink small" data-unit="'+next.k+'">Abrir</button></p>':'<p><b>¡Completaste las 20 unidades!</b> Sigue conversando con '+PN()+' para no olvidar.</p>')+
+   '<p class="note">Cada unidad vale 5 puntos. Sube tu puntaje marcando ✓ las frases que ya dices sin leer.</p>'+body+
+   (isKid()?'':'<h2>Todo el inglés de trabajo</h2><div class="row"><button class="btn small" data-work="tec">Técnico</button><button class="btn small" data-work="res">Reservaciones</button></div>')+'</div>'; }
+function vTrabajo(){ if(isKid()||!st.work) return vCamino(); var k= st.work || (mem.who==='el'?'tec':'res'); var t=TOPICS.filter(function(x){return x.k===k;})[0];
+  return '<div class="wrap"><p style="margin:16px 0 0"><button class="btn small" data-work="">← Mi camino</button></p><div class="jobhead">'+pdog(k==='tec'?['helmet']:['headset'],'jdog','idle')+'<h1>'+(k==='tec'?'Técnico de telecomunicaciones':'Agente de reservaciones')+'</h1></div>'+
    chips(TOPICS.filter(function(x){return x.work;}),k,'data-work')+
    '<div class="row" style="margin:6px 0 4px"><button class="btn pink small" data-go="tutor">Practicar con '+PN()+'</button><button class="btn small" data-start="quiz" data-deck="'+k+'">Quiz</button><button class="btn small" data-start="cards" data-deck="'+k+'">Tarjetas</button></div>'+secs(t)+'</div>'; }
 
@@ -133,7 +161,7 @@ MODES=[['shadow','Escuchar y repetir','Imiten la frase en voz alta. Tiene modo m
  ['spell','Deletrear','Letras, códigos de confirmación y el alfabeto fonético.','--sun-t'],
  ['guide','Ejercicios escritos','Seis ejercicios de gramática y traducción, con corrección.','--flamingo-t'],
  ['role','Role-plays y juegos','Escenarios para practicar los dos juntos.','--lagoon-t']];
-function deckSel(){ var opts=TOPICS.filter(function(t){return !t.nopool;}).map(function(t){return [t.k,t.n];}); if(me().mine.length) opts.push(['mio','Mi cuaderno']);
+function deckSel(){ var opts=TOP().filter(function(t){return !t.nopool;}).map(function(t){return [t.k,t.n];}); if(me().mine.length) opts.push(['mio','Mi cuaderno']);
   return '<label>Tema: <select class="inp" id="deck"><option value="all">Todos</option>'+opts.map(function(o){return '<option value="'+o[0]+'"'+(st.deck===o[0]?' selected':'')+'>'+o[1]+'</option>';}).join('')+'</select></label>'; }
 function vPracticar(){
   if(!st.mode) return '<div class="wrap"><h1 style="margin-top:22px">Practicar</h1><p>Diez minutos al día valen más que dos horas el domingo. Si no saben por dónde empezar, hagan la sesión de hoy en Inicio.</p><div class="modes">'+
@@ -287,11 +315,25 @@ var METODO=[['Recordar en vez de releer','Cada tarjeta les pide decir la frase a
  ['Su vida real primero','El vocabulario del trabajo y de sus trámites se repite todos los días, así que se aprende más rápido que el de un libro general.'],
  ['Poco y diario','Diez o quince minutos todos los días rinden más que una sesión larga a la semana. La racha de días en Inicio es para cuidar ese hábito.'],
  ['Hablar aunque sea mal','El tutor con IA y los role-plays son para equivocarse sin costo. La corrección inmediata es la que más enseña.']];
-function vPlan(){ var m=me(); var days=['L','M','X','J','V','S','D'];
+/* frase del día: la de Camila sale de sus primeras unidades */
+function dayPhrase(){ var d=new Date(), n=Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5);
+  var src=isKid()?['c1','c2','c3','c4','c5','c6','c7','c9','c10'].reduce(function(a,k){ return a.concat(pool(k,true)); },[]):pool('surv').concat(pool('super'),pool('casa'));
+  var pick=src.filter(function(x){return x.ph&&x.en.length<46;}); return pick[n%pick.length]; }
+/* «Ya puedo…» de Camila, por etapa */
+function vPlanKid(){ var m=me(), id=0, sc=kidScore();
+  return '<div class="wrap"><h1 style="margin-top:22px">Ya puedo…</h1><p>Marca lo que ya logras hacer en inglés en la vida real: en el colegio, en casa o con tus amigos. Tu camino va en <b>'+sc+' de 100</b>.</p>'+
+   D.kid.cando.map(function(g){ var n=0, rows=g[1].map(function(c){ var k='k'+(id++), on=m.cando[k]; if(on) n++; return '<label class="wk'+(on?' done':'')+'"><input type="checkbox" data-cando="'+k+'"'+(on?' checked':'')+'><span>'+c+'</span></label>'; }).join('');
+     return '<h3>'+g[0]+' ('+n+' de '+g[1].length+')</h3>'+rows; }).join('')+
+   '<h2>Para mamá y papá</h2>'+
+   '<details><summary>Cómo está pensado este camino</summary><p>Son 20 unidades en 5 etapas, de Pre-A1 a B1 (equivalentes a los exámenes Cambridge para niños: Starters, Movers, Flyers y Preliminary for Schools). Cada unidad parte de la vida real de Camila (su salón Montessori, su casa, sus amigos, Aruba) y trae palabras, frases con audio, un diálogo, un truco para los errores típicos de quien habla español y un reto para la vida real.</p></details>'+
+   '<details><summary>Cómo ayudarla en casa</summary><p>Quince minutos diarios valen más que dos horas el fin de semana. Usen el inglés en rutinas fijas (desayuno, camino al colegio, hora de dormir), celebren el intento y no el error, y cuando se equivoque repitan la frase bien dicha con naturalidad en vez de decir «está mal». Leer cuentos en inglés en voz alta y ver series con subtítulos en inglés también ayuda mucho.</p></details>'+
+   '<details><summary>Cómo se calcula el puntaje</summary><p>Cada unidad vale 5 puntos. El puntaje sube a medida que Camila marca ✓ las frases que ya dice sin leer. Una unidad se considera lista al 80 %.</p></details></div>'; }
+function vPlan(){ if(isKid()) return vPlanKid(); var m=me(); var days=['L','M','X','J','V','S','D'];
   var acts=['Sesión de hoy en la guía','Hora en inglés en casa','Juego «Three things» en la cena','Una frase nueva en «Mi cuaderno»','Usé inglés en el trabajo o la calle'];
   var id=0, lvl='', cd=CANDO.map(function(grp,gi){ var n=0, rows=grp[1].map(function(c){ var k='c'+(id++), on=m.cando[k]; if(on) n++; return '<label class="wk'+(on?' done':'')+'"><input type="checkbox" data-cando="'+k+'"'+(on?' checked':'')+'><span>'+c+'</span></label>'; }).join('');
     if(gi<2&&n>=grp[1].length-1) lvl=gi===0?'A1':'A2'; return '<h3>'+grp[0]+' ('+n+' de '+grp[1].length+')</h3>'+rows; }).join('');
   return '<div class="wrap"><h1 style="margin-top:22px">Plan y nivel</h1>'+
+   '<p class="score-line">Su camino va en <b>'+kidScore()+' de 100</b>. <button class="btn small" data-go="trabajo">Ver mi camino</button></p>'+
    '<h2>Ya puedo…</h2><p>Marquen lo que ya logran hacer en la vida real, no lo que «saben». Revísenlo cada dos semanas.'+(lvl?' Según sus marcas, van por el nivel <b>'+lvl+'</b>.':'')+'</p><p class="note">A1 y A2 son los dos primeros niveles del Marco Común Europeo, la escala más usada para medir idiomas.</p>'+cd+
    '<h2>Plan de 12 semanas</h2><p>Una meta por semana. Marquen cada semana cuando la terminen.</p>'+
    D.plan.map(function(p){ var d=m.weeks[p[0]]; return '<label class="wk'+(d?' done':'')+'"><input type="checkbox" data-week="'+p[0]+'"'+(d?' checked':'')+'><span><b>Semana '+p[0]+': '+p[1]+'</b><small>'+p[2]+'</small></span></label>'; }).join('')+
@@ -349,3 +391,8 @@ try{ new MutationObserver(function(ms){ ms.forEach(function(m){ var c=m.target.c
 /* texto plano sin ejecutar nada: documento inerte */
 function plain(s){ try{ return new DOMParser().parseFromString('<!DOCTYPE html><body>'+String(s),'text/html').body.textContent||''; }catch(e){ return String(s).replace(/<[^>]*>/g,''); } }
 hookCaps();
+
+/* abrir una unidad del camino de Camila */
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-unit]'); if(!t) return; st.topic=t.getAttribute('data-unit'); go('frases'); });
+/* volver de «Todo el inglés de trabajo» al camino */
+document.addEventListener('click',function(e){ var t=e.target.closest&&e.target.closest('[data-work]'); if(!t||t.getAttribute('data-work')!=='') return; st.work=null; render(); });

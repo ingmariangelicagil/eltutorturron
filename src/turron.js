@@ -35,8 +35,27 @@ function setPet(k){ if(!DOG.pets[k]) k='turron'; if(PET.k===k&&setPet.done) retu
   [].forEach.call(document.querySelectorAll('.petname'),function(e){ e.textContent=PET.n; });
   var h=petHead(); [].forEach.call(document.querySelectorAll('.logo,.tdog'),function(e){ e.innerHTML=h; });
   var r=document.documentElement.style; r.setProperty('--dog-head',svgURI(h)); r.setProperty('--dog-ok',svgURI(petHead(['happy']))); r.setProperty('--dog-sleep',svgURI(petHead(['sleep'])));
-  document.title='English Dog: aprendiendo inglés con '+PET.n; }
-function applyPet(){ var m=mem[mem.who]; setPet((m&&m.pet)||'turron'); }
+  document.title='English Dog: aprendiendo inglés con '+PET.n;
+  /* la paleta cambia con la mascota (identity.css: html[data-pet=…]) y la barra del teléfono la sigue */
+  document.documentElement.setAttribute('data-pet',k);
+  try{ var sea=getComputedStyle(document.documentElement).getPropertyValue('--sea').trim(); if(sea) [].forEach.call(document.querySelectorAll('meta[name=theme-color]'),function(m){ m.setAttribute('content',sea); }); }catch(e){} }
+function applyPet(){ var m=mem[mem.who]; setPet((m&&m.pet)||'turron');
+  var tb=document.querySelector('.tabs [data-tab=trabajo]'); if(tb){ var tn=tb.lastChild; if(tn&&tn.nodeType===3) tn.nodeValue='Mi camino'; } }
+/* selector de mascota: se abre tocando el logo de arriba o desde la pestaña de la mascota */
+var ppAnim=0, ppBack=null;
+function openPicker(){ closePicker(); ppBack=document.activeElement; var el=document.createElement('div'); el.id='petpick'; el.setAttribute('role','dialog'); el.setAttribute('aria-modal','true'); el.setAttribute('aria-labelledby','ppT');
+  el.innerHTML='<div class="pp-in"><h2 id="ppT">¿Con cuál mascota quieres aprender?</h2><div class="gpets">'+Object.keys(DOG.pets).map(function(k,i){ var p=DOG.pets[k];
+      return '<button class="gpet'+(k===PET.k?' on':'')+'" data-pk="'+k+'" aria-pressed="'+(k===PET.k)+'"><span class="gpdog" data-pet="'+k+'" aria-hidden="true">'+window.TURRON_APP.welcomeFrame(14+i*7,k)+'</span><b>'+esc(p.n)+'</b><small>'+esc(p.breed)+(p.age?' · '+p.age+' años':'')+'</small></button>'; }).join('')+
+    '</div><button class="btn" id="ppClose">Cerrar</button></div>';
+  document.body.appendChild(el); document.documentElement.classList.add('picking');
+  var on=el.querySelector('.gpet.on')||el.querySelector('.gpet'); try{ on.focus({preventScroll:true}); }catch(e){}
+  var t=0; ppAnim=setInterval(function(){ if(document.hidden) return; t++; [].forEach.call(el.querySelectorAll('[data-pet]'),function(d,i){ d.innerHTML=window.TURRON_APP.welcomeFrame(t+i*7,d.getAttribute('data-pet')); }); },230); }
+function closePicker(){ var el=$('#petpick'); clearInterval(ppAnim); ppAnim=0; if(!el) return; el.remove(); document.documentElement.classList.remove('picking'); if(ppBack&&ppBack.focus) try{ ppBack.focus({preventScroll:true}); }catch(e){} }
+document.addEventListener('click',function(e){ var t=e.target;
+  if(t.closest&&t.closest('#petBtn,[data-pickpet]')){ openPicker(); return; }
+  var pk=t.closest&&t.closest('[data-pk]'); if(pk){ window.TURRON_APP.setPet(pk.getAttribute('data-pk')); closePicker(); return; }
+  if(t.id==='ppClose'||t.id==='petpick') closePicker(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&$('#petpick')) closePicker(); });
 /* la mascota fuera de su pestaña: pdog(variantes, clase, estado, soloCabeza) */
 function pdog(mods,cls,state,head){ return '<span class="pdog '+cls+'" data-state="'+(state||'idle')+'">'+dogSVG(mods,head?null:'tailA',null,head?'0 0 22 14':null)+'</span>'; }
 
@@ -106,6 +125,9 @@ var TSC=[
  {who:'both',t:'Hablar con mi supervisor',p:'Role-play: you are the learner\'s supervisor at work in Aruba. Ask how today is going, what problems came up, and discuss tomorrow\'s schedule.'},
  {who:'both',t:'Charla libre sobre mi trabajo',p:'Have a relaxed conversation about the learner\'s job and work day. Ask simple questions about what they do, their co-workers, schedule and customers.'},
  {who:'both',t:'Pregúntale a tu mascota: ¿cómo se dice…?',ask:1,p:'The learner will ask, in Spanish or broken English, how to say things they need at work. In EN give the best natural English phrase for work and one short example. Then ask what else they need.'}];
+D.adult.scen.forEach(function(x){ TSC.splice(TSC.length-1,0,{who:x[0],t:x[1],p:x[2]}); });
+var KSC=D.kid.scen.map(function(x){ return {who:'kid',t:x[0],p:x[1],ask:/cómo se dice/.test(x[0])?1:0}; });
+function scList(){ return mem.who==='camila'?KSC:TSC; }
 function studentLine(){ if(mem.who==='camila') return 'Camila, a Spanish-speaking girl who lives in Aruba with her parents and is learning English. Be extra warm, playful and encouraging, use very simple words, and keep every topic child-friendly.';
   if(mem.who==='el'||mem.who==='ella') return 'a Spanish-speaking adult beginner (CEFR A1-A2) who recently moved to Aruba and works as '+jobLine()+'. The goal is the English they need at work.';
   return 'a Spanish-speaking adult beginner (CEFR A1-A2) living in Aruba. The goal is everyday English for home, shopping, school and work.'; }
@@ -154,7 +176,7 @@ function tListen(){ if(T.busy) return; stopAll();
     r.start(); }catch(e){ T.noSR=true; render(true); } }
 function tHeard(text){ if(st.tab!=='tutor') return; if(!text){ toast('No se escuchó nada. Prueben otra vez, más cerca del micrófono.'); return; } tSend(text); }
 
-function tStart(i){ T.chat=[]; T.sc=TSC[i]; T.busy=false; T.over=false; if(window.TUTOR_KEY&&!caps.sample&&!window.TUTOR_KEY.get()&&!window.TUTOR_AI_READY){ T.needPass=true; render(true); return; } render(true); tTurn(); }
+function tStart(i){ T.chat=[]; T.sc=scList()[i]; T.busy=false; T.over=false; if(window.TUTOR_KEY&&!caps.sample&&!window.TUTOR_KEY.get()&&!window.TUTOR_AI_READY){ T.needPass=true; render(true); return; } render(true); tTurn(); }
 function tSend(text){ if(T.busy||!T.sc) return; text=String(text).trim().slice(0,400); if(!text) return; T.chat.push({role:'user',text:text}); tTurn(); }
 function tTurn(){ var sc=T.sc; T.busy=true; tDraw(); setDog('think');
   var msgs=[{role:'user',content:tPrompt(sc)}]; T.chat.forEach(function(m){ msgs.push({role:m.role,content:m.role==='user'?m.text:m.raw}); });
@@ -190,13 +212,13 @@ function tDraw(){ var b=$('#tBub'); if(b) b.innerHTML=tBubble(); var c=$('#tLog'
         '<div class="row tset"><button class="btn small" id="tVoice" aria-pressed="'+T.voice+'">Voz de '+PN()+': '+(T.voice?'sí':'no')+'</button><button class="btn small" id="tFix" aria-pressed="'+T.fix+'">Corregir en voz alta: '+(T.fix?'sí':'no')+'</button>'+(!caps.dictation&&SRClass()&&!T.noSR?'<button class="btn small" id="tLang">Hablo en: '+(T.micLang==='es'?'español':'inglés')+'</button>':'')+'<button class="btn small" id="tNew">Cambiar de tema</button>'+(window.TUTOR_KEY&&window.TUTOR_KEY.get()?'<button class="btn small" id="tKey">Cambiar clave de Gemini</button>':'')+'</div>'; }
     var bs=f.querySelectorAll('#tMic,#tSend2'); for(var k=0;k<bs.length;k++) bs[k].disabled=!!T.busy; }
   var end=$('#tEnd'); if(end&&T.chat.length>1){ try{ end.scrollIntoView({block:'end'}); }catch(e){} } }
-function vTutor(){ var a=aiState(), mine=mem.who, list=TSC.map(function(s,i){return {s:s,i:i};}).sort(function(x,y){ function r(z){ return z.s.who===mine?0:z.s.who==='both'?1:2; } return r(x)-r(y)||x.i-y.i; });
+function vTutor(){ var a=aiState(), mine=mem.who, list=scList().map(function(s,i){return {s:s,i:i};}).sort(function(x,y){ function r(z){ return z.s.who===mine?0:z.s.who==='both'?1:2; } return r(x)-r(y)||x.i-y.i; });
   var head='<div class="tstage"><div><div class="dog" id="dog" data-state="'+T.dog+'"></div><p class="doglab" id="dogLab" aria-live="polite"></p></div><div class="tb" id="tBub">'+tBubble()+'</div></div>'+(T.sc?'<button class="tmini" id="tMini" hidden><span class="dogmini" id="dogMini" aria-hidden="true"></span><span id="tMiniLab">'+(DOGLAB[T.dog]||'Ver a '+PN())+'</span></button>':'');
   var body;
   if(a!=='wait'&&!caps.sample&&navigator.onLine===false){ T.dog='sleep'; head=head.replace('data-state="idle"','data-state="sleep"'); body='<div class="empty"><p><b>Sin conexión.</b> '+PN()+' necesita internet para conversar. Todo lo demás funciona sin conexión: frases, juegos y tarjetas.</p></div><button class="btn" data-go="practicar">Ir a los juegos</button>'; }
   else if(a==='wait') body='<p>Buscando a '+PN()+'…</p>';
   else if(a==='none') body='<aside class="box warn"><strong class="t">'+PN()+' necesita conexión con la IA</strong><p>En esta vista no hay un servicio de IA disponible. Dentro de Claude funciona al abrir la guía con sesión iniciada. Mientras tanto pueden practicar las mismas situaciones en «Role-plays y juegos».</p></aside><button class="btn" data-start="role">Ir a los role-plays</button>';
-  else if(!T.sc) body='<h1>'+PN()+', tu '+(PET.f?'tutora':'tutor')+' de inglés</h1><p>Elige una situación. '+PN()+' hace el otro papel, te habla en inglés sencillo y corrige cada respuesta, por voz y por escrito.</p><div class="tlist">'+list.map(function(x){ return '<button class="mode" data-tsc="'+x.i+'"><b>'+x.s.t+'</b><span>'+(x.s.who==='el'?'Técnico':x.s.who==='ella'?'Reservaciones':'Para los dos')+'</span></button>'; }).join('')+'</div><p class="note">La primera vez puede pedir permiso para usar la IA y el micrófono. '+PN()+' es una IA y puede equivocarse.</p>';
+  else if(!T.sc) body='<h1>'+PN()+', tu '+(PET.f?'tutora':'tutor')+' de inglés</h1><p><button class="btn small" data-pickpet="1">Cambiar de mascota</button></p><p>Elige una situación'+(mem.who==='camila'?' de tu día':'')+'. '+PN()+' hace el otro papel, te habla en inglés sencillo y corrige cada respuesta, por voz y por escrito.</p><div class="tlist">'+list.map(function(x){ return '<button class="mode" data-tsc="'+x.i+'"><b>'+x.s.t+'</b><span>'+(x.s.who==='kid'?'Para Camila':x.s.who==='el'?'Técnico':x.s.who==='ella'?'Reservaciones':'Para los dos')+'</span></button>'; }).join('')+'</div><p class="note">La primera vez puede pedir permiso para usar la IA y el micrófono. '+PN()+' es una IA y puede equivocarse.</p>';
   else body='<p class="note" style="margin-top:0">'+esc(T.sc.t)+'</p><div id="tLog" class="chat tchat" aria-live="polite"></div><div id="tCtl" class="tctl"></div><div id="tEnd"></div>';
   return '<div class="wrap tutor">'+head+body+'</div>'; }
 

@@ -6,6 +6,8 @@ from urllib.parse import quote
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'src'))
 from content_extra import EXTRA
+from content_camila import CAMILA, KID_SCENARIOS, KID_CANDO, STAGES
+from content_adult import ADULT, ADULT_STAGES, ADULT_PATH, ADULT_SCENARIOS
 
 def rd(*p): return open(os.path.join(ROOT, *p), encoding='utf-8').read()
 def wr(text, *p):
@@ -82,7 +84,11 @@ def icons():
 # ---------- página ----------
 s = rd('src', 'base.html')
 d = json.loads(rd('src', 'guide_data.json'))
-d['rec'] += EXTRA
+d['rec'] += EXTRA + ADULT + CAMILA  # orden fijo: adultos nuevos (7) y luego Camila (20), contadas desde el final en learning.js
+assert sum(1 for b in CAMILA if b['t'] == 'h1') == 20
+d['kid'] = {'scen': KID_SCENARIOS, 'cando': KID_CANDO, 'stages': STAGES}
+NEW_ADULT = sum(1 for b in ADULT if b['t'] == 'h1'); assert NEW_ADULT == 7
+d['adult'] = {'stages': ADULT_STAGES, 'path': ADULT_PATH, 'scen': ADULT_SCENARIOS, 'n': NEW_ADULT}
 js = json.dumps(d, ensure_ascii=False).replace('</', '<\\/')
 a = s.index('<script id="data" type="application/json">') + len('<script id="data" type="application/json">'); b = s.index('</script>', a)
 s = s[:a] + js + s[b:]

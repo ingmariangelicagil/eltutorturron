@@ -19,6 +19,15 @@
   --ok-text:#7FD9A5; --bad-text:#FF86AE; --shade:#0F0906; --paw:#E7A25A;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px rgba(0,0,0,.3); --bar-shadow:0 8px 28px rgba(0,0,0,.45)}}
 
+/* paleta según la mascota: Turrón (caramelo, por defecto), Sam (beige y collar azul), Roma (blanco y rosa) */
+html[data-pet=sam]{--caramel:#C9974E;--cocoa:#8A6230;--collar:#2F6FB5;--flamingo:#2F6FB5;--foam:#FAF6EE;--line:#EADFCB;--soft:#6B5844;
+  --deep:#7A5424;--sea:#5C4120;--hero:#D9AE72;--hero-ink:#2E1F10;--paw:#B98544;--shade:#E3D3B6;--flamingo-t:#E1ECF8}
+html[data-pet=roma]{--caramel:#E58FB3;--cocoa:#A63D6E;--collar:#C2185B;--flamingo:#C2185B;--foam:#FDF7F9;--paper:#FFFFFF;--line:#F1DDE6;--soft:#6E5460;
+  --deep:#9C2E5E;--sea:#7A2E52;--hero:#F7D3E2;--hero-ink:#3D1F2C;--paw:#E58FB3;--shade:#EBCFDB;--sun-t:#FCE8F0}
+@media (prefers-color-scheme:dark){
+  html[data-pet=sam]{--foam:#1B150D;--paper:#2A2117;--ink:#FFF1DF;--soft:#D2C1A8;--line:#47392A;--deep:#E4C28C;--sea:#7A5A2E;--hero:#4A3A22;--hero-ink:#FFF1DF;--paw:#E4C28C;--shade:#0F0B06;--flamingo-t:#16263A}
+  html[data-pet=roma]{--foam:#1E1218;--paper:#2C1A23;--ink:#FFEAF2;--soft:#D2B3C2;--line:#4A2C3A;--deep:#F2A7C8;--sea:#8E3A63;--hero:#4A2436;--hero-ink:#FFEAF2;--paw:#F2A7C8;--shade:#120A0E;--sun-t:#3A1A28}}
+
 /* superficies del navegador */
 ::selection{background:var(--tag);color:var(--tink)}
 input,textarea{caret-color:var(--flamingo)}
@@ -39,6 +48,37 @@ h2.part::before{background:var(--flamingo);box-shadow:3px 3px 0 #8F1F47}
 .sdog[data-state=sleep]::after{content:none}
 .pdog[data-state=happy]{animation:hop .45s ease 2}
 .pdog[data-state=sleep]::after{content:"Zzz";position:absolute;right:-6px;top:-4px;font:700 .95rem var(--pixel);color:var(--hero-ink);opacity:.8}
+
+/* barra superior: el logo es el botón para cambiar de mascota */
+button.brand{border:0;background:none;color:inherit;padding:4px 6px 4px 0;margin-left:-2px;text-align:left;border-radius:12px;min-height:44px;cursor:pointer}
+button.brand{flex:1;min-width:0}
+button.brand>span{min-width:0}
+button.brand small{overflow:hidden;text-overflow:ellipsis}
+.top .wrap{gap:8px}.who{flex:none}
+@media (max-width:360px){.who button{padding:6px 8px;font-size:.8rem}}
+button.brand:active{transform:translateY(1px)}
+.chev{width:10px;height:6px;margin-left:5px;vertical-align:1px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (hover:hover) and (pointer:fine){button.brand:hover{background:rgba(255,241,223,.1)}}
+/* selector de mascota */
+html.picking,html.picking body{overflow:hidden}
+#petpick{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:calc(20px + env(safe-area-inset-top,0px)) 16px calc(20px + env(safe-area-inset-bottom,0px));background:rgba(28,18,12,.55);overflow-y:auto}
+.pp-in{width:100%;max-width:440px;background:var(--hero);color:var(--hero-ink);border-radius:24px;padding:18px 16px 16px;text-align:center;box-shadow:0 10px 0 rgba(43,26,18,.25);animation:gateIn .25s cubic-bezier(.2,.8,.2,1) both}
+.pp-in h2{justify-content:center;margin:0 0 14px;font-size:1.2rem}
+.pp-in h2::before{display:none}
+.pp-in #ppClose{margin-top:14px}
+/* camino de Camila: puntaje de 0 a 100 y unidades */
+.score{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px;margin:6px 0 14px}
+.score b{font:700 3rem/1 var(--pixel);color:var(--deep)}
+.score span{font-weight:700}
+.sbar,.ubar{display:block;flex-basis:100%;height:12px;background:var(--line);border-radius:3px;overflow:hidden}
+.sbar i,.ubar i{display:block;height:100%;background:var(--paw)}
+.unit{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center;width:100%;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:8px 0;box-shadow:var(--shadow);min-height:44px}
+.unit.done{background:var(--aloe-t)}
+.unit .un{grid-row:span 2;display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--hero);color:var(--hero-ink);font:700 1.1rem var(--pixel)}
+.unit .ut b{display:block}.unit .ut small{color:var(--soft)}
+.unit .ubar{grid-column:2;height:8px}
+h2 .lvl{font:700 .8rem var(--body);color:var(--soft);margin-left:6px}
+@media (hover:hover) and (pointer:fine){.unit:hover{border-color:var(--caramel)}}
 
 /* barra superior */
 .top{background:var(--sea)}
@@ -103,7 +143,16 @@ h1{overflow-wrap:break-word}
 
 /* barra inferior: Turrón al centro */
 .tabs{box-shadow:var(--bar-shadow)}
-.tabs button{font-size:.78rem}
+.tabs button{font-size:.78rem;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis}
+/* el contenido nunca queda debajo de la barra: su alto real + margen + la barra de inicio del iPhone */
+@media (max-width:759px){
+  body{padding-bottom:calc(128px + env(safe-area-inset-bottom,0px))}
+  html{scroll-padding-bottom:calc(128px + env(safe-area-inset-bottom,0px))}
+  .tabs button{padding-left:1px;padding-right:1px}
+}
+@media (max-width:360px){.tabs button{font-size:.75rem}}
+.tabs .tcenter{overflow:visible;text-overflow:clip;justify-content:flex-end;padding-top:0}
+.tabs .tcenter .tdog{flex:none;margin-top:-34px;margin-bottom:2px}
 .tabs button[aria-current=page]{background:var(--sun-t);color:var(--deep)}
 .tabs .tcenter{position:relative;justify-content:flex-end;gap:3px}
 .tabs .tcenter[aria-current=page]{background:none}
@@ -125,7 +174,7 @@ h1{overflow-wrap:break-word}
 .wrap{padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
 button,.tabs,.chips,.who,summary,.pdog,.dog{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 @media (display-mode:standalone){html,body{overscroll-behavior-y:none}}
-@media (max-width:759px){body:has(input:focus,textarea:focus,select:focus) .tabs{display:none}}
+@media (max-width:759px) and (pointer:coarse){body:has(input:focus,textarea:focus,select:focus) .tabs{display:none}}
 .tchat{overscroll-behavior:contain}
 
 /* sincronizar entre teléfonos */

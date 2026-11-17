@@ -172,7 +172,7 @@ html{-webkit-text-size-adjust:100%}
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <div class="brand"><span class="logo"></span><span>English Dog<small>Aprendiendo inglés con <span class="petname">Turrón</span></small></span></div>
+  <button class="brand" id="petBtn" type="button" aria-haspopup="dialog" aria-label="Cambiar de mascota"><span class="logo"></span><span>English Dog<small>Aprendiendo inglés con <span class="petname">Turrón</span><svg class="chev" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></small></span></button>
   <div class="who" role="group" aria-label="¿Quién estudia ahora?">
     <button data-who="el">Eduardo</button><button data-who="ella">Mariana</button>
   </div>
@@ -269,9 +269,9 @@ var PLAY='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4v16l13-8z"/><
 
 /* ---------- block renderers ---------- */
 function phraseRow(en,pr,es){ var key=plain(en), k=me().known[key];
-  return '<div class="phr'+(k?' known':'')+'" data-key="'+esc(key)+'"><button class="play" data-say="'+esc(en)+'" aria-label="Escuchar">'+PLAY+'</button>'+
+  return '<div class="phr'+(k?' known':'')+'" data-key="'+esc(key)+'"><button class="play" data-say="'+esc(key)+'" aria-label="Escuchar">'+PLAY+'</button>'+
     '<div><div class="en" lang="en">'+en+'</div>'+(pr?'<div class="pr">'+esc(pr)+'</div>':'')+'<div class="es">'+es+'</div></div>'+
-    '<div class="side"><button class="know" aria-pressed="'+(k?'true':'false')+'" aria-label="Marcar como aprendida" title="Ya la sé">✓</button><button class="slow" data-say="'+esc(en)+'" data-slow="1">lento</button></div></div>'; }
+    '<div class="side"><button class="know" aria-pressed="'+(k?'true':'false')+'" aria-label="Marcar como aprendida" title="Ya la sé">✓</button><button class="slow" data-say="'+esc(key)+'" data-slow="1">lento</button></div></div>'; }
 function block(b){
   switch(b.t){
     case 'h2': return '<h2>'+b.title+'</h2>';
