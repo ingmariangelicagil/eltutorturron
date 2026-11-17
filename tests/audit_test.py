@@ -13,7 +13,7 @@ def new(pw,init=None,w=390,h=800):
     pg=b.new_page(viewport={'width':w,'height':h},reduced_motion='reduce'); pg.errs=[]
     pg.on('pageerror',lambda e:pg.errs.append(str(e))); pg.on('console',lambda m:pg.errs.append(m.text) if m.type=='error' else None)
     if init: pg.add_init_script(init)
-    pg.goto(URL); pg.wait_for_timeout(250); return b,pg
+    pg.goto(URL,wait_until='domcontentloaded'); pg.wait_for_timeout(400); return b,pg  # sin esperar las fuentes externas
 def tour(pg,label,deep=True):
     """visit everything, press everything"""
     ov=[]

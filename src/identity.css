@@ -9,7 +9,7 @@
   --lagoon-t:#DCEFF0; --flamingo-t:#FBE3EB; --sun-t:#FFF0C4; --aloe-t:#E0F0E3;
   --ok-text:#1F7A49; --bad-text:#B8285C; --shade:#E6D3BA; --paw:#C47A2C;
   --shadow:0 1px 2px rgba(90,47,14,.07),0 6px 18px rgba(90,47,14,.08); --bar-shadow:0 8px 28px rgba(90,47,14,.2);
-  --display:"Atkinson Hyperlegible",system-ui,sans-serif; --pixel:"Pixelify Sans","Atkinson Hyperlegible",system-ui,sans-serif;
+  --display:"Lexend",system-ui,sans-serif; --pixel:"Lexend",system-ui,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root{
   --foam:#1C120C; --paper:#2A1C14; --ink:#FFF1DF; --soft:#CDB49C; --line:#47321F;
@@ -33,10 +33,16 @@ html[data-pet=roma]{--caramel:#E58FB3;--cocoa:#A63D6E;--collar:#C2185B;--flaming
 input,textarea{caret-color:var(--flamingo)}
 html{scrollbar-color:var(--line) transparent}
 
-/* tipografía: píxel para la marca y los títulos, Atkinson para leer */
-h1,.brand,.stat b{font-family:var(--pixel)}
-h1{font-weight:700;letter-spacing:0;font-size:clamp(1.9rem,7vw,2.7rem);line-height:1.08;text-wrap:balance}
-h2,h3{font-family:var(--display)}
+/* tipografía: Lexend (hecha para leer con facilidad) en la marca y los títulos; Atkinson Hyperlegible Next en el texto.
+   El píxel queda solo en los perros. */
+h1,.brand,.stat b{font-family:var(--display)}
+h1{font-weight:700;letter-spacing:-.02em;font-size:clamp(1.8rem,6.4vw,2.5rem);line-height:1.1;text-wrap:balance}
+h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.01em;text-wrap:balance}
+.brand{font-weight:700;letter-spacing:-.01em}
+.brand small{font-family:var(--body);font-weight:400;letter-spacing:0}
+.tabs button{font-family:var(--display);font-weight:500;letter-spacing:0}
+.tabs button[aria-current=page]{font-weight:600}
+.stat b,.score b,.unit .un{font-variant-numeric:tabular-nums}
 h2::before{width:9px;height:9px;border-radius:0;background:var(--caramel);box-shadow:3px 3px 0 var(--cocoa)}
 h2.part::before{background:var(--flamingo);box-shadow:3px 3px 0 #8F1F47}
 .stat b{font-weight:700;letter-spacing:0}
@@ -53,7 +59,9 @@ h2.part::before{background:var(--flamingo);box-shadow:3px 3px 0 #8F1F47}
 button.brand{border:0;background:none;color:inherit;padding:4px 6px 4px 0;margin-left:-2px;text-align:left;border-radius:12px;min-height:44px;cursor:pointer}
 button.brand{flex:1;min-width:0}
 button.brand>span{min-width:0}
-button.brand small{overflow:hidden;text-overflow:ellipsis}
+button.brand>span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+button.brand small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:420px){button.brand{font-size:1.15rem}button.brand>span{white-space:normal}button.brand small{font-size:.74rem;white-space:normal;line-height:1.2}}
 .top .wrap{gap:8px}.who{flex:none}
 @media (max-width:360px){.who button{padding:6px 8px;font-size:.8rem}}
 button.brand:active{transform:translateY(1px)}
@@ -251,7 +259,9 @@ html.gated,html.gated body{overflow:hidden}
 
 @media (min-width:760px){
   .tabs .tcenter{justify-content:center}
-  .tdog{width:32px;height:32px;margin:0;border-width:0;box-shadow:none}
+  .tdog,.tabs .tcenter .tdog{width:32px;height:32px;margin:0;border-width:0;box-shadow:none}
+  .tcenter[aria-current=page] .tdog{box-shadow:none}
+  .tabs .tcenter{flex-direction:row;gap:8px;align-items:center;padding-top:6px;padding-bottom:6px}
   .tabs{top:calc(10px + env(safe-area-inset-top,0px))}
   .tdog svg{width:22px;height:14px;margin:0}
   .hdog{width:132px;height:132px}
