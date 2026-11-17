@@ -151,7 +151,7 @@ if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
     if(S.picking) return true;
     return !hasPet(); }
   function petCards(){ var A=app(), cur=A.pet(); return '<div class="gpets" role="group" aria-label="Mascotas">'+A.pets().map(function(p){
-      return '<button class="gpet'+(p.k===cur?' on':'')+'" data-sync="pet" data-k="'+p.k+'"><span class="gpdog" data-pet="'+p.k+'" aria-hidden="true">'+A.welcomeFrame(14,p.k)+'</span><b>'+esc(p.n)+'</b><small>'+esc(p.breed)+(p.age?' · '+p.age+' años':'')+'</small></button>'; }).join('')+'</div>'; }
+      return '<button class="gpet'+(p.k===cur?' on':'')+'" data-sync="pet" data-k="'+p.k+'"><span class="gpdog" data-pet="'+p.k+'" aria-hidden="true">'+A.welcomeFrame(14,p.k)+'</span><b>'+esc(p.n)+'</b></button>'; }).join('')+'</div>'; }
   var gateKey='', gateAnim=0, gateTick=0;
   function gateUpdate(){ var g=document.getElementById('gate'), need=needGate(), A=app();
     if(!need||!A){ if(g){ g.remove(); document.documentElement.classList.remove('gated'); } gateKey=''; clearInterval(gateAnim); gateAnim=0; return; }
@@ -734,7 +734,6 @@ a.btn{display:inline-flex;align-items:center;text-decoration:none}
 .gpet{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid transparent;border-radius:18px;background:var(--paper);color:var(--ink);padding:10px 4px 12px;box-shadow:0 4px 0 rgba(43,26,18,.25);min-height:44px}
 .gpet.on{border-color:var(--sea)}
 .gpet b{font-family:var(--pixel);font-size:1.25rem}
-.gpet small{font-size:.8rem;color:var(--soft);text-align:center;line-height:1.2}
 .gpdog{display:block;width:72px;height:98px}
 .gpdog svg{display:block;width:100%;height:100%;stroke:none}
 .gpick .slow{color:var(--hero-ink)}
@@ -1476,7 +1475,7 @@ function applyPet(){ var m=mem[mem.who]; setPet((m&&m.pet)||'turron');
 var ppAnim=0, ppBack=null;
 function openPicker(){ closePicker(); ppBack=document.activeElement; var el=document.createElement('div'); el.id='petpick'; el.setAttribute('role','dialog'); el.setAttribute('aria-modal','true'); el.setAttribute('aria-labelledby','ppT');
   el.innerHTML='<div class="pp-in"><h2 id="ppT">¿Con cuál mascota quieres aprender?</h2><div class="gpets">'+Object.keys(DOG.pets).map(function(k,i){ var p=DOG.pets[k];
-      return '<button class="gpet'+(k===PET.k?' on':'')+'" data-pk="'+k+'" aria-pressed="'+(k===PET.k)+'"><span class="gpdog" data-pet="'+k+'" aria-hidden="true">'+window.TURRON_APP.welcomeFrame(14+i*7,k)+'</span><b>'+esc(p.n)+'</b><small>'+esc(p.breed)+(p.age?' · '+p.age+' años':'')+'</small></button>'; }).join('')+
+      return '<button class="gpet'+(k===PET.k?' on':'')+'" data-pk="'+k+'" aria-pressed="'+(k===PET.k)+'"><span class="gpdog" data-pet="'+k+'" aria-hidden="true">'+window.TURRON_APP.welcomeFrame(14+i*7,k)+'</span><b>'+esc(p.n)+'</b></button>'; }).join('')+
     '</div><button class="btn" id="ppClose">Cerrar</button></div>';
   document.body.appendChild(el); document.documentElement.classList.add('picking');
   var on=el.querySelector('.gpet.on')||el.querySelector('.gpet'); try{ on.focus({preventScroll:true}); }catch(e){}

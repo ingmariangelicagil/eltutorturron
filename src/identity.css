@@ -198,7 +198,6 @@ a.btn{display:inline-flex;align-items:center;text-decoration:none}
 .gpet{display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid transparent;border-radius:18px;background:var(--paper);color:var(--ink);padding:10px 4px 12px;box-shadow:0 4px 0 rgba(43,26,18,.25);min-height:44px}
 .gpet.on{border-color:var(--sea)}
 .gpet b{font-family:var(--pixel);font-size:1.25rem}
-.gpet small{font-size:.8rem;color:var(--soft);text-align:center;line-height:1.2}
 .gpdog{display:block;width:72px;height:98px}
 .gpdog svg{display:block;width:100%;height:100%;stroke:none}
 .gpick .slow{color:var(--hero-ink)}

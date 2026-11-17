@@ -45,7 +45,7 @@ function applyPet(){ var m=mem[mem.who]; setPet((m&&m.pet)||'turron');
 var ppAnim=0, ppBack=null;
 function openPicker(){ closePicker(); ppBack=document.activeElement; var el=document.createElement('div'); el.id='petpick'; el.setAttribute('role','dialog'); el.setAttribute('aria-modal','true'); el.setAttribute('aria-labelledby','ppT');
   el.innerHTML='<div class="pp-in"><h2 id="ppT">¿Con cuál mascota quieres aprender?</h2><div class="gpets">'+Object.keys(DOG.pets).map(function(k,i){ var p=DOG.pets[k];
-      return '<button class="gpet'+(k===PET.k?' on':'')+'" data-pk="'+k+'" aria-pressed="'+(k===PET.k)+'"><span class="gpdog" data-pet="'+k+'" aria-hidden="true">'+window.TURRON_APP.welcomeFrame(14+i*7,k)+'</span><b>'+esc(p.n)+'</b><small>'+esc(p.breed)+(p.age?' · '+p.age+' años':'')+'</small></button>'; }).join('')+
+      return '<button class="gpet'+(k===PET.k?' on':'')+'" data-pk="'+k+'" aria-pressed="'+(k===PET.k)+'"><span class="gpdog" data-pet="'+k+'" aria-hidden="true">'+window.TURRON_APP.welcomeFrame(14+i*7,k)+'</span><b>'+esc(p.n)+'</b></button>'; }).join('')+
     '</div><button class="btn" id="ppClose">Cerrar</button></div>';
   document.body.appendChild(el); document.documentElement.classList.add('picking');
   var on=el.querySelector('.gpet.on')||el.querySelector('.gpet'); try{ on.focus({preventScroll:true}); }catch(e){}

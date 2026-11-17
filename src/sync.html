@@ -104,7 +104,7 @@
     if(S.picking) return true;
     return !hasPet(); }
   function petCards(){ var A=app(), cur=A.pet(); return '<div class="gpets" role="group" aria-label="Mascotas">'+A.pets().map(function(p){
-      return '<button class="gpet'+(p.k===cur?' on':'')+'" data-sync="pet" data-k="'+p.k+'"><span class="gpdog" data-pet="'+p.k+'" aria-hidden="true">'+A.welcomeFrame(14,p.k)+'</span><b>'+esc(p.n)+'</b><small>'+esc(p.breed)+(p.age?' · '+p.age+' años':'')+'</small></button>'; }).join('')+'</div>'; }
+      return '<button class="gpet'+(p.k===cur?' on':'')+'" data-sync="pet" data-k="'+p.k+'"><span class="gpdog" data-pet="'+p.k+'" aria-hidden="true">'+A.welcomeFrame(14,p.k)+'</span><b>'+esc(p.n)+'</b></button>'; }).join('')+'</div>'; }
   var gateKey='', gateAnim=0, gateTick=0;
   function gateUpdate(){ var g=document.getElementById('gate'), need=needGate(), A=app();
     if(!need||!A){ if(g){ g.remove(); document.documentElement.classList.remove('gated'); } gateKey=''; clearInterval(gateAnim); gateAnim=0; return; }
