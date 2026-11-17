@@ -139,7 +139,7 @@ function vTrabajo(){ if(isKid()||!st.work) return vCamino(); var k= st.work || (
    '<div class="row" style="margin:6px 0 4px"><button class="btn pink small" data-go="tutor">Practicar con '+PN()+'</button><button class="btn small" data-start="quiz" data-deck="'+k+'">Quiz</button><button class="btn small" data-start="cards" data-deck="'+k+'">Tarjetas</button></div>'+secs(t)+'</div>'; }
 
 /* ---------- practicar ---------- */
-var ICONS={shadow:'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',
+var ICONS={aventura:'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',shadow:'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',
  cards:'<rect x="7" y="4" width="13" height="13" rx="2"/><path d="M4 8v10a2 2 0 0 0 2 2h10"/>',
  tutor:'<path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01"/>',
  quiz:'<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>',
@@ -150,7 +150,7 @@ var ICONS={shadow:'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width
  spell:'<text x="12" y="16" text-anchor="middle">Aa</text>',
  guide:'<path d="M6 3h9l4 4v14H6z"/><path d="M9 11h7M9 15h7"/>',
  role:'<circle cx="8" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M2.5 20a5.5 5.5 0 0 1 11 0M14 20a4.2 4.2 0 0 1 7.5-2.5"/>'};
-MODES=[['shadow','Escuchar y repetir','Imiten la frase en voz alta. Tiene modo manos libres para el carro.','--sun'],
+MODES=[['aventura','Camino a casa','Juego: corre, salta y ladra por 4 mundos hasta llegar a casa.','--sun'],['shadow','Escuchar y repetir','Imiten la frase en voz alta. Tiene modo manos libres para el carro.','--sun'],
  ['cards','Tarjetas con repaso','Vuelven justo cuando están por olvidarse: al día, a los 2, 4, 8 y 16 días.','--sun-t'],
  ['tutor','Tu mascota tutora con IA','Conversen por voz o por escrito y reciban correcciones.','--flamingo-t'],
  ['quiz','Quiz de 10 preguntas','Elijan la respuesta correcta. Incluye preguntas de escuchar.','--flamingo-t'],
@@ -175,6 +175,7 @@ function startGame(){ var g=$('#game'); if(!g) return; stopMic(); var P=pool(st.
     case 'quiz': G={qs:shuffle(P).slice(0,10),i:0,ok:0,P:P,done:false}; quiz(); break;
     case 'order': G={list:shuffle(P.filter(function(x){var n=x.en.split(' ').length;return simple(x)&&n>=3&&n<=9;})),i:0}; order(); break;
     case 'dict': G={list:shuffle(P.filter(function(x){return simple(x)&&x.en.split(' ').length<=9;})),i:0}; dict(); break;
+    case 'aventura': if(window.ADV) ADV.start(g); break;
     case 'spell': spell(); break;
     case 'guide': guide(); break;
     case 'shadow': shadowStart(P); break;
@@ -380,6 +381,7 @@ document.addEventListener('change',function(e){ var t=e.target, d=t.dataset;
 });
 document.addEventListener('keydown',function(e){ if(e.key!=='Enter') return; var id=e.target.id; if(id==='nIn'){ $('#nCheck').click(); } if(id==='tIn'){ e.preventDefault(); $('#tSend').click(); } if(id==='mEs'){ $('#mAdd').click(); } });
 function render(keep){ var y=window.scrollY; stopAll(); stopMic();
+  if(window.ADV&&!(st.tab==='practicar'&&st.mode==='aventura')) ADV.stop();
   view.innerHTML=VIEWS[st.tab]();
   document.querySelectorAll('.tabs button').forEach(function(b){ if(b.dataset.tab===st.tab) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
   document.querySelectorAll('.who button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.who===mem.who); });

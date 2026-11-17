@@ -25,6 +25,15 @@ invitados (`inv`). El ícono de la app muestra las tres cabezas.
 - **Eduardo y Mariana** (`src/content_adult.py`): camino A1 a B1 con 13 secciones de la guía + 7 unidades nuevas (small talk, pasado, futuro, quejas, mensajes, reuniones, entrevistas). Las 2 unidades de trabajo cambian por persona (técnico 9/20 o reservaciones 10/21). Las 7 nuevas van justo antes de las de Camila (`AD0`) y también aparecen en Frases. «Todo el inglés de trabajo» sigue a un toque desde el camino.
 - **Selector de mascota**: tocar el logo de arriba (o «Cambiar de mascota» en la pestaña de la mascota) abre `openPicker()`. La **paleta cambia con la mascota** (`html[data-pet=sam|roma]` en `identity.css`, claro y oscuro, contraste AA comprobado) y la barra del teléfono la sigue (`theme-color`).
 
+### Juego «Camino a casa» (v8)
+
+- Primer modo de **Practicar** (`data-start="aventura"`). Código en `src/game.js` (motor en canvas, 320×180 lógicos; el ancho se adapta a la pantalla, mínimo 192) y estilos en `src/game.css`. `window.ADV.start(host)` / `ADV.stop()`; `render()` lo detiene al salir de Practicar.
+- Plataformas con salto y ladrido (el ladrido es el disparo). 4 mundos × 2 niveles (playa, pueblo, desierto, noche en el barrio), generados con semilla fija (`gen(L)`); cada nivel es más largo y trae más abuelos, más rápidos, que lanzan chancletas (desde 2-1), en scooter y cactus (desde 3-1). El último nivel termina con un vecino gruñón (jefe) frente a la casa; al vencerlo se abre la puerta y se gana.
+- Los malos son **abuelos gruñones de diseño original** (no usar personajes de series). Hablan en inglés con traducción («Get off my lawn!»).
+- Curas: Turrón con calcetines, Roma con croquetas, Sam con su plato de comida (`HEAL`). 3 vidas, punto de control a mitad de nivel.
+- Controles: flechas/WASD, arriba o espacio para saltar, X para ladrar, P o Esc para pausar; en táctil, botones grandes con varios dedos a la vez.
+- Avance por persona en `localStorage` `english-dog-juego` (nunca en `aruba-ingles-v1`). `ADV._dbg` existe para las pruebas.
+
 ### Correr las pruebas
 
 ```

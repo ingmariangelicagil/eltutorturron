@@ -98,13 +98,14 @@ s = s[:a] + js + s[b:]
 
 dogvars = ':root{--dog-head:%s;--dog-ok:%s;--dog-sleep:%s}\n' % (
     uri(svg(head=True)), uri(svg(('happy',), head=True)), uri(svg(('sleep',), head=True)))
-css = rd('src', 'learning.css') + rd('src', 'design.css') + rd('src', 'turron.css') + rd('src', 'identity.css') + dogvars
+css = rd('src', 'learning.css') + rd('src', 'design.css') + rd('src', 'turron.css') + rd('src', 'identity.css') + rd('src', 'game.css') + dogvars
 s = s.replace('</style>', css + '</style>', 1)
 assert s.count('function render(keep){') == 1
 s = s.replace('function render(keep){', 'function renderV1(keep){')
 m = 'var VIEWS={inicio:vInicio'
 assert s.count(m) == 1
 v4 = rd('src', 'turron.js').replace('__DOG__', json.dumps(JSDOG, ensure_ascii=False))
+v4 += rd('src', 'game.js')  # v8: juego «Camino a casa»
 v4 += "\nfunction stopMic(){ mic.cb=null; if(mic.on){ if(caps.dictation){ try{ caps.dictation.stop(); }catch(e){} } if(T.rec){ try{ T.rec.abort(); }catch(e){} } } mic.on=false; }\n"
 s = s.replace(m, rd('src', 'learning.js') + v4 + '\nvar VIEWS={tutor:vTutor,inicio:vInicio')
 
