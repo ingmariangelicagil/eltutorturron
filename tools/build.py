@@ -64,21 +64,24 @@ def uri(s):
 def icons():
     from PIL import Image
     BG = (255, 200, 58, 255)  # placa del collar
-    def head(scale):  # Sam, Turrón y Roma juntos (English Dog)
-        im = Image.new('RGBA', (22 * 3 + 2, HEAD_ROWS), (0, 0, 0, 0))
-        for n, pet in enumerate(['sam', 'turron', 'roma']):
+    # Sam y Roma atrás, Turrón adelante y al centro: los tres grandes y el ícono se entiende
+    LAYOUT = [('sam', 0, 0), ('roma', 23, 0), ('turron', 11, 10)]
+    W, H = 45, HEAD_ROWS + 10
+    def group(scale):
+        im = Image.new('RGBA', (W, H), (0, 0, 0, 0))
+        for pet, ox, oy in LAYOUT:
             pal = PETS[pet]['pal']
             for y, r in enumerate(grid((), None, pet)[:HEAD_ROWS]):
                 for x, c in enumerate(r):
                     if c != '.':
                         h = '#B7791F' if c == 'Y' else pal[c]  # la placa, más oscura para que se vea sobre el fondo amarillo
-                        im.putpixel((x + n * 23, y), tuple(int(h[i:i + 2], 16) for i in (1, 3, 5)) + (255,))
-        return im.resize((im.width * scale, HEAD_ROWS * scale), Image.NEAREST)
-    for size, scale, name in [(512, 7, 'icon-512.png'), (192, 2, 'icon-192.png'), (180, 2, 'apple-touch-icon.png'), (512, 5, 'icon-maskable-512.png')]:
+                        im.putpixel((ox + x, oy + y), tuple(int(h[i:i + 2], 16) for i in (1, 3, 5)) + (255,))
+        return im.resize((round(W * scale), round(H * scale)), Image.NEAREST)  # escala no entera solo en los tamaños chicos
+    os.makedirs(os.path.join(ROOT, 'icons'), exist_ok=True)
+    for size, scale, name in [(512, 10, 'icon-512.png'), (192, 3.8, 'icon-192.png'), (180, 3.6, 'apple-touch-icon.png'), (512, 7.5, 'icon-maskable-512.png')]:
         im = Image.new('RGBA', (size, size), BG)
-        h = head(scale)
-        im.paste(h, ((size - h.width) // 2, (size - h.height) // 2 + scale), h)
-        os.makedirs(os.path.join(ROOT, 'icons'), exist_ok=True)
+        g = group(scale)
+        im.paste(g, ((size - g.width) // 2, (size - g.height) // 2), g)
         im.save(os.path.join(ROOT, 'icons', name), optimize=True)
 
 # ---------- página ----------
